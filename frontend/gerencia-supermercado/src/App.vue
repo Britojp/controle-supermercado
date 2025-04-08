@@ -9,3 +9,11 @@
 <script lang="ts" setup>
   //
 </script>
+
+<style>
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+    
+.application {
+  font-family: "Roboto";
+}
+</style>
