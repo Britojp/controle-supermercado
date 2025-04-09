@@ -41,6 +41,8 @@
   
   <script lang="ts">
     export default {
+      name : 'NavBar',
+      components : {},
         
     }
   </script>
