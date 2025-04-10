@@ -11,7 +11,7 @@
       
         <v-divider></v-divider>
 
-        
+        <Table></Table>
   
   </v-card>
     </v-sheet>
@@ -19,13 +19,12 @@
   
   
   <script lang="ts">
-  
-  
-  
+import Table from '@/components/Table.vue';
+
   
   export default {
     name: 'allEmployees',
-    components: {},
+    components: {Table},
   
     data () {
       return {
