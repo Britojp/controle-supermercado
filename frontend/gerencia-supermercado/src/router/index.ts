@@ -5,13 +5,24 @@
  */
 
 // Composables
-import { createRouter, createWebHistory } from 'vue-router/auto'
-import { routes } from 'vue-router/auto-routes'
+import AllEmployees from '@/pages/allEmployees.vue'
+import Dashboard from '@/pages/dashboard.vue'
+import Index from '@/pages/index.vue'
+import Register from '@/pages/register.vue'
+import Transaction from '@/pages/transaction.vue'
+import { createRouter, createMemoryHistory } from 'vue-router/auto'
 
+const routes = [
+  {path: '/', component: Index},
+  {path: '/dashboard', component: Dashboard},
+  {path: '/transaction', component: Transaction},
+  {path: '/register', component: Register},
+  {path: '/allEmployees', component: AllEmployees}
+]
 
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createMemoryHistory(),
   routes,
 })
 

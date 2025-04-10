@@ -34,6 +34,7 @@
             variant="underlined"
             type="e-mail"
             required
+            color="green-darken-3"
           ></v-text-field>
           
           <v-text-field
@@ -44,9 +45,13 @@
             label="Senha"
             density="comfortable"
             variant="underlined"
-            type="password"
             required
-          ></v-text-field>
+            :type="show ? 'text' : 'password'"
+              counter
+              :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+              @click:append-inner="show = !show"
+              color="green-darken-3"
+            ></v-text-field>
 
           <v-btn
           :loading="loading"
@@ -71,7 +76,8 @@ export default{
     return {
       loading: false,
       email: '',
-      password: ''
+      password: '',
+      show : false,
     };
   },
   methods: {

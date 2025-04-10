@@ -1,39 +1,45 @@
 <template>
     <v-card 
-     :class="`pa-4 d-flex flex-column ${colorBg}`"
-     height="100"
-     width="400"
-     elevation="5">
- 
-     <v-card-item>
-      <v-avatar 
-      class="me-4 rounded"
-      size="50" 
-      >
-
+    width="400"
+    :class="`pa-4 d-flex align-center ${colorBg}`" 
+    elevation="3" 
+    rounded="md"
+    >
       <v-icon 
-      size="50"
-      :class ="`${colorIcon}`"
+      size="36"
+      color="white" 
+      class="me-4"
       >
       mdi-currency-usd
     </v-icon>
-  
-      </v-avatar>
-      <v-card-subtitle 
-      color="grey-darken-3"
-      class="text-h6 d-flex" 
-      >
-        {{title }}
-    </v-card-subtitle>
-    <span 
-    class="text-p color-grey-darken-4"
-    >
-    R$ {{price}}
-</span>
+      <div>
+        <div 
+        class="text-caption text-white"
+        >
+          {{title}}
+        </div>
+        <div class="text-subtitle-1 font-weight-bold">
+          R$ {{price}}
+        </div>
+      </div>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ props }">
+          <v-icon 
+            v-bind="props" 
+            size="24" 
+            color="yellow-darken-2" 
+            class="ms-auto"
+          >
+            mdi-information
+          </v-icon>
+        </template 
+        >
+        <span>{{ informationMessage }}</span>
+      </v-tooltip>
 
-    </v-card-item>
     </v-card>
-   </template>
+  </template>
+
 
 
 <script lang="ts">
@@ -45,8 +51,8 @@ export default {
         title: {type: String, required: true},
         colorBg: {type: String, required: true},
         colorIcon : {type: String, required: true},
-        price : {type: Number, required: true}
-
+        price : {type: Number, required: true},
+        informationMessage : {type: String, required: true},
     },
 
 }
