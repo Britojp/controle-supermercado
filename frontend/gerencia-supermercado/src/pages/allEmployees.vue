@@ -11,20 +11,20 @@
       
         <v-divider></v-divider>
 
-        <Table :headers="headers" :users="funcionarios"></Table>
-  
+        <TableEmployees :headers="headers" :users="funcionarios"></TableEmployees>
+
   </v-card>
     </v-sheet>
   </template>
   
   
   <script lang="ts">
-import Table from '@/components/Table.vue';
+import TableEmployees from '@/components/TableEmployees.vue';
 
   
   export default {
     name: 'allEmployees',
-    components: {Table},
+    components: {TableEmployees},
   
     data () {
       return {
@@ -39,14 +39,13 @@ import Table from '@/components/Table.vue';
     name: 'Ana Souza',
     email: 'ana.souza@example.com',
     password: 'senha123',
-    icon: 'mdi-eye'
+    icon: 'mdi-eye',
   },
   {
     name: 'Carlos Lima',
     email: 'carlos.lima@example.com',
     password: '123senha',
-    icon: 'mdi-eye'
-
+    icon: 'mdi-eye',
   },
   {
     name: 'Fernanda Oliveira',

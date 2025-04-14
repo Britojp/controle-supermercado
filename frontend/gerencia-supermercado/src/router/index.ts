@@ -10,19 +10,21 @@ import Dashboard from '@/pages/dashboard.vue'
 import Index from '@/pages/index.vue'
 import Register from '@/pages/register.vue'
 import Transaction from '@/pages/transaction.vue'
-import { createRouter, createMemoryHistory } from 'vue-router/auto'
+import Product from '@/pages/products.vue'
+import { createRouter, createWebHistory } from 'vue-router/auto'
 
 const routes = [
   {path: '/', component: Index},
   {path: '/dashboard', component: Dashboard},
   {path: '/transaction', component: Transaction},
   {path: '/register', component: Register},
-  {path: '/allEmployees', component: AllEmployees}
+  {path: '/allEmployees', component: AllEmployees},
+  {path: '/products', component: Product}
 ]
 
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHistory(),
   routes,
 })
 

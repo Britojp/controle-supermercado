@@ -44,12 +44,21 @@
         />
 
       <v-list-item 
-        prepend-icon="mdi-cart-variant" 
+        prepend-icon="mdi-cart-plus" 
         title="Movimentação de Produtos" 
         value="movimentacao"
         to="/transaction" 
         :class="!drawer ? 'justify-center' : ''"
       />
+
+      <v-list-item 
+        prepend-icon="mdi-cart-variant" 
+        title="Consultar todos os produtos" 
+        value="produtos"
+        to="/products" 
+        :class="!drawer ? 'justify-center' : ''"
+      />
+      
     </v-list>
 
     <v-divider></v-divider>

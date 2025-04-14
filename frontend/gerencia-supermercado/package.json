@@ -12,13 +12,15 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
+    "@devindex/vue-mask": "^2.0.3",
     "@mdi/font": "^7.4.47",
     "chart.js": "^4.4.8",
     "core-js": "^3.37.1",
     "pinia": "^3.0.1",
     "roboto-fontface": "*",
     "vue": "^3.4.31",
-    "vue-chartjs": "^5.3.2"
+    "vue-chartjs": "^5.3.2",
+    "vue-mask": "^1.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",
