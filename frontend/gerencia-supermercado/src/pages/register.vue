@@ -107,9 +107,6 @@ export default {
     email: '',
     password: '',
     validationEnabled: true,
-    nameRules: [],
-    emailRules: [],
-    passwordRules: [],
     show: false,
     alert: false,
   }
