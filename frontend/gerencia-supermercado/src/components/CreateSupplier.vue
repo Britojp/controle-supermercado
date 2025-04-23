@@ -30,7 +30,8 @@ inline>
         hint="*Obrigatório"
         persistent-hint
         :rules = "computedName"
-        
+        v-model= "companyName"
+        @blur="checkFields"
       />
     </v-col>
     <v-col cols="3">
@@ -45,6 +46,7 @@ inline>
         v-model="cnpj"
         @input = "formatCNPJ"
         :rules="computedCNPJ"
+        @blur="checkFields"
       />
     </v-col>
     <v-col cols="3">
@@ -56,6 +58,7 @@ inline>
         hint="Exemplo: (32) 99322-8924"
         maxlength="15"
         v-model="phone"
+        @input = "formatPhone"
       />
     </v-col>
     <v-col cols="3">
@@ -67,6 +70,7 @@ inline>
         hint="Exemplo: 74991-129"
         maxlength="11"
         v-model="cep"
+        @input = "formatCEP"
 
       />
     </v-col>
@@ -109,6 +113,7 @@ inline>
       hint="*Obrigatório"
       persistent-hint
       :rules="[value => !!value || 'Selecione um fornecedor válido']"
+      @change="emitSelectedSupplier"
       />
     </v-col>
   </v-row>
@@ -132,6 +137,8 @@ export default {
         cep: '',
         complemento: '',
         validationEnabled: true,
+        companyName : '',
+        emitSelectedSupplier: '',
       }
     },
     computed : {
@@ -177,6 +184,10 @@ export default {
           }
           this.cep = digits
         },
+      checkFields() {
+        const isValid = (this.companyName.length > 0 && this.cnpj.length > 0) || this.emitSelectedSupplier;
+        this.$emit('dados-validos', isValid);  
+    },
     },
   }
   </script>
