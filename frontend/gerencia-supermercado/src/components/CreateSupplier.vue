@@ -90,7 +90,6 @@ inline>
         hint="Exemplo: Próximo ao Batalhão de Polícia"
         maxlength="30"
         v-model="complemento"
-
       />
     </v-col>
   <v-divider></v-divider>
@@ -113,7 +112,8 @@ inline>
       hint="*Obrigatório"
       persistent-hint
       :rules="[value => !!value || 'Selecione um fornecedor válido']"
-      @change="emitSelectedSupplier"
+      v-model="selectedSupplier"
+      @blur="checkFields"
       />
     </v-col>
   </v-row>
@@ -138,7 +138,7 @@ export default {
         complemento: '',
         validationEnabled: true,
         companyName : '',
-        emitSelectedSupplier: '',
+        selectedSupplier: 'Fornecedor',
       }
     },
     computed : {
@@ -183,13 +183,13 @@ export default {
             digits = digits.replace(/^(\d{5})(\d)/, '$1-$2')
           }
           this.cep = digits
-        },
+      },
       checkFields() {
-        const isValid = (this.companyName.length > 0 && this.cnpj.length > 0) || this.emitSelectedSupplier;
-        this.$emit('dados-validos', isValid);  
+        const isValid = ((this.companyName.length > 0 && this.cnpj.length === 17));
+        this.$emit('dados-validos', isValid);
     },
-    },
-  }
+  },
+}
   </script>
   
   <style>
