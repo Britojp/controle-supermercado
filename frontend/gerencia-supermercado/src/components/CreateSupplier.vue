@@ -6,6 +6,7 @@ elevation="0"
 >
 <v-card-title class="text-subtitle-1">Fornecedor</v-card-title>
 <v-radio-group 
+@change="clearValues"
 v-model="registrationCompany"
 inline>
   <v-radio 
@@ -112,7 +113,7 @@ inline>
       hint="*Obrigatório"
       persistent-hint
       :rules="[value => !!value || 'Selecione um fornecedor válido']"
-      v-model="selectedSupplier"
+      :v-model="selectedSupplier"
       @blur="checkFields"
       />
     </v-col>
@@ -138,7 +139,7 @@ export default {
         complemento: '',
         validationEnabled: true,
         companyName : '',
-        selectedSupplier: 'Fornecedor',
+        selectedSupplier: '',
       }
     },
     computed : {
@@ -185,10 +186,29 @@ export default {
           this.cep = digits
       },
       checkFields() {
-        const isValid = ((this.companyName.length > 0 && this.cnpj.length === 17));
+        const isValid = ((this.companyName.length > 0 && this.cnpj.length === 17) || this.selectedSupplier);
         this.$emit('dados-validos', isValid);
     },
+    clearValues(){
+      this.cnpj = ''
+      this.companyName = ''
+      this.phone = '',
+      this.cep = '',
+      this.complemento = ''
+      this.selectedSupplier = ''
+    },
   },
+  watch : {
+    companyName() {
+      this.checkFields();
+    },
+    cnpj() {
+      this.checkFields();
+    },
+    selectedSupplier() {
+      this.checkFields();
+    }
+  }
 }
   </script>
   

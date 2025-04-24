@@ -21,9 +21,7 @@
             :editable="validatedData"
           ></v-stepper-item>
   
-          <v-divider
-          :color="validatedData ? 'green-darken-4' : ''"
-          ></v-divider>
+          <v-divider></v-divider>
   
           <v-stepper-item
             title="Produtos"
@@ -45,7 +43,7 @@
             <CreateSupplier @dados-validos="handleDadosValidos" />
           </v-stepper-window-item>
           <v-stepper-window-item :value="2">
-            <div>Conteúdo da Etapa 2</div>
+            <CreateProduct/>
           </v-stepper-window-item>
           <v-stepper-window-item :value="3">
             <div>Conteúdo da Etapa 3</div>
@@ -81,11 +79,13 @@
 </template>
 
 <script lang="ts">
+import CreateProduct from '@/components/CreateProduct.vue';
 import CreateSupplier from '@/components/CreateSupplier.vue';
 
 export default {
   components: {
     CreateSupplier,
+    CreateProduct,
   },
   data() {
     return {
