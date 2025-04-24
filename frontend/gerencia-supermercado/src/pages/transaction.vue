@@ -16,9 +16,8 @@
             title="Fornecedor"
             subtitle="Preencha os dados do fornecedor"
             :value="1"
-            :rules="[() => validatedData]"
-            :color="validatedData ? 'green-darken-4' : ''"
-            :editable="validatedData"
+            :rules="[() => validateFirstData]"
+            :color="validateFirstData ? 'green-darken-4' : ''"
           ></v-stepper-item>
   
           <v-divider></v-divider>
@@ -27,6 +26,7 @@
             title="Produtos"
             subtitle="Adicione os produtos"
             :value="2"
+            :rules="[() => validateSecondData]"
           ></v-stepper-item>
   
           <v-divider></v-divider>
@@ -43,7 +43,7 @@
             <CreateSupplier @dados-validos="handleDadosValidos" />
           </v-stepper-window-item>
           <v-stepper-window-item :value="2">
-            <CreateProduct/>
+            <CreateProduct @validate-data="handleDadosValidos"/>
           </v-stepper-window-item>
           <v-stepper-window-item :value="3">
             <div>Conteúdo da Etapa 3</div>
@@ -67,7 +67,7 @@
               icon 
               @click="goNext" 
               class="bg-green-darken-3 ml-10"
-              :disabled="step === 3 || !validatedData"
+              :disabled="step === 3 || !validateFirstData"
             >
               <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
@@ -85,17 +85,18 @@ import CreateSupplier from '@/components/CreateSupplier.vue';
 export default {
   components: {
     CreateSupplier,
-    CreateProduct,
+    CreateProduct
   },
   data() {
     return {
       step: 1, 
-      validatedData: false,
+      validateFirstData: false,
+      validateSecondData: false
     };
   },
   methods: {
     goNext() {
-      if (this.step < 3 && this.validatedData) {
+      if (this.step < 3 && this.validateFirstData) {
         this.step++;
       }
     },
@@ -105,8 +106,9 @@ export default {
         this.step--;
       }
     },
-    handleDadosValidos(isValid: boolean) {
-      this.validatedData = isValid;
+    handleDadosValidos(isValid: boolean, isValidation: boolean) {
+      this.validateFirstData = isValid;
+      this.validateSecondData = isValidation;
     },
   },
 

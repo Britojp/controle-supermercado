@@ -5,7 +5,7 @@ create table unidade_medida (
 	nome varchar(10) not null unique,
 	sigla char(2) not null unique,
 
-	constraint pk_unidade_medida_id primary key (id)
+	constraint pk_unidade_medida_id 	primary key (id)
 );
 
 create table usuario (

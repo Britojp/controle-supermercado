@@ -92,6 +92,7 @@ INSERT INTO categoria (nome) VALUES
 INSERT INTO categoria (nome) VALUES
 ( 'Pet Shop');
 
+-- Marca --
 INSERT INTO marca (nome) VALUES
 ('Tio João');
 INSERT INTO marca (nome) VALUES
@@ -227,38 +228,84 @@ INSERT INTO produto ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUE
 
 -- Transações --
 INSERT INTO transacao ( tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-( 'Entrada', 100, '2024-04-01', 17.00, 1, 1, 1);
+( 'Entrada', 500, '2024-01-01', 17.00, 1, 1, 1);
 INSERT INTO transacao ( tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-( 'Entrada', 200, '2024-04-02', 5.50, 2, 2, 2);
+( 'Entrada', 300, '2024-02-01', 5.50, 2, 2, 2);
 INSERT INTO transacao ( tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-( 'Entrada', 150, '2024-04-03', 4.90, 3, 3, 3);
+( 'Entrada', 350, '2024-03-01', 5.50, 2, 2, 2);
 INSERT INTO transacao ( tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-( 'Entrada', 100, '2024-04-04', 3.20, 4, 4, 4);
+( 'Entrada', 300, '2024-04-01', 5.00, 2, 2, 2);
 INSERT INTO transacao ( tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-( 'Entrada', 250, '2024-04-05', 3.89, 5, 5, 5);
+( 'Entrada', 150, '2024-03-01', 4.90, 3, 3, 3);
 INSERT INTO transacao ( tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-( 'Entrada', 180, '2024-04-06', 12.00, 6, 6, 6);
+( 'Entrada', 100, '2024-04-01', 3.20, 4, 4, 4);
 INSERT INTO transacao ( tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-( 'Entrada', 220, '2024-04-06', 2.50, 7, 7, 7);
+( 'Entrada', 100, '2024-05-01', 5.20, 4, 4, 4);
 INSERT INTO transacao ( tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-( 'Entrada', 200, '2024-04-06', 4.70, 8, 8, 8);
+( 'Entrada', 250, '2024-05-01', 3.89, 5, 5, 5);
 INSERT INTO transacao ( tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-( 'Entrada', 300, '2024-04-06', 1.20, 9, 9, 9);
+( 'Entrada', 180, '2024-06-01', 12.00, 6, 6, 6);
 INSERT INTO transacao ( tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-('Entrada', 400, '2024-04-06', 1.99, 10, 10, 10);
-
-INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-('Saída', 5, '2025-04-01', 4.50, 1, NULL, 1);
-INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-('Saída', 2, '2025-04-02', 3.20, 2, NULL, 3);  
-INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-('Saída', 1, '2025-04-03', 10.99, 3, NULL, 4);
-INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-('Saída', 3, '2025-04-04', 2.49, 1, NULL, 6);
-INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
-('Saída', 1, '2025-04-05', 5.90, 2, NULL, 7); 
+( 'Entrada', 220, '2024-07-01', 2.50, 4, 7, 7);
+INSERT INTO transacao ( tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
+( 'Entrada', 200, '2024-08-01', 4.70, 3, 8, 8);
+INSERT INTO transacao ( tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
+( 'Entrada', 300, '2024-09-01', 1.20, 2, 9, 9);
+INSERT INTO transacao ( tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
+('Entrada', 400, '2024-10-01', 1.99, 1, 10, 10);
 
 
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
+('Saída', 10, '2024-04-01', 22.90, 1, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
+('Saída', 20, '2024-04-02', 7.49, 2, NULL, 2);  
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
+('Saída', 31, '2024-04-03', 7.49, 3, NULL, 2);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
+('Saída', 32, '2024-04-04', 14.99, 1, NULL, 6);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES
+('Saída', 15, '2024-04-05', 3.49, 2, NULL, 7); 
+
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 6, '2024-07-16', 3.49, 10, NULL, 7);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 6, '2024-09-14', 1.99, 3, NULL, 9);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 9, '2024-02-15', 14.99, 6, NULL, 2);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 2, '2024-01-05', 22.9, 2, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 9, '2024-02-09', 22.9, 8, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 6, '2024-03-21', 22.9, 6, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 10, '2024-04-02', 22.9, 4, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 5, '2024-05-01', 22.9, 3, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 2, '2024-06-09', 22.9, 2, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 4, '2024-09-11', 1.99, 6, NULL, 9);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 5, '2024-07-21', 22.9, 9, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 45, '2024-08-30', 5.59, 5, NULL, 8);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 36, '2024-09-09', 1.99, 8, NULL, 9);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 27, '2024-06-25', 14.99, 5, NULL, 6);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 19, '2024-07-27', 3.49, 1, NULL, 7);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 36, '2024-02-09', 7.49, 5, NULL, 2);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 25, '2024-03-25', 7.49, 4, NULL, 2);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 18, '2024-01-17', 22.9, 5, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 38, '2024-02-23', 7.49, 3, NULL, 2);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 25, '2024-03-11', 7.49, 2, NULL, 2);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 61, '2024-07-16', 3.49, 1, NULL, 7);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 16, '2024-09-14', 1.99, 3, NULL, 9);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 19, '2024-02-15', 3.49, 6, NULL, 2);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 12, '2024-01-05', 22.9, 2, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 19, '2024-02-09', 22.9, 8, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 11, '2024-03-21', 22.9, 6, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 20, '2024-04-02', 22.9, 4, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 61, '2024-05-01', 22.9, 3, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 12, '2024-06-09', 22.9, 2, NULL, 1);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 54, '2024-09-11', 1.99, 6, NULL, 9);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 54, '2024-02-21', 7.49, 9, NULL, 2);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 25, '2024-08-30', 5.59, 5, NULL, 8);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 16, '2024-09-09', 1.99, 8, NULL, 9);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 27, '2024-06-25', 14.99, 5, NULL, 6);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 69, '2024-07-27', 3.49, 1, NULL, 7);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 56, '2024-02-09', 7.49, 5, NULL, 2);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 51, '2024-03-25', 7.49, 4, NULL, 2);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 38, '2024-04-17', 7.49, 5, NULL, 2);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 38, '2024-05-23', 7.49, 3, NULL, 2);
+INSERT INTO transacao (tipo_transacao, quantidade, data_transacao, preco, idusuario, idfornecedor, idproduto) VALUES ('Saída', 35, '2024-06-11', 7.49, 2, NULL, 2);
 -- Prateleira --
 INSERT INTO prateleira ( numero) VALUES
 ('P01');
@@ -346,5 +393,4 @@ INSERT INTO localizacao_estoque ( idlote, idprateleira, idcorredor) VALUES
 ( 9, 9, 9);
 INSERT INTO localizacao_estoque (idlote, idprateleira, idcorredor) VALUES
 ( 10, 10, 10);
-
 

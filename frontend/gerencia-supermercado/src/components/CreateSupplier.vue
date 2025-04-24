@@ -146,9 +146,7 @@ export default {
       computedName () {
         if(!this.validationEnabled) return [];
         return[
-        (value: string) => !!value || 'O nome da empresa é obrigatório.',
-        (value: string) => value.length >= 1 || 'O nome da empresa deve ter pelo menos 3 caracteres.'
-        ]
+        (value: string) => !!value || 'O nome da empresa é obrigatório.',        ]
       },
       computedCNPJ () {
         if(!this.validationEnabled) return [];
@@ -156,8 +154,6 @@ export default {
         (value: string) => value.length > 16 || 'Exemplo: 12.345.678/0001-00'
         ]
       },
-  
-  
     },
     methods : {
       formatCNPJ() {

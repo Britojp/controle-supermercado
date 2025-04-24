@@ -21,6 +21,7 @@
                                 hint="*Obrigatório"
                                 persistent-hint
                                 :rules="[value => !!value || 'O nome da marca é obrigatório']"
+                                v-model="brandName"
                             />
                         </v-col>
                     </v-row>
@@ -29,6 +30,7 @@
                     <v-row>
                         <v-col cols="3">
                             <v-select
+                            :items="Marcas"
                             label="Selecione a marca"
                             item-title="marca"
                             item-value="id"
@@ -38,6 +40,7 @@
                             hint="*Obrigatório"
                             persistent-hint
                             :rules="[value => !!value || 'Selecione uma marca válida']"
+                            v-model="brandName"
                             />
                         </v-col>
                         </v-row>
@@ -55,11 +58,13 @@
                         hint="*Obrigatório"
                         persistent-hint
                         :rules="[value => !!value || 'O nome do produto é obrigatório']"
+                        v-model="productName"
                     />
                     
                 </v-col>
                 <v-col cols="3">
                             <v-select
+                            :items="Categoria"
                             label="Categoria do Produto"
                             item-title="categoria"
                             item-value="id"
@@ -69,6 +74,7 @@
                             hint="*Obrigatório"
                             persistent-hint
                             :rules="[value => !!value || 'Selecione uma categoria válida']"
+                            v-model="categoryName"
                             />
                         </v-col>
                         <v-col cols="3">
@@ -82,7 +88,8 @@
                         hint="*Obrigatório"
                         persistent-hint
                         :rules="[value => !!value || 'O número do lote do produto é obrigatório']"
-                    />
+                        v-model="lotNumber"
+                        />
                     
                 </v-col>
                 <v-col cols="3">
@@ -95,6 +102,7 @@
                         hint="*Obrigatório"
                         persistent-hint
                         :rules="[value => !!value || 'Selecione uma Data de Validade']"
+                        v-model="validateDate"
                     />
                     
                 </v-col>
@@ -109,6 +117,7 @@
                         hint="*Obrigatório"
                         persistent-hint
                         :rules="[value => !!value || 'Indique um valor válido']"
+                        v-model="costValue"
                     />
                     
                 </v-col>
@@ -123,27 +132,32 @@
                         hint="*Obrigatório"
                         persistent-hint
                         :rules="[value => !!value || 'A quantidade é obrigatória']"
+                        v-model="inputQuantity"
                     />
                     
                 </v-col>
                 <v-col cols="3">
                             <v-select
+                            :items="Corredores"
                             label="Número do corredor"
                             item-title="nome"
                             item-value="id"
                             color="green-darken-3"
                             variant="outlined"
                             class="mb-5 hint-custom"
+                            v-model="corredorNumber"
                             />
                         </v-col>
                         <v-col cols="3">
                             <v-select
+                            :items="Prateleiras"
                             label="Número da prateleira"
                             item-title="nome"
                             item-value="id"
                             color="green-darken-3"
                             variant="outlined"
                             class="mb-5 hint-custom"
+                            v-model="shelfNumber"
                             />
                         </v-col>
             </v-row>
@@ -158,7 +172,38 @@ export default {
     data() {
         return {
             registrationMarca: 'cadastrar',
+            validationForms: false,
+            Categoria : ['Alimentos', 'Bebidas', 'Latícinios', 'Cafés e chás', 'Massas', 'Padarias', 'Higiene Pessoal', 'Limpeza', 'Congelados', 'Pet Shop'],
+            Marcas : ['Tio João', 'Kicaldo', 'Soya', 'União', 'Parmalat', 'Pilão', 'Dona Benta', 'Palmolive', 'Ypê'],
+            Prateleiras: ['P01', 'P02', 'P03', 'P04', 'P05', 'P06', 'P07', 'P08', 'P09', 'P10'],
+            Corredores: ['C01', 'C02', 'C03', 'C04', 'C05', 'C06', 'C07', 'C08', 'C09', 'C10'],
+            productName: '',
+            brandName: '',
+            lotNumber: '',
+            shelfNumber: '',
+            validateDate: '',
+            inputQuantity: 0,
+            costValue: 0,
+            categoryName: '',
+            corredorNumber: '',
+
         };
+    },
+    methods : {
+        checkFields() {
+        const isValidation = (
+            this.productName.length > 0 ||
+            this.brandName.length > 0 ||
+            this.lotNumber ||
+            this.validateDate ||
+            this.inputQuantity > 0 ||
+            this.costValue > 0 ||
+            this.categoryName 
+        );
+        this.$emit('validate-data', isValidation);
+    },
+    },
+    computed : {
     },
 };
 </script>
