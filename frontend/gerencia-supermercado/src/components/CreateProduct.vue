@@ -90,35 +90,40 @@
                         :rules="[value => !!value || 'O número do lote do produto é obrigatório']"
                         v-model="lotNumber"
                         />
-                    
                 </v-col>
                 <v-col cols="3">
-                    <v-text-field
-                        color="green-darken-3"
-                        label="Data de Validade"
-                        variant="outlined"
-                        class="hint-custom"
-                        type="Date"
-                        hint="*Obrigatório"
-                        persistent-hint
-                        :rules="[value => !!value || 'Selecione uma Data de Validade']"
-                        v-model="validateDate"
-                    />
-                    
-                </v-col>
-                <v-col cols="3">
-                    <v-text-field
-                        color="green-darken-3"
-                        type="number"
-                        label="Valor de custo por unidade"
-                        variant="outlined"
-                        class="hint-custom"
-                        maxlength="5"
-                        hint="*Obrigatório"
-                        persistent-hint
-                        :rules="[value => !!value || 'Indique um valor válido']"
-                        v-model="costValue"
-                    />
+                    <v-menu
+                        v-model="menuDate"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        max-width="290px"
+                        min-width="290px"
+                        >
+                        <template #activator="{ props }">
+                            <v-text-field
+                            v-model="tempDate"
+                            label="Data de Validade"
+                            readonly
+                            v-bind="props"
+                            color="green-darken-3"
+                            variant="outlined"
+                            class="hint-custom"
+                            hint="*Obrigatório"
+                            persistent-hint
+                            :rules="[value => !!value || 'Selecione uma Data de Validade']"
+                            @input="selectDate"
+                            />
+                        </template>
+                        <v-date-picker
+                            v-model="tempDate"
+                            class="bg-white"
+                            show-adjacent-months
+                            elevation="24"
+                            @update:model-value="selectDate"
+                            />
+                        </v-menu>
+
                     
                 </v-col>
                 <v-col cols="3">
@@ -167,6 +172,8 @@
 </template>
 
 <script lang="ts">
+import { useDate } from 'vuetify';
+
 export default {
     name: 'CreateProduct',
     data() {
@@ -181,27 +188,36 @@ export default {
             brandName: '',
             lotNumber: '',
             shelfNumber: '',
-            validateDate: '',
+            tempDate: '',
             inputQuantity: 0,
             costValue: 0,
             categoryName: '',
             corredorNumber: '',
+            menuDate: false,
+            date : useDate()
 
         };
     },
-    methods : {
+    methods: {
         checkFields() {
-        const isValidation = (
-            this.productName.length > 0 ||
-            this.brandName.length > 0 ||
-            this.lotNumber ||
-            this.validateDate ||
-            this.inputQuantity > 0 ||
-            this.costValue > 0 ||
-            this.categoryName 
-        );
-        this.$emit('validate-data', isValidation);
+            const isValidation = [
+                this.productName.trim(),
+                this.brandName.trim(),
+                this.lotNumber,
+                this.tempDate,
+                this.inputQuantity > 0,
+                this.costValue > 0,
+                this.categoryName.trim()
+            ].every(field => field && field !== '');
+            
+            this.$emit('validate-data', isValidation);
+        },
+    selectDate(date: string) {
+    const formattedDate = this.date.format(date, 'keyboardDate');
+    this.tempDate = formattedDate;
+    this.menuDate = false;
     },
+    
     },
     computed : {
     },

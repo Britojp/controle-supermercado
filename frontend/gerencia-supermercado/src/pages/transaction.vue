@@ -39,13 +39,23 @@
         </v-stepper-header>
         
         <v-stepper-window>
-          <v-stepper-window-item :value="1">
-            <CreateSupplier @dados-validos="handleDadosValidos" />
+          <v-stepper-window-item 
+          :value="1"
+          >
+            <CreateSupplier 
+            @dados-validos="handleFirstValidData" 
+            />
+          </v-stepper-window-item
+          >
+          <v-stepper-window-item 
+          :value="2"
+          >
+            <CreateProduct 
+            @validate-data="handleSecondValidData"
+            />
           </v-stepper-window-item>
-          <v-stepper-window-item :value="2">
-            <CreateProduct @validate-data="handleDadosValidos"/>
-          </v-stepper-window-item>
-          <v-stepper-window-item :value="3">
+          <v-stepper-window-item 
+          :value="3">
             <div>Conteúdo da Etapa 3</div>
           </v-stepper-window-item>
         </v-stepper-window>     
@@ -62,16 +72,16 @@
             </v-btn>
           </template>
           
-          <template v-slot:next>
+            <template v-slot:next>
             <v-btn 
               icon 
               @click="goNext" 
               class="bg-green-darken-3 ml-10"
-              :disabled="step === 3 || !validateFirstData"
+              :disabled="(step === 1 && !validateFirstData) || (step === 2 && !validateSecondData) || step === 3"
             >
               <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
-          </template>
+            </template>
         </v-stepper-actions>
       </v-stepper>
     </v-card>
@@ -106,8 +116,10 @@ export default {
         this.step--;
       }
     },
-    handleDadosValidos(isValid: boolean, isValidation: boolean) {
+    handleFirstValidData(isValid: boolean) {
       this.validateFirstData = isValid;
+    },
+    handleSecondValidData(isValidation: boolean){
       this.validateSecondData = isValidation;
     },
   },
