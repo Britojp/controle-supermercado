@@ -68,7 +68,6 @@ create table nutricao(
 create table produto (
 	id serial not null,
 	nome varchar(30) not null,
-	preco_venda float not null,
 	idnutricao integer,
 	idcategoria integer not null,
 	idmarca integer not null,
