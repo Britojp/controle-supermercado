@@ -19,15 +19,15 @@ export class Transaction {
     preco: number
     
     @ManyToOne(() => User, user => user.transactions)
-    @JoinColumn({ name: 'usuario_id' })
+    @JoinColumn({ name: 'idusuario' })
     usuario: User
 
     @ManyToOne(() => Supplier, supplier => supplier.transactions)
-    @JoinColumn({ name: 'fornecedor_id' })
+    @JoinColumn({ name: 'idfornecedor' })
     fornecedor: Supplier
 
     @OneToOne(() => Product)
-    @JoinColumn({ name: 'produto_id' })
+    @JoinColumn({ name: 'idproduto' })
     produto: Product;
 
 }

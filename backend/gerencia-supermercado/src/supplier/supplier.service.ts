@@ -2,11 +2,12 @@ import { Delete, HttpException, Injectable, NotFoundException } from '@nestjs/co
 import { InjectRepository } from '@nestjs/typeorm';
 import { Supplier } from 'src/database/entities/supplier.entity';
 import { Repository } from 'typeorm';
-import { createSupplierDTO } from './dto/create-supplier-dto';
-import { updateSupplierDTO } from './dto/update-supplier-dto';
+import { createSupplierDTO } from './dto/create-supplier.dto';
+import { updateSupplierDTO } from './dto/update-supplier.dto';
 import { State } from 'src/database/entities/state.entity';
 import { Address } from 'src/database/entities/address.entity';
 import { Contact } from 'src/database/entities/contact.entity';
+import { readSupplierDTO } from './dto/read-supplier.dto';
 
 @Injectable()
 export class SupplierService {
@@ -25,8 +26,8 @@ export class SupplierService {
         private readonly contactRepository: Repository <Contact>
     ){}
 
-    async findAll() {
-        return this.supplierRepository.find({
+    async findAll() : Promise<readSupplierDTO[]> {
+        const suppliers = await this.supplierRepository.find({
         relations: {
             idendereco: {
             estado: true
@@ -34,6 +35,8 @@ export class SupplierService {
             idcontato: true
         }
         });
+
+        return suppliers.map(supplier => new readSupplierDTO(supplier))
     }
 
     async findOne(id: number){
@@ -49,7 +52,7 @@ export class SupplierService {
         if(!supplier){
             throw new HttpException(`Fornecedor ${id} não encontrado`, 400)
         }
-        return supplier;
+        return new readSupplierDTO(supplier);
     }
 
     async create(createSupplierDTO : createSupplierDTO){
@@ -84,19 +87,54 @@ export class SupplierService {
     }
 
     async update(id: number, updateSupplierDTO: updateSupplierDTO){
+        const {endereco, contato} = updateSupplierDTO;
+
         const supplier = await this.supplierRepository.preload({
             id,
-            ...updateSupplierDTO
-        })
+            ...updateSupplierDTO,
+        });
+
         if(!supplier){
-            throw new NotFoundException("Não encontrado")
+            throw new NotFoundException('Fornecedor não encontrado');
         }
+
+        if(endereco){
+            let estado = await this.stateRepository.findOne({
+                where: {nome: endereco.estado.nome, uf: endereco.estado.uf },
+            });
+
+        if (!estado){
+            estado = this.stateRepository.create(endereco.estado);
+            await this.stateRepository.save(estado);
+        }
+
+        const newAddress = this. addressRepository.create({
+            cep: endereco.cep,
+            complemento: endereco.complemento,
+            estado
+        });
+        supplier.idendereco = newAddress;
+        }
+        if (contato){
+            const newContact = this.contactRepository.create(contato);
+            supplier.idcontato = newContact;
+        }
+
         return this.supplierRepository.save(supplier)
+
     }
+    
     async remove(id: number){
         const supplier = await this.supplierRepository.findOne({
             where: {id},
+            relations: {
+                idendereco: {
+                estado: true
+                },
+                idcontato: true
+            },
         })
+
         if(!supplier){
             throw new NotFoundException("Não encontrado");
         }

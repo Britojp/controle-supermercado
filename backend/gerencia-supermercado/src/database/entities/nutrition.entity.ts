@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Measurement } from "./measurement.entity";
 import { Product } from "./product.entity";
 
@@ -10,17 +10,17 @@ export class Nutrition{
     @Column()
     porcao: number
 
-    @Column()
+    @Column('decimal')
     quantidade_proteina: number
 
-    @Column()
+    @Column('decimal')
     quantidade_gordura: number
 
-    @Column()
+    @Column('decimal')
     quantidade_carboidrato: number
 
-    @OneToOne(() => Measurement)
-    @JoinColumn({ name: 'unidade_de_medida_id' })
+    @ManyToOne(() => Measurement, {cascade: true, eager:true, nullable: false})
+    @JoinColumn({ name: 'idunidade_de_medida' })
     unidademedida: Measurement
 
     @OneToOne( () => Product)

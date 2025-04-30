@@ -8,7 +8,7 @@ export class Brand{
     id: number
 
     @Column()
-    name: string
+    nome: string
 
     @OneToMany( () => Category, category => category.produtos)
     produtos: Product[]

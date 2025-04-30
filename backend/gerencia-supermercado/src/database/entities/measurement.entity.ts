@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm"
 import { Nutrition } from "./nutrition.entity"
 
 @Entity('unidade_medida')
@@ -11,8 +11,5 @@ export class Measurement{
 
     @Column()
     sigla: string
-
-    @OneToOne(() => Nutrition)
-    nutricao: Nutrition
 
 }

@@ -9,7 +9,7 @@ export class Batch {
     id: number
 
     @Column()
-    numero: number
+    numero: string
 
     @Column()
     data_validade: Date

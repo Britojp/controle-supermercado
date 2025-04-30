@@ -7,7 +7,7 @@ export class Shelf{
     id: number
 
     @Column()
-    name: string
+    nome: string
     
     @OneToMany(() => Stock_location, loc => loc.lote)
     localizacoes: Stock_location[];

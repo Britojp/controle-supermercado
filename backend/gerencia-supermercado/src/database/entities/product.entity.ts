@@ -13,25 +13,21 @@ export class Product{
     id: number
 
     @Column()
-    name: string
+    nome: string
 
     @OneToOne( () => Nutrition)
-    @JoinColumn({ name: 'nutricao_id' })
+    @JoinColumn({ name: 'idnutricao' })
     nutricao: Nutrition
 
-    @OneToMany( () => Category, category => category.produtos)
-    @JoinColumn({ name: 'categoria_id' })
+    @ManyToOne( () => Category, category => category.produtos)
+    @JoinColumn({ name: 'idcategoria' })
     categoria: Category
 
     @ManyToOne( () => Brand, brand => brand.produtos)
-    @JoinColumn({ name: 'marca_id' })
+    @JoinColumn({ name: 'idmarca' })
     marca: Brand
 
     @OneToOne( () => Transaction, transaction => transaction.produto)
     transacao: Transaction
-
-    @OneToOne( () => Batch, batch => batch.produto)
-    @JoinColumn({ name: 'lote_id' })
-    produto: Product
 
 }

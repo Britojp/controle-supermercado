@@ -9,15 +9,15 @@ export class Stock_location{
     id: number
     
     @ManyToOne(() => Batch)
-    @JoinColumn({ name: "lote_id" })
+    @JoinColumn({ name: "idlote" })
     lote: Batch;
     
     @ManyToOne(() => Shelf)
-    @JoinColumn({ name: "prateleira_id" })
+    @JoinColumn({ name: "idprateleira" })
     prateleira: Shelf;
     
     @ManyToOne(() => Corridor)
-    @JoinColumn({ name: "corredor_id" })
+    @JoinColumn({ name: "idcorredor" })
     corredor: Corridor;
     
 }
