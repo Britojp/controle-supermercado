@@ -8,6 +8,7 @@ import { Nutrition } from 'src/database/entities/nutrition.entity';
 import { Category } from 'src/database/entities/category.entity';
 import { createProductDTO } from './dto/create-product.dto';
 import { Measurement } from 'src/database/entities/measurement.entity';
+import { updateProductDTO } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductService {
@@ -26,7 +27,7 @@ export class ProductService {
         private readonly categoryRepository: Repository <Category>,
 
         @InjectRepository(Measurement)
-        private readonly meansurementRepository: Repository <Measurement>,
+        private readonly measurementRepository: Repository <Measurement>,
 
     ){}
 
@@ -57,18 +58,18 @@ export class ProductService {
         if(!product){
             throw new HttpException(`Produto ${id} não encontrado`,400)
         }
-        return new readProductDTO(product)
+        return new readProductDTO(product)                
     }
 
     async create(createProductDTO: createProductDTO) {
         const { nome, nutricao, categoria, marca } = createProductDTO;
 
-        let unidade_medida = await this.meansurementRepository.findOne({
+        let unidade_medida = await this.measurementRepository.findOne({
             where: { nome: nutricao.unidade_medida.nome, sigla: nutricao.unidade_medida.sigla }
         });
         if (!unidade_medida) {
-            unidade_medida = this.meansurementRepository.create(nutricao.unidade_medida);
-            await this.meansurementRepository.save(unidade_medida);
+            unidade_medida = this.measurementRepository.create(nutricao.unidade_medida);
+            await this.measurementRepository.save(unidade_medida);
         }
 
         const newNutrition = this.nutritionRepository.create({
@@ -103,6 +104,10 @@ export class ProductService {
             marca: marcaVerify,
         });
         return this.productRespository.save(product);
+    }
+
+    async update(id: number, updateProductDTO: updateProductDTO){
+        
     }
 
     async remove(id: number){

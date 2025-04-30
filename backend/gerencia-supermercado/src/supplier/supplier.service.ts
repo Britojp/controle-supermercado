@@ -108,7 +108,7 @@ export class SupplierService {
             await this.stateRepository.save(estado);
         }
 
-        const newAddress = this. addressRepository.create({
+        const newAddress = this.addressRepository.create({
             cep: endereco.cep,
             complemento: endereco.complemento,
             estado
