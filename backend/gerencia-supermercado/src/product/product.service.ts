@@ -106,67 +106,73 @@ export class ProductService {
         return this.productRespository.save(product);
     }
 
-    async update(id: number, updateProductDTO: updateProductDTO) {
-        const { nome, nutricao, categoria, marca } = updateProductDTO;
-        const product = await this.productRespository.preload({
-            id,
-            ...updateProductDTO,
+    async update(id: number, dto: updateProductDTO) {
+        const existingProduct = await this.productRespository.findOne({
+          where: { id },
+          relations: ['marca', 'categoria', 'nutricao', 'nutricao.unidademedida'],
         });
-    
-        if (!product) {
-            throw new NotFoundException('Produto não encontrado');
+      
+        if (!existingProduct) {
+          throw new Error('Produto não encontrado.');
         }
-    
-        if (categoria) {
-            let categoriaVerify = await this.categoryRepository.findOne({
-                where: { nome: categoria.nome },
-            });
-            if (!categoriaVerify) {
-                categoriaVerify = this.categoryRepository.create(categoria);
-                await this.categoryRepository.save(categoriaVerify);
-            }
-            product.categoria = categoriaVerify;
+      
+        if (dto.nutricao?.unidade_medida) {
+          let measurement = await this.measurementRepository.findOneBy({
+            nome: dto.nutricao.unidade_medida.nome,
+            sigla: dto.nutricao.unidade_medida.sigla,
+          });
+      
+          if (!measurement) {
+            measurement = this.measurementRepository.create(dto.nutricao.unidade_medida);
+            await this.measurementRepository.save(measurement);
+          }
+      
+          existingProduct.nutricao.unidademedida = measurement;
         }
-    
-        if (nutricao) {
-            let unidade_medida = await this.measurementRepository.findOne({
-                where: {
-                    nome: nutricao.unidade_medida.nome,
-                    sigla: nutricao.unidade_medida.sigla,
-                },
-            });
-    
-            if (!unidade_medida) {
-                unidade_medida = this.measurementRepository.create(nutricao.unidade_medida);
-                await this.measurementRepository.save(unidade_medida);
-            }
-    
-            const newNutrition = this.nutritionRepository.create({
-                porcao: nutricao.porcao,
-                unidademedida: unidade_medida,
-                quantidade_carboidrato: nutricao.quantidade_carboidrato,
-                quantidade_gordura: nutricao.quantidade_gordura,
-                quantidade_proteina: nutricao.quantidade_proteina,
-            });
-    
-            await this.nutritionRepository.save(newNutrition); 
-            product.nutricao = newNutrition;
+      
+        if (dto.nutricao?.porcao) {
+          existingProduct.nutricao.porcao = dto.nutricao.porcao;
         }
-    
-        if (marca) {
-            let marcaVerify = await this.brandRepository.findOne({
-                where: { nome: marca.nome },
-            });
-            if (!marcaVerify) {
-                marcaVerify = this.brandRepository.create(marca);
-                await this.brandRepository.save(marcaVerify);
-            }
-            product.marca = marcaVerify;
+      
+        if (dto.nutricao?.quantidade_proteina) {
+          existingProduct.nutricao.quantidade_proteina = dto.nutricao.quantidade_proteina;
         }
-    
-        await this.productRespository.save(product);
-        return product;
-    }
+      
+        if (dto.nutricao?.quantidade_gordura) {
+          existingProduct.nutricao.quantidade_gordura = dto.nutricao.quantidade_gordura;
+        }
+      
+        if (dto.nutricao?.quantidade_carboidrato) {
+          existingProduct.nutricao.quantidade_carboidrato = dto.nutricao.quantidade_carboidrato;
+        }
+      
+        if (dto.marca?.nome) {
+          let brand = await this.brandRepository.findOneBy({ nome: dto.marca.nome });
+          if (!brand) {
+            brand = this.brandRepository.create(dto.marca);
+            await this.brandRepository.save(brand);
+          }
+          existingProduct.marca = brand;
+        }
+      
+        if (dto.categoria?.nome) {
+          let category = await this.categoryRepository.findOneBy({ nome: dto.categoria.nome });
+          if (!category) {
+            category = this.categoryRepository.create(dto.categoria);
+            await this.categoryRepository.save(category);
+          }
+          existingProduct.categoria = category;
+        }
+      
+        if (dto.nome) {
+          existingProduct.nome = dto.nome;
+        }
+      
+        await this.productRespository.save(existingProduct);
+      
+        return existingProduct;
+      }
+      
     
 
     async remove(id: number){

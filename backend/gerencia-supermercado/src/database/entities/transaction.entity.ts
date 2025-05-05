@@ -18,6 +18,9 @@ export class Transaction {
     @Column('decimal')
     preco: number
     
+    @Column()
+    quantidade: number
+
     @ManyToOne(() => User, user => user.transactions)
     @JoinColumn({ name: 'idusuario' })
     usuario: User
@@ -26,8 +29,9 @@ export class Transaction {
     @JoinColumn({ name: 'idfornecedor' })
     fornecedor: Supplier
 
-    @OneToOne(() => Product)
+    @OneToOne(() => Product, product => product.transacao)
     @JoinColumn({ name: 'idproduto' })
     produto: Product;
+    
 
 }

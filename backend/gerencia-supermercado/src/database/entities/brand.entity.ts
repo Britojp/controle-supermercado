@@ -10,6 +10,7 @@ export class Brand{
     @Column()
     nome: string
 
-    @OneToMany( () => Category, category => category.produtos)
+    @OneToMany(() => Product, product => product.marca)
     produtos: Product[]
+    
 }

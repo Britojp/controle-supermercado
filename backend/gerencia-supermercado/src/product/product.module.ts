@@ -7,10 +7,9 @@ import { Nutrition } from 'src/database/entities/nutrition.entity';
 import { Measurement } from 'src/database/entities/measurement.entity';
 import { Category } from 'src/database/entities/category.entity';
 import { Brand } from 'src/database/entities/brand.entity';
-import { Batch } from 'src/database/entities/batch.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Product, Nutrition, Measurement, Category, Brand, Batch])],
+  imports: [TypeOrmModule.forFeature([Product, Nutrition, Measurement, Category, Brand])],
   controllers: [ProductController],
   providers: [ProductService]
 })

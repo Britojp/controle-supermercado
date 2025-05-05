@@ -1,6 +1,5 @@
 import { Type } from "class-transformer"
-import { IsNotEmpty, IsNumber, IsString, Validate, ValidateNested } from "class-validator"
-import { createBatchDTO } from "src/batch/dto/create-batch.dto"
+import { IsNotEmpty, IsNumber, IsString, ValidateNested } from "class-validator"
 
 class Brand{
     @IsString()
@@ -55,7 +54,7 @@ export class createProductDTO{
 
     @ValidateNested()
     @Type(() => Nutrition)
-    nutricao : Nutrition
+    nutricao : Nutrition 
     
     @ValidateNested()
     @Type(() => Category)
@@ -64,9 +63,4 @@ export class createProductDTO{
     @ValidateNested()
     @Type(() => Brand)
     marca: Brand
-
-    @ValidateNested()
-    @Type(() => createBatchDTO)
-    lote: createBatchDTO
-    
 }

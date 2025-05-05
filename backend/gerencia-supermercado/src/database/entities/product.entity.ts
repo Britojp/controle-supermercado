@@ -15,9 +15,10 @@ export class Product{
     @Column()
     nome: string
 
-    @OneToOne( () => Nutrition)
+    @OneToOne(() => Nutrition)
     @JoinColumn({ name: 'idnutricao' })
     nutricao: Nutrition
+    
 
     @ManyToOne( () => Category, category => category.produtos)
     @JoinColumn({ name: 'idcategoria' })
@@ -27,7 +28,8 @@ export class Product{
     @JoinColumn({ name: 'idmarca' })
     marca: Brand
 
-    @OneToOne( () => Transaction, transaction => transaction.produto)
+    @OneToOne(() => Transaction, transaction => transaction.produto)
     transacao: Transaction
+    
 
 }

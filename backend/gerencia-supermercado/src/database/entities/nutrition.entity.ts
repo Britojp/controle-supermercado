@@ -22,8 +22,4 @@ export class Nutrition{
     @ManyToOne(() => Measurement, {cascade: true, eager:true, nullable: false})
     @JoinColumn({ name: 'idunidade_de_medida' })
     unidademedida: Measurement
-
-    @OneToOne( () => Product)
-    produto: Product
-
 }
