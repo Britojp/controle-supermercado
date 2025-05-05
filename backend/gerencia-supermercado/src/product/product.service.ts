@@ -106,9 +106,68 @@ export class ProductService {
         return this.productRespository.save(product);
     }
 
-    async update(id: number, updateProductDTO: updateProductDTO){
-        
+    async update(id: number, updateProductDTO: updateProductDTO) {
+        const { nome, nutricao, categoria, marca } = updateProductDTO;
+        const product = await this.productRespository.preload({
+            id,
+            ...updateProductDTO,
+        });
+    
+        if (!product) {
+            throw new NotFoundException('Produto não encontrado');
+        }
+    
+        if (categoria) {
+            let categoriaVerify = await this.categoryRepository.findOne({
+                where: { nome: categoria.nome },
+            });
+            if (!categoriaVerify) {
+                categoriaVerify = this.categoryRepository.create(categoria);
+                await this.categoryRepository.save(categoriaVerify);
+            }
+            product.categoria = categoriaVerify;
+        }
+    
+        if (nutricao) {
+            let unidade_medida = await this.measurementRepository.findOne({
+                where: {
+                    nome: nutricao.unidade_medida.nome,
+                    sigla: nutricao.unidade_medida.sigla,
+                },
+            });
+    
+            if (!unidade_medida) {
+                unidade_medida = this.measurementRepository.create(nutricao.unidade_medida);
+                await this.measurementRepository.save(unidade_medida);
+            }
+    
+            const newNutrition = this.nutritionRepository.create({
+                porcao: nutricao.porcao,
+                unidademedida: unidade_medida,
+                quantidade_carboidrato: nutricao.quantidade_carboidrato,
+                quantidade_gordura: nutricao.quantidade_gordura,
+                quantidade_proteina: nutricao.quantidade_proteina,
+            });
+    
+            await this.nutritionRepository.save(newNutrition); 
+            product.nutricao = newNutrition;
+        }
+    
+        if (marca) {
+            let marcaVerify = await this.brandRepository.findOne({
+                where: { nome: marca.nome },
+            });
+            if (!marcaVerify) {
+                marcaVerify = this.brandRepository.create(marca);
+                await this.brandRepository.save(marcaVerify);
+            }
+            product.marca = marcaVerify;
+        }
+    
+        await this.productRespository.save(product);
+        return product;
     }
+    
 
     async remove(id: number){
         const supplier = await this.productRespository.findOne({
