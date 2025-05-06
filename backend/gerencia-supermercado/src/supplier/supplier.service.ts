@@ -15,13 +15,10 @@ export class SupplierService {
     constructor(
         @InjectRepository(Supplier)
         private readonly supplierRepository: Repository <Supplier>,
-        
         @InjectRepository(State)
         private readonly stateRepository: Repository <State>,
-        
         @InjectRepository(Address)
-        private readonly addressRepository: Repository <Address>,
-        
+        private readonly addressRepository: Repository <Address>,      
         @InjectRepository(Contact)
         private readonly contactRepository: Repository <Contact>
     ){}

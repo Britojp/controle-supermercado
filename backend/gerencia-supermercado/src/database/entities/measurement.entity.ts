@@ -12,4 +12,6 @@ export class Measurement{
     @Column()
     sigla: string
 
+    @OneToMany(() => Nutrition, nutrition => nutrition.unidademedida)
+    unidademedida: Nutrition[]
 }
