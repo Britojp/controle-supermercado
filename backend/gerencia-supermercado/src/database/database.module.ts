@@ -44,7 +44,7 @@ export const dataSourceOptions: DataSourceOptions = {
         User,
         Stock_location
     ],
-    synchronize: true,
+    synchronize: false,
 }
 
 @Module({

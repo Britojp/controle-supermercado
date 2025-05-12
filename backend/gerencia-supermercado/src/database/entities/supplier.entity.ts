@@ -13,11 +13,11 @@ export class Supplier{
     @Column()
     cnpj: string
 
-    @OneToOne(() => Address, { cascade: true})
+    @OneToOne(() => Address)
     @JoinColumn({ name: 'idendereco' })
     idendereco: Address;
     
-    @OneToOne(() => Contact, { cascade: true})
+    @OneToOne(() => Contact)
     @JoinColumn({ name: 'idcontato' })
     idcontato: Contact;
     

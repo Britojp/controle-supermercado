@@ -19,7 +19,7 @@ export class Nutrition{
     @Column('decimal')
     quantidade_carboidrato: number
 
-    @ManyToOne(() => Measurement, {cascade: true, eager:true, nullable: false})
+    @ManyToOne(() => Measurement, {eager:true, nullable: false})
     @JoinColumn({ name: 'idunidade_de_medida' })
     unidademedida: Measurement
 }

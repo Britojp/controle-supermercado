@@ -22,8 +22,25 @@ export class Batches1747073459152 implements MigrationInterface {
                     type: 'timestamp',
                     default: 'now()',
                 },
+                {
+                  name: 'id_products',
+                  type: 'uuid',
+                  isNullable: true,
+                },
+                {
+                  name: 'validate_date',
+                  type: 'timestamp',
+                  isNullable: true,
+                }
                 
             ],
+            foreignKeys: [
+              new TableForeignKey({
+                  columnNames: ["id_products"],
+                  referencedTableName: "products",
+                  referencedColumnNames: ["id"],
+              })
+            ]
     }));
   }
 
