@@ -1,12 +1,12 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class Nutrition1746715009814 implements MigrationInterface {
+export class Nutritions1747073374300 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
         await queryRunner.createTable(new Table(
             {
-                name: 'nutricao',
+                name: 'nutritions',
                 columns: [
                     {
                         name: 'id',
@@ -15,27 +15,27 @@ export class Nutrition1746715009814 implements MigrationInterface {
                         default: 'uuid_generate_v4()',
                     },
                     {
-                        name: 'porcao',
+                        name: 'portion',
                         type: 'float',
                         isNullable: true
                     },
                     {
-                        name: 'quantidade_proteina',
+                        name: 'protein_quantity',
                         type: 'integer',
                         isNullable: true
                     },
                     {
-                        name: 'quantidade_gordura',
+                        name: 'fatness_quantity',
                         type: 'integer',
                         isNullable: true
                     },
                     {
-                        name: 'quantidade_carboidratos',
+                        name: 'carbohydrate_quantity',
                         type: 'integer',
                         isNullable: true
                     },
                     {
-                        name: 'id_unidade_medida',
+                        name: 'id_measurements',
                         type: 'uuid',
                         isNullable: true
                     },
@@ -44,31 +44,21 @@ export class Nutrition1746715009814 implements MigrationInterface {
                         type: 'timestamp',
                         default: 'now()',
                     },
-                    {
-                        name: 'updated_at',
-                        type: 'timestamp',
-                        default: 'now()',
-                    }
+                ],
+                foreignKeys: [
+                    new TableForeignKey({
+                        columnNames: ["id_measurements"],
+                        referencedTableName: "measurements",
+                        referencedColumnNames: ["id"],
+                        onDelete: "RESTRICT"
+                    })
                 ]
             }    
         ));
-
-        await queryRunner.createForeignKey("nutricao", new TableForeignKey({
-            columnNames: ["id_unidade_medida"],
-            referencedTableName: "unidade_medida",
-            referencedColumnNames: ["id"],
-            onDelete: "CASCADE"
-        }));
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        const table = await queryRunner.getTable("nutricao");
-        if(table){
-            const foreignKeys = table.foreignKeys;
-            for (const foreignKey of foreignKeys){
-                await queryRunner.dropForeignKey("nutricao", foreignKey);
-            }
-            await queryRunner.dropTable("nutricao");
-        }
+
+            await queryRunner.dropTable("nutritions", true, true, true);
     }
 }

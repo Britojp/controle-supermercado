@@ -39,7 +39,7 @@ export class TransactionService {
         
     }
 
-    async findOne(id: number){
+    async findOne(id: string){
         const transaction = await this.transactionRepository.findOne({
             relations : {
                 fornecedor: true,
@@ -97,7 +97,7 @@ export class TransactionService {
     }
     
 
-    async remove(id: number){
+    async remove(id: string){
         const transaction = await this.transactionRepository.findOne({
             where: {id},
             relations : {

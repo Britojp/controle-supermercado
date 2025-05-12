@@ -1,12 +1,13 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class Supplier1746714980853 implements MigrationInterface {
+export class Suppliers1747073422576 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);        
         await queryRunner.createTable(
             new Table(
                 {
-                    name: 'fonecedor',
+                    name: 'suppliers',
                     columns: [
                         {
                             name: 'id',
@@ -15,7 +16,7 @@ export class Supplier1746714980853 implements MigrationInterface {
                             default: 'uuid_generate_v4()',
                         },
                         {
-                            name: 'nome',
+                            name: 'name',
                             type: 'varchar',
                             length: '30',
                             isNullable: false
@@ -28,52 +29,40 @@ export class Supplier1746714980853 implements MigrationInterface {
                             isUnique: true,
                         },
                         {
-                            name: "id_endereco",
+                            name: "id_address",
                             type: "uuid",
                         },
                         {
-                            name: "id_contato",
+                            name: "id_contacts",
                             type: "uuid",
                         },
                         {
                             name: 'created_at',
                             type: 'timestamp',
                             default: 'now()',
-                        },
-                        {
-                            name: 'updated_at',
-                            type: 'timestamp',
-                            default: 'now()',
                         }
+                    ],
+                    foreignKeys: [
+                        new TableForeignKey({
+                            columnNames: ["id_address"],
+                            referencedTableName: "address",
+                            referencedColumnNames: ["id"],
+                            onDelete: "RESTRICT"
+                        }),
+                        new TableForeignKey({
+                            columnNames: ["id_contacts"],
+                            referencedTableName: "contacts",
+                            referencedColumnNames: ["id"],
+                            onDelete: "RESTRICT"
+                        })
                     ]
                 }
             )
         )
-
-                await queryRunner.createForeignKey("fornecedor", new TableForeignKey({
-                    columnNames: ["id_endereco"],
-                    referencedTableName: "endereco",
-                    referencedColumnNames: ["id"],
-                    onDelete: "CASCADE"
-                }));
-        
-                await queryRunner.createForeignKey("fornecedor", new TableForeignKey({
-                    columnNames: ["id_contato"],
-                    referencedTableName: "contato",
-                    referencedColumnNames: ["id"],
-                    onDelete: "CASCADE"
-                }));
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        const table = await queryRunner.getTable("fornecedor");
-        if (table) {
-            const foreignKeys = table.foreignKeys;
-            for (const foreignKey of foreignKeys) {
-                await queryRunner.dropForeignKey("fornecedor", foreignKey);
-            }
-        }
-        await queryRunner.dropTable("fornecedor");
+        await queryRunner.dropTable("suppliers", true, true, true);
     }
 
 }

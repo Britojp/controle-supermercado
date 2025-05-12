@@ -12,7 +12,7 @@ export class TransactionController {
     }
 
     @Get(':id')
-    findOne(@Param(':id') id: number){
+    findOne(@Param(':id') id: string){
         return this.transactionService.findOne(id);
     }
 
@@ -22,7 +22,7 @@ export class TransactionController {
     }
 
     @Delete(':id')
-    remove(@Param(':id') id: number){
+    remove(@Param(':id') id: string){
         return this.transactionService.remove(id);
     }
 

@@ -7,7 +7,7 @@ import { User } from "src/database/entities/user.entity";
 @Entity('transacao')
 export class Transaction {
     @PrimaryGeneratedColumn()
-    id: number
+    id: string
 
     @Column()
     tipo_transacao: string

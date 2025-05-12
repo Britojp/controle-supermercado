@@ -4,7 +4,7 @@ import { Nutrition } from "./nutrition.entity"
 @Entity('unidade_medida')
 export class Measurement{
     @PrimaryGeneratedColumn()
-    id: number
+    id: string
 
     @Column()
     nome: string

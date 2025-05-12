@@ -44,7 +44,7 @@ export class ProductService {
         return products.map(product => new readProductDTO(product))
     }
 
-    async findOne(id: number) {
+    async findOne(id: string) {
         const product = await this.productRespository.findOne({
             relations : {
                 nutricao : {
@@ -106,7 +106,7 @@ export class ProductService {
         return this.productRespository.save(product);
     }
 
-    async update(id: number, dto: updateProductDTO) {
+    async update(id: string, dto: updateProductDTO) {
         const existingProduct = await this.productRespository.findOne({
           where: { id },
           relations: ['marca', 'categoria', 'nutricao', 'nutricao.unidademedida'],
@@ -175,7 +175,7 @@ export class ProductService {
       
     
 
-    async remove(id: number){
+    async remove(id: string){
         const supplier = await this.productRespository.findOne({
             where: {id},
             relations : {

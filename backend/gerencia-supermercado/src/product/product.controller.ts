@@ -13,7 +13,7 @@ export class ProductController {
     }
 
     @Get(':id')
-    findOne(@Param('id') id: number){
+    findOne(@Param('id') id: string){
         return this.productService.findOne(id);
     }
 
@@ -23,12 +23,12 @@ export class ProductController {
     }
 
     @Delete(':id')
-    remove(@Param('id') id: number){
+    remove(@Param('id') id: string){
         return this.productService.remove(id);
     }
 
     @Patch(':id')
-    update(@Param(':id') id: number, @Body() updateProductDTO : updateProductDTO){
+    update(@Param(':id') id: string, @Body() updateProductDTO : updateProductDTO){
         return this.productService.update(id, updateProductDTO);
     }
 }

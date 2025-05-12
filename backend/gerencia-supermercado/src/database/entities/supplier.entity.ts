@@ -5,7 +5,7 @@ import { Transaction } from "src/database/entities/transaction.entity";
 @Entity('fornecedor')
 export class Supplier{
     @PrimaryGeneratedColumn()
-    id: number
+    id: string
 
     @Column()
     nome: string

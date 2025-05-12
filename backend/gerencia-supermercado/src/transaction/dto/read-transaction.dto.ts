@@ -1,7 +1,7 @@
 import { Transaction } from "src/database/entities/transaction.entity"
 
 export class readTransactionDTO{
-    id: number
+    id: string
     quantidade: number
     data: Date
     preco: number

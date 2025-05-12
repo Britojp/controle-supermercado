@@ -1,24 +1,21 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class Shelf1746714999303 implements MigrationInterface {
+export class Categories1747073314154 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
-        await queryRunner.createTable(
-            new Table(
+        await queryRunner.createTable(new Table({
+            name: 'categories',
+            columns: [
                 {
-                name: 'prateleira',
-                columns: [
-                    {
                     name: 'id',
                     type: 'uuid',
                     isPrimary: true,
                     default: 'uuid_generate_v4()',
                 },
                 {
-                    name: 'nome',
+                    name: 'name',
                     type: 'varchar',
-                    length: '30',
                     isNullable: false
                 },
                 {
@@ -26,19 +23,12 @@ export class Shelf1746714999303 implements MigrationInterface {
                     type: 'timestamp',
                     default: 'now()',
                 },
-                {
-                    name: 'updated_at',
-                    type: 'timestamp',
-                    default: 'now()',
-                }
             ]
-        }
-            )
-        )
+        }));
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        queryRunner.dropTable('prateleira')
+        await queryRunner.dropTable('categories', true, true, true)
     }
 
 }

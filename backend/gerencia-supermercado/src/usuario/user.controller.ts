@@ -16,7 +16,7 @@ export class UsuarioController {
     }
 
     @Get(':id')
-    findOne(@Param('id') id: number){
+    findOne(@Param('id') id: string){
         return this.usuarioService.findOne(id);
     }
 
@@ -26,13 +26,13 @@ export class UsuarioController {
     }
 
     @Patch(':id')
-    update(@Param('id') id : number, @Body() updateUserDTO: updateUserDTO){
+    update(@Param('id') id : string, @Body() updateUserDTO: updateUserDTO){
         return this.usuarioService.update(id, updateUserDTO);
     }
 
     @HttpCode(204)
     @Delete(':id')
-    remove(@Param(':id') id: number){
+    remove(@Param(':id') id: string){
         return this.usuarioService.remove(id);
     }
 

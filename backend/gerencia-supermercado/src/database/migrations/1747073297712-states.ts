@@ -1,12 +1,12 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class State1746714992379 implements MigrationInterface {
+export class States1747073297712 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
         await queryRunner.createTable(new Table(
             {
-                name: 'estado',
+                name: 'states',
                 columns : [
                     {
                         name: 'id',
@@ -15,7 +15,7 @@ export class State1746714992379 implements MigrationInterface {
                         default: 'uuid_generate_v4()',
                     },
                     {
-                        name: 'nome',
+                        name: 'name',
                         type: 'varchar',
                         length: '30',
                         isNullable: false,
@@ -28,12 +28,17 @@ export class State1746714992379 implements MigrationInterface {
                         isNullable: false,
                         isUnique: true,
                     },
+                    {
+                        name: "created_at",
+                        type: "timestamp",
+                        default: "now()"
+                    }
                 ]
             }
         ))
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('estado')
+        await queryRunner.dropTable('states', true, true, true)
     }
 }

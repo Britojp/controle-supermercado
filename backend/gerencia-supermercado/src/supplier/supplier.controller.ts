@@ -12,7 +12,7 @@ export class SupplierController {
     }
     
     @Get(':id')
-    findOne(@Param('id') id: number){
+    findOne(@Param('id') id: string){
         return this.supplierService.findOne(id);
     }
 
@@ -22,13 +22,13 @@ export class SupplierController {
     }
 
     @Patch(':id')
-    update(@Param('id') id: number, @Body() createSupplierDTO: createSupplierDTO){
+    update(@Param('id') id: string, @Body() createSupplierDTO: createSupplierDTO){
         return this.supplierService.update(id, createSupplierDTO);
     }
 
     @HttpCode(204)
     @Delete(':id')
-    remove(@Param(':id') id: number){
+    remove(@Param(':id') id: string){
         return this.supplierService.remove(id);
     }
 }

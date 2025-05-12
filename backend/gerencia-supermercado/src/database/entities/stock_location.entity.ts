@@ -6,7 +6,7 @@ import { Shelf } from "./shelf.entity"
 @Entity('localizacao_estoque')
 export class Stock_location{
     @PrimaryGeneratedColumn()
-    id: number
+    id: string
     
     @ManyToOne(() => Batch)
     @JoinColumn({ name: "idlote" })

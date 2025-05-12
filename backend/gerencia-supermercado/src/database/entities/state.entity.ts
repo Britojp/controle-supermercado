@@ -4,7 +4,7 @@ import { Address } from "./address.entity";
 @Entity('estado')
 export class State{
     @PrimaryGeneratedColumn()
-    id: number
+    id: string
 
     @Column()
     nome: string

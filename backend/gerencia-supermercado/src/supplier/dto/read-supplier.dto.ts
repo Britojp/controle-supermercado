@@ -1,7 +1,7 @@
 import { Supplier } from "src/database/entities/supplier.entity";
 
 export class readSupplierDTO {
-    id: number;
+    id: string;
     nome: string;
     cnpj: string;
     endereco: {

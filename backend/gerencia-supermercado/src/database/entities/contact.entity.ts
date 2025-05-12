@@ -4,7 +4,7 @@ import { Supplier } from "./supplier.entity";
 @Entity('contato')
 export class Contact{
     @PrimaryGeneratedColumn()
-    id: number
+    id: string
 
     @Column()
     numero: string

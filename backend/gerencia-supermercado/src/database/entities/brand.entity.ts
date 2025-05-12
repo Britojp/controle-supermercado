@@ -5,7 +5,7 @@ import { Category } from "./category.entity";
 @Entity('marca')
 export class Brand{
     @PrimaryGeneratedColumn()
-    id: number
+    id: string
 
     @Column()
     nome: string

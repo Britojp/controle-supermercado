@@ -1,7 +1,7 @@
 import { Product } from "src/database/entities/product.entity";
 
 export class readProductDTO {
-    id: number
+    id: string
     nome: string
     nutricao: {
             porcao: number
@@ -9,17 +9,15 @@ export class readProductDTO {
             quantidade_gordura : number
             quantidade_carboidratos: number
             unidade_medida: {
-                id: number,
+                id: string,
                 nome: string
                 sigla: string
                 }
             }
             categoria: {
-                id: number
                 nome: string
             }
             marca: {
-                id: number
                 nome: string
             }
     
@@ -38,11 +36,9 @@ export class readProductDTO {
             },
         };
         this.categoria = {
-            id: entity.categoria.id,
             nome: entity.categoria.nome,
         },
         this.marca = {
-            id: entity.categoria.id,
             nome: entity.marca.nome
         }
     }

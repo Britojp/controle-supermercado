@@ -4,7 +4,7 @@ import { Stock_location } from "./stock_location.entity";
 @Entity('corredor')
 export class Corridor {
     @PrimaryGeneratedColumn()
-    id: number
+    id: string
 
     @Column()
     numero: number

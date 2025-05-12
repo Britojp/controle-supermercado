@@ -5,7 +5,7 @@ import { Product } from "./product.entity";
 @Entity('nutricao')
 export class Nutrition{
     @PrimaryGeneratedColumn()
-    id: number
+    id: string
 
     @Column()
     porcao: number

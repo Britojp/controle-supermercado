@@ -1,12 +1,13 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class Address1746715054964 implements MigrationInterface {
+export class Address1747073409336 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        queryRunner.createTable(
+        await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
+        await queryRunner.createTable(
             new Table(
                 {
-                    name: 'endereco',
+                    name: 'address',
                     columns: [
                         {
                             name: 'id',
@@ -21,13 +22,13 @@ export class Address1746715054964 implements MigrationInterface {
                             isNullable: false
                         },
                         {
-                            name: 'complemento',
+                            name: 'complement',
                             type: 'varchar',
                             length: '15',
                             isNullable: true
                         },
                         {
-                            name: "id_estado",
+                            name: "id_states",
                             type: "uuid",
                         },
                         {
@@ -35,27 +36,22 @@ export class Address1746715054964 implements MigrationInterface {
                             type: 'timestamp',
                             default: 'now()',
                         },
-                        {
-                            name: 'updated_at',
-                            type: 'timestamp',
-                            default: 'now()',
-                        }
+                    ],
+                    foreignKeys: [
+                        new TableForeignKey ({
+                        columnNames: ["id_states"],
+                        referencedTableName: "states",
+                        referencedColumnNames: ["id"],
+                        onDelete: "RESTRICT"
+                        })
                     ]
                 }
             )
         )
-                await queryRunner.createForeignKey("endereco", new TableForeignKey(
-                    {
-                        columnNames: ["id_estado"],
-                        referencedTableName: "estado",
-                        referencedColumnNames: ["id"],
-                        onDelete: "CASCADE"
-                    }
-                ))
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('endereco');
+        await queryRunner.dropTable('address');
     }
 
 }

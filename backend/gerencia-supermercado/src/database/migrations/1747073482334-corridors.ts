@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class Corridor1746715026418 implements MigrationInterface {
+export class Corridors1747073482334 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         queryRunner.createTable(new Table(
             {
-                name: 'corredor',
+                name: 'corridors',
                 columns: [
                     {
                     name: 'id',
@@ -14,7 +14,7 @@ export class Corridor1746715026418 implements MigrationInterface {
                     default: 'uuid_generate_v4()',
                 },
                 {
-                    name: 'nome',
+                    name: 'name',
                     type: 'varchar',
                     length: '30',
                     isNullable: false
@@ -24,18 +24,14 @@ export class Corridor1746715026418 implements MigrationInterface {
                     type: 'timestamp',
                     default: 'now()',
                 },
-                {
-                    name: 'updated_at',
-                    type: 'timestamp',
-                    default: 'now()',
-                }
-            ]
+                
+            ],
             }
         ))
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        queryRunner.dropTable('corredor')
+        queryRunner.dropTable('corridors', true, true, true)
     }
 
 }

@@ -10,7 +10,7 @@ import { Batch } from "./batch.entity";
 @Entity('produto')
 export class Product{
     @PrimaryGeneratedColumn()
-    id: number
+    id: string
 
     @Column()
     nome: string

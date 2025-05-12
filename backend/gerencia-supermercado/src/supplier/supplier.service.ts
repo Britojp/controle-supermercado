@@ -36,7 +36,7 @@ export class SupplierService {
         return suppliers.map(supplier => new readSupplierDTO(supplier))
     }
 
-    async findOne(id: number){
+    async findOne(id: string){
         const supplier = await this.supplierRepository.findOne({
             relations: {
                 idendereco: {
@@ -83,7 +83,7 @@ export class SupplierService {
         return this.supplierRepository.save(supplier)
     }
 
-    async update(id: number, updateSupplierDTO: updateSupplierDTO){
+    async update(id: string, updateSupplierDTO: updateSupplierDTO){
         const {endereco, contato} = updateSupplierDTO;
 
         const supplier = await this.supplierRepository.preload({
@@ -121,7 +121,7 @@ export class SupplierService {
 
     }
     
-    async remove(id: number){
+    async remove(id: string){
         const supplier = await this.supplierRepository.findOne({
             where: {id},
             relations: {

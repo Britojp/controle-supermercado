@@ -18,7 +18,7 @@ export class UsuarioService {
         return this.userRepository.find()
     }
 
-    async findOne(id: number){
+    async findOne(id: string){
         const user = await this.userRepository.findOne({
             where: {id},
         })
@@ -33,7 +33,7 @@ async create(createUserDTO : createUserDTO){
         return this.userRepository.save(user);
     }
 
-async update(id: number, updateUserDTO: updateUserDTO){
+async update(id: string, updateUserDTO: updateUserDTO){
     const user = await this.userRepository.preload({
         id,
         ...updateUserDTO
@@ -44,7 +44,7 @@ async update(id: number, updateUserDTO: updateUserDTO){
     return this.userRepository.save(user);
 }
     
-    async remove(id: number){
+    async remove(id: string){
         const user = await this.userRepository.findOne({
             where: {id},
         })

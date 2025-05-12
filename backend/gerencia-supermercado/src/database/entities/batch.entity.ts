@@ -6,7 +6,7 @@ import { Stock_location } from "./stock_location.entity";
 @Entity('lote')
 export class Batch {
     @PrimaryGeneratedColumn()
-    id: number
+    id: string
 
     @Column()
     numero: string
