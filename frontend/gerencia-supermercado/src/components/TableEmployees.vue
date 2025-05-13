@@ -1,6 +1,13 @@
 <template>
   <div class="d-flex flex-column bg-white rounded-xl elevation-1 pa-4" style="height: 100%;">
-    <div class="d-flex justify-end mb-4">
+    <div class="d-flex justify-space-between mb-4">
+    <v-btn
+      prepend-icon="mdi-plus-circle-outline"
+    >
+
+      {{ buttonString }}
+</v-btn>
+
       <v-text-field
         v-model="search"
         density="compact"
@@ -9,8 +16,6 @@
         prepend-inner-icon="mdi-magnify"
         clearable
         variant="outlined"
-        hide-details
-        single-line
         bg-color="grey-lighten-4"
         class="search-field"
       />
@@ -18,7 +23,6 @@
 
         <v-data-table-virtual
       v-model:search="search"
-      :headers="headers"
       :items="items"
       item-value="id"
       fixed-header
@@ -27,9 +31,6 @@
       density="comfortable"
     >
 
-      <template v-for="(_, slotName) in $slots" #[slotName]="slotData">
-        <slot :name="slotName" v-bind="slotData" />
-      </template>
     </v-data-table-virtual>
   </div>
 </template>
@@ -38,14 +39,14 @@
 export default {
   name: 'TableEmployees',
   props: {
-    headers: {
-      type: Array,
-      required: true,
-    },
     items: {
       type: Array,
       required: true,
     },
+    buttonString: {
+      type: String,
+      required: true,
+    }
   },
   data() {
     return {
@@ -59,4 +60,5 @@ export default {
 .search-field {
   max-width: 300px;
 }
+
 </style>

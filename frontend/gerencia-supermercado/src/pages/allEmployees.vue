@@ -11,7 +11,7 @@
 
         <v-divider></v-divider>
 
-        <TableEmployees :headers="headers" :items="funcionarios"></TableEmployees>
+        <TableEmployees :items="funcionarios" button-string="Cadastrar novo Funcionário"></TableEmployees>
 
   </v-card>
     </v-sheet>
@@ -28,12 +28,6 @@ import TableEmployees from '@/components/TableEmployees.vue';
 
     data () {
       return {
-
-    headers : [
-    { title: 'Nome do Funcionário', align: 'center', key: 'name'},
-    { title: 'E-mail', align: 'center', key: 'email' },
-    { title: 'Senha', align: 'center', key: 'password'},
-  ],
     funcionarios :[
   {
     name: 'Ana Souza',
