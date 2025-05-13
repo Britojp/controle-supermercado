@@ -1,6 +1,6 @@
 <template>
   <v-sheet class="bg-green-lighten-5 px-5 py-3 h-screen d-flex justify-center align-center">
-    <v-card 
+    <v-card
         class="pa-4 d-flex flex-column bg-white"
         width="90%"
         height="90%"
@@ -10,9 +10,9 @@
     >
 
         <v-divider></v-divider>
-        
+
         <v-container class="w-75">
-          <v-card 
+          <v-card
             class="ma-5"
             title="Instruções para Cadastro"
             subtitle="Siga os passos abaixo para se registrar"
@@ -21,32 +21,26 @@
             color="amber-accent-4"
             prepend-icon="mdi-information"
           ></v-card>
-      
+
           <v-form ref="form" >
           <v-text-field
             color="green-darken-3"
             label="Nome"
             variant="outlined"
-            :rules="computedNameRules"
+            :rules="[rulesForm.requiredRule, rulesForm.maxLenghtRule(30)]"
             class="mb-5 hint-custom"
             v-model="name"
-            @input="enableValidation"
-            maxlength="30"
-            hint="*Obrigatório"
-            persistent-hint
+            counter="30"
           />
 
           <v-text-field
             color="green-darken-3"
             label="Email"
             variant="outlined"
-            :rules="computedEmailRules"
+            :rules="[rulesForm.emailRule, rulesForm.maxLenghtRule(30)]"
             class="mb-5 hint-custom "
             v-model="email"
-            @input="enableValidation"
-            maxlength="30"
-            hint="*Obrigatório"
-            persistent-hint
+            counter="30"
           />
 
           <v-text-field
@@ -54,16 +48,12 @@
             v-model="password"
             label="Senha"
             variant="outlined"
-            :rules="computedPasswordRules"
+            :rules="[rulesForm.maxLenghtRule(30), rulesForm.requiredRule]"
             :type="show ? 'text' : 'password'"
-            counter
+            counter = 30
             :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append-inner="show = !show"
-            @input="enableValidation"
             class="mb-5 hint-custom"
-            maxlength="30"
-            hint="*Obrigatório"
-            persistent-hint
           />
 
           <v-btn
@@ -77,7 +67,7 @@
             Registrar
           </v-btn>
         </v-form>
-          
+
           <transition name="fade">
             <v-alert
               v-if="alert"
@@ -99,6 +89,7 @@
 </template>
 
 <script lang="ts">
+import rulesForm from '@/utils/rules-form';
 export default {
   name: 'register',
   data () {
@@ -109,6 +100,7 @@ export default {
     validationEnabled: true,
     show: false,
     alert: false,
+    rulesForm: rulesForm,
   }
 },
 computed: {
@@ -138,7 +130,7 @@ computed: {
 
 
 methods: {
-  
+
   enableValidation() {
     this.validationEnabled = true;
   },

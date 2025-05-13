@@ -1,70 +1,62 @@
 <template>
-  <v-text-field
-          v-model="search"
-          density="compact"
-          label="Pesquisar Funcionário"
-          prepend-inner-icon="mdi-magnify"
-          variant="solo-filled"
-          flat
-          hide-details
-          single-line
-          class="mx-2"
-        />
-    <v-data-table-virtual
-    v-model:search ="search"
-    :headers="headers"
-    :items="users"
-    height="100%"
-    item-value="name"
-    fixed-header
+  <div class="d-flex flex-column bg-white rounded-xl elevation-1 pa-4" style="height: 100%;">
+    <div class="d-flex justify-end mb-4">
+      <v-text-field
+        v-model="search"
+        density="compact"
+        label="Pesquisar"
+        placeholder="Digite algo..."
+        prepend-inner-icon="mdi-magnify"
+        clearable
+        variant="outlined"
+        hide-details
+        single-line
+        bg-color="grey-lighten-4"
+        class="search-field"
+      />
+    </div>
+
+        <v-data-table-virtual
+      v-model:search="search"
+      :headers="headers"
+      :items="items"
+      item-value="id"
+      fixed-header
+      class="rounded-lg bg-white table-custom"
+      height="100%"
+      density="comfortable"
     >
 
-
-  <template #item.password="{ item }: { item: { password: string; icon: string } }">
-  
-      <span>{{ item.password }}</span>
-      <v-icon 
-      class="pl-5"
-      >
-       {{item.icon}}
-       </v-icon>
-  </template>
-
-</v-data-table-virtual>
-
+      <template v-for="(_, slotName) in $slots" #[slotName]="slotData">
+        <slot :name="slotName" v-bind="slotData" />
+      </template>
+    </v-data-table-virtual>
+  </div>
 </template>
 
 <script lang="ts">
 export default {
-  name: 'Table',
-  components: {},
-  
+  name: 'TableEmployees',
   props: {
     headers: {
       type: Array,
       required: true,
     },
-    users: {
+    items: {
       type: Array,
-      required: true
+      required: true,
     },
   },
-
   data() {
-  return {
-    show: false,
-    search: "",
-  };
+    return {
+      search: '',
+    };
   },
-
-  methods : {
-
-    
-  },
-
 };
 </script>
 
 <style scoped>
-
+.search-field {
+  max-width: 300px;
+}
 </style>

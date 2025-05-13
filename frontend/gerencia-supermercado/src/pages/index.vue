@@ -1,6 +1,6 @@
 <template>
   <v-sheet class="rounded bg-green-lighten-3 h-100 w-100 d-flex justify-end ">
-    
+
     <div class="d-flex justify-center align-center w-100">
     <v-img
       src="../../public/main-bg.png"
@@ -8,12 +8,12 @@
       class="h-75 w-75 d-flex justify-center align-center"
     ></v-img>
   </div>
-    
+
     <v-container class="pa-0 ma-0" style="max-width: 25%;">
       <v-card class="bg-green-lighten-5 px-6 py-10 h-screen d-flex flex-column align-center justify-center  elevation-5">
         <div class="w-100">
-        
-          
+
+
           <div class="d-flex flex-column text-center">
             <label class="text-h3 font-weight-bold mb-2 text-grey-darken-3">
               Bem vindo!
@@ -36,7 +36,7 @@
             required
             color="green-darken-3"
           ></v-text-field>
-          
+
           <v-text-field
             v-model="password"
             prepend-icon="mdi-lock"
@@ -64,6 +64,12 @@
           >
               Entrar
           </v-btn>
+          <v-btn
+          @click="fetchUserData"
+          >
+          teste
+        </v-btn>
+
         </div>
       </v-card>
     </v-container>
@@ -71,6 +77,9 @@
 </template>
 
 <script lang="ts">
+import { getAllUsers } from '@/services/api';
+
+
 export default{
   data(){
     return {
@@ -78,6 +87,7 @@ export default{
       email: '',
       password: '',
       show : false,
+      allUsers: [] as any[]
     };
   },
   methods: {
@@ -87,9 +97,19 @@ export default{
         return true
       }
       this.loading = false;
-    }
-  },  
+    },
+    fetchUserData() {
+      getAllUsers()
+      .then((data: { results: any[] }) => {
+        this.allUsers = data.results;
+          }).catch((error: Error) => {
 
+      console.error("Erro ao carregar filmes populares:", error);
+    })
+  }
+  },
+  computed: {
+},
 }
 
 </script>

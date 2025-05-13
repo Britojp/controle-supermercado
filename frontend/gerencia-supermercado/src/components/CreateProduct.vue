@@ -60,7 +60,7 @@
                         :rules="[value => !!value || 'O nome do produto é obrigatório']"
                         v-model="productName"
                     />
-                    
+
                 </v-col>
                 <v-col cols="3">
                             <v-select
@@ -124,7 +124,7 @@
                             />
                         </v-menu>
 
-                    
+
                 </v-col>
                 <v-col cols="3">
                     <v-text-field
@@ -139,7 +139,7 @@
                         :rules="[value => !!value || 'A quantidade é obrigatória']"
                         v-model="inputQuantity"
                     />
-                    
+
                 </v-col>
                 <v-col cols="3">
                             <v-select
@@ -166,7 +166,7 @@
                             />
                         </v-col>
             </v-row>
-        
+
         </v-form>
     </v-card>
 </template>
@@ -199,28 +199,35 @@ export default {
         };
     },
     methods: {
-        checkFields() {
-            const isValidation = [
-                this.productName.trim(),
-                this.brandName.trim(),
-                this.lotNumber,
-                this.tempDate,
-                this.inputQuantity > 0,
-                this.costValue > 0,
-                this.categoryName.trim()
-            ].every(field => field && field !== '');
-            
-            this.$emit('validate-data', isValidation);
-        },
+
     selectDate(date: string) {
     const formattedDate = this.date.format(date, 'keyboardDate');
     this.tempDate = formattedDate;
     this.menuDate = false;
     },
-    
+    checkFields() {
+      const isValidation = [
+        this.productName.trim(),
+        this.brandName.trim(),
+        this.lotNumber,
+        this.tempDate,
+        this.inputQuantity > 0,
+        this.costValue > 0,
+        this.categoryName.trim()
+      ].every(field => field && field !== '');
+
+      this.$emit('validate-data', isValidation);
     },
-    computed : {
-    },
+  },
+  watch: {
+    productName() { this.checkFields() },
+    brandName() { this.checkFields() },
+    lotNumber() { this.checkFields() },
+    tempDate() { this.checkFields() },
+    inputQuantity() { this.checkFields() },
+    costValue() { this.checkFields() },
+    categoryName() { this.checkFields() }
+  }
 };
 </script>
 

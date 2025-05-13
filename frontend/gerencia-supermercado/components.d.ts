@@ -11,14 +11,9 @@ declare module 'vue' {
     Card: typeof import('./src/components/Card.vue')['default']
     CreateProduct: typeof import('./src/components/CreateProduct.vue')['default']
     CreateSupplier: typeof import('./src/components/CreateSupplier.vue')['default']
-    Ex: typeof import('./src/components/ex.vue')['default']
-    GraphicView: typeof import('./src/components/graphicView.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    LoginForm: typeof import('./src/components/LoginForm.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Table: typeof import('./src/components/Table.vue')['default']
     TableEmployees: typeof import('./src/components/TableEmployees.vue')['default']
   }
 }

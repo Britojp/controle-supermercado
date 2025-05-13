@@ -1,14 +1,14 @@
 <template>
   <v-sheet class="bg-green-lighten-5 px-5 py-3 h-screen d-flex justify-center align-center">
     <v-card class="pa-4 bg-white" width="90%" height="90%" elevation="0" flat prepend-icon="mdi-cart-plus" title="Movimentação de Mercadoria" variant="text">
-      
+
       <v-divider class="mb-5"></v-divider>
-      
-      <v-stepper 
-        v-model="step" 
-        alt-labels 
+
+      <v-stepper
+        v-model="step"
+        alt-labels
         class="bg-white"
-        elevation="0" 
+        elevation="0"
         error-icon="mdi-alert-circle"
       >
         <v-stepper-header>
@@ -19,63 +19,63 @@
             :rules="[() => validateFirstData]"
             :color="validateFirstData ? 'green-darken-4' : ''"
           ></v-stepper-item>
-  
+
           <v-divider></v-divider>
-  
+
           <v-stepper-item
             title="Produtos"
             subtitle="Adicione os produtos"
             :value="2"
             :rules="[() => validateSecondData]"
           ></v-stepper-item>
-  
+
           <v-divider></v-divider>
-  
+
           <v-stepper-item
             title="Resumo"
             subtitle="Revise os dados"
             :value="3"
           ></v-stepper-item>
         </v-stepper-header>
-        
+
         <v-stepper-window>
-          <v-stepper-window-item 
+          <v-stepper-window-item
           :value="1"
           >
-            <CreateSupplier 
-            @dados-validos="handleFirstValidData" 
+            <CreateSupplier
+            @dados-validos="handleFirstValidData"
             />
           </v-stepper-window-item
           >
-          <v-stepper-window-item 
+          <v-stepper-window-item
           :value="2"
           >
-            <CreateProduct 
+            <CreateProduct
             @validate-data="handleSecondValidData"
             />
           </v-stepper-window-item>
-          <v-stepper-window-item 
+          <v-stepper-window-item
           :value="3">
             <div>Conteúdo da Etapa 3</div>
           </v-stepper-window-item>
-        </v-stepper-window>     
-        
+        </v-stepper-window>
+
         <v-stepper-actions class="d-flex justify-center">
           <template v-slot:prev>
-            <v-btn 
-              icon 
-              @click="goPrevious" 
+            <v-btn
+              icon
+              @click="goPrevious"
               class="bg-green-darken-3 mr-10"
               :disabled="step === 1"
             >
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
           </template>
-          
+
             <template v-slot:next>
-            <v-btn 
-              icon 
-              @click="goNext" 
+            <v-btn
+              icon
+              @click="goNext"
               class="bg-green-darken-3 ml-10"
               :disabled="(step === 1 && !validateFirstData) || (step === 2 && !validateSecondData) || step === 3"
             >
@@ -99,9 +99,9 @@ export default {
   },
   data() {
     return {
-      step: 1, 
+      step: 1,
       validateFirstData: false,
-      validateSecondData: false
+      validateSecondData: false,
     };
   },
   methods: {

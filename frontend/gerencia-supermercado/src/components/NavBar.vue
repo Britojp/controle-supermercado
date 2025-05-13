@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer 
+  <v-navigation-drawer
     v-model="drawer"
     :width="300"
     class="bg-grey-darken-4"
@@ -20,21 +20,25 @@
     <v-divider></v-divider>
 
     <v-list density="compact" nav>
-      <v-list-item 
-        prepend-icon="mdi-monitor-dashboard" 
-        title="Dashboard" 
-        value="dashboard" 
+      <v-list-item
+        prepend-icon="mdi-monitor-dashboard"
+        title="Dashboard"
+        value="dashboard"
         to="/dashboard"
         :class="!drawer ? 'justify-center' : ''"
       />
+          <v-divider></v-divider>
 
-      <v-list-item 
-        prepend-icon="mdi-account-plus" 
-        title="Cadastrar funcionário" 
-        value="cadastro" 
-        to="/register"
+            <v-list-item
+        prepend-icon="mdi-cart-variant"
+        title="Consultar todos os produtos"
+        value="produtos"
+        to="/products"
         :class="!drawer ? 'justify-center' : ''"
       />
+
+    <v-divider></v-divider>
+
       <v-list-item
         prepend-icon="mdi-account-multiple"
         title="Consultar todos os funcionários"
@@ -42,23 +46,16 @@
         to="/allEmployees"
         :class="!drawer ? 'justify-center' : ''"
         />
+    <v-divider></v-divider>
 
-      <v-list-item 
-        prepend-icon="mdi-cart-plus" 
-        title="Movimentação de Produtos" 
+      <v-list-item
+        prepend-icon="mdi-cart-plus"
+        title="Movimentação de Produtos"
         value="movimentacao"
-        to="/transaction" 
+        to="/transaction"
         :class="!drawer ? 'justify-center' : ''"
       />
 
-      <v-list-item 
-        prepend-icon="mdi-cart-variant" 
-        title="Consultar todos os produtos" 
-        value="produtos"
-        to="/products" 
-        :class="!drawer ? 'justify-center' : ''"
-      />
-      
     </v-list>
 
     <v-divider></v-divider>
@@ -66,10 +63,10 @@
     <template v-slot:append>
       <div class="pa-2">
         <v-list density="compact" nav>
-          <v-list-item 
-            prepend-icon="mdi-logout" 
-            title="Logout" 
-            value="logout" 
+          <v-list-item
+            prepend-icon="mdi-logout"
+            title="Logout"
+            value="logout"
             to="/"
             :class="!drawer ? 'justify-center' : ''"
           />
