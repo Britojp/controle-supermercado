@@ -1,13 +1,13 @@
 import { Transaction } from "src/database/entities/transaction.entity"
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
-@Entity('usuario')
+@Entity('users')
 export class User {
     @PrimaryGeneratedColumn()
     id: string
     
     @Column()
-    nome: string
+    name: string
     
     @Column()
     email: string
@@ -15,6 +15,6 @@ export class User {
     @Column()
     password: string
 
-    @OneToMany(() => Transaction, transaction => transaction.usuario)
+    @OneToMany(() => Transaction, transaction => transaction.user)
     transactions: Transaction[];
     }

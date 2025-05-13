@@ -3,21 +3,21 @@ import { Batch } from "./batch.entity"
 import { Corridor } from "./corridor.entity"
 import { Shelf } from "./shelf.entity"
 
-@Entity('localizacao_estoque')
+@Entity('stock_locations')
 export class Stock_location{
     @PrimaryGeneratedColumn()
     id: string
     
     @ManyToOne(() => Batch)
-    @JoinColumn({ name: "idlote" })
-    lote: Batch;
+    @JoinColumn({ name: "id_batches" })
+    batch: Batch;
     
     @ManyToOne(() => Shelf)
-    @JoinColumn({ name: "idprateleira" })
-    prateleira: Shelf;
+    @JoinColumn({ name: "id_shelves" })
+    shelf: Shelf;
     
     @ManyToOne(() => Corridor)
-    @JoinColumn({ name: "idcorredor" })
-    corredor: Corridor;
+    @JoinColumn({ name: "id_corridors" })
+    corridor: Corridor;
     
 }

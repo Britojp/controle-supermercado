@@ -26,10 +26,10 @@ export class SupplierService {
     async findAll() : Promise<readSupplierDTO[]> {
         const suppliers = await this.supplierRepository.find({
         relations: {
-            idendereco: {
-            estado: true
+            id_address: {
+            state: true
             },
-            idcontato: true
+            id_contacts: true
         }
         });
 
@@ -39,10 +39,10 @@ export class SupplierService {
     async findOne(id: string){
         const supplier = await this.supplierRepository.findOne({
             relations: {
-                idendereco: {
-                estado: true
+                id_address: {
+                state: true
                 },
-                idcontato: true
+                id_contacts: true
             },
             where: {id},
         })
@@ -53,38 +53,38 @@ export class SupplierService {
     }
 
     async create(createSupplierDTO : createSupplierDTO){
-        const {nome, cnpj, endereco, contato} = createSupplierDTO;
+        const {name, cnpj, address, contact} = createSupplierDTO;
 
-        let estado = await this.stateRepository.findOne({
-            where: { nome: endereco.estado.nome, uf: endereco.estado.uf}
+        let state = await this.stateRepository.findOne({
+            where: { name: address.state.name, uf: address.state.uf}
         })
-        if(!estado){
-        estado = this.stateRepository.create(endereco.estado);
-        await this.stateRepository.save(estado);
+        if(!state){
+        state = this.stateRepository.create(address.state);
+        await this.stateRepository.save(state);
         }
 
         const newAddress = this.addressRepository.create({
-            cep: endereco.cep,
-            complemento: endereco.complemento,
-            estado,
+            cep: address.cep,
+            complement: address.complement,
+            state,
         })
         await this.addressRepository.save(newAddress)
 
-        const newContact = this.contactRepository.create(contato);
+        const newContact = this.contactRepository.create(contact);
         await this.contactRepository.save(newContact)
 
         const supplier = this.supplierRepository.create({
-            nome,
+            name,
             cnpj,
-            idendereco: newAddress,
-            idcontato: newContact,
+            id_address: newAddress,
+            id_contacts: newContact,
         })
 
         return this.supplierRepository.save(supplier)
     }
 
     async update(id: string, updateSupplierDTO: updateSupplierDTO){
-        const {endereco, contato} = updateSupplierDTO;
+        const {address, contact} = updateSupplierDTO;
 
         const supplier = await this.supplierRepository.preload({
             id,
@@ -95,26 +95,26 @@ export class SupplierService {
             throw new NotFoundException('Fornecedor não encontrado');
         }
 
-        if(endereco){
-            let estado = await this.stateRepository.findOne({
-                where: {nome: endereco.estado.nome, uf: endereco.estado.uf },
+        if(address){
+            let state = await this.stateRepository.findOne({
+                where: {name: address.state.name, uf: address.state.uf },
             });
 
-        if (!estado){
-            estado = this.stateRepository.create(endereco.estado);
-            await this.stateRepository.save(estado);
+        if (!state){
+            state = this.stateRepository.create(address.state);
+            await this.stateRepository.save(state);
         }
 
         const newAddress = this.addressRepository.create({
-            cep: endereco.cep,
-            complemento: endereco.complemento,
-            estado
+            cep: address.cep,
+            complement: address.complement,
+            state
         });
-        supplier.idendereco = newAddress;
+        supplier.id_address = newAddress;
         }
-        if (contato){
-            const newContact = this.contactRepository.create(contato);
-            supplier.idcontato = newContact;
+        if (contact){
+            const newContact = this.contactRepository.create(contact);
+            supplier.id_contacts = newContact;
         }
 
         return this.supplierRepository.save(supplier)
@@ -125,10 +125,10 @@ export class SupplierService {
         const supplier = await this.supplierRepository.findOne({
             where: {id},
             relations: {
-                idendereco: {
-                estado: true
+                id_address: {
+                state: true
                 },
-                idcontato: true
+                id_contacts: true
             },
         })
 

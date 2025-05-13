@@ -1,14 +1,14 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Stock_location } from "./stock_location.entity";
 
-@Entity('prateleira')
+@Entity('shelves')
 export class Shelf{
     @PrimaryGeneratedColumn()
     id: string
 
     @Column()
-    nome: string
+    name: string
     
-    @OneToMany(() => Stock_location, loc => loc.lote)
-    localizacoes: Stock_location[];
+    @OneToMany(() => Stock_location, loc => loc.batch)
+    locations: Stock_location[];
 }

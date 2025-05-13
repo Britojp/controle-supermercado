@@ -1,17 +1,17 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Address } from "./address.entity";
 
-@Entity('estado')
+@Entity('states')
 export class State{
     @PrimaryGeneratedColumn()
     id: string
 
     @Column()
-    nome: string
+    name: string
 
     @Column()
     uf: string
 
-    @OneToMany(() => Address, address => address.estado)
+    @OneToMany(() => Address, address => address.state)
     address: Address[];
 }

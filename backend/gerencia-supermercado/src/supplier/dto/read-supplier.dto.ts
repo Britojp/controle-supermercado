@@ -2,33 +2,33 @@ import { Supplier } from "src/database/entities/supplier.entity";
 
 export class readSupplierDTO {
     id: string;
-    nome: string;
+    name: string;
     cnpj: string;
-    endereco: {
+    address: {
       cep: string;
-      complemento: string;
-      estado: {
-        nome: string;
+      complement: string;
+      state: {
+        name: string;
         uf: string;
       }
     };
-    contato: {
-      numero: string;
+    contact: {
+      tel_number: string;
     };
     constructor(entity: Supplier) {
         this.id = entity.id;
-        this.nome = entity.nome;
+        this.name = entity.name;
         this.cnpj = entity.cnpj;
-        this.endereco = {
-          cep: entity.idendereco?.cep,
-          complemento: entity.idendereco?.complemento,
-          estado: {
-            nome: entity.idendereco?.estado?.nome,
-            uf: entity.idendereco?.estado?.uf,
+        this.address = {
+          cep: entity.id_address?.cep,
+          complement: entity.id_address?.complement,
+          state: {
+            name: entity.id_address?.state?.name,
+            uf: entity.id_address?.state?.uf,
           },
         };
-        this.contato = {
-          numero: entity.idcontato?.numero
+        this.contact = {
+          tel_number: entity.id_contacts?.tel_number
         };
       }
 }  

@@ -2,24 +2,24 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn
 import { Measurement } from "./measurement.entity";
 import { Product } from "./product.entity";
 
-@Entity('nutricao')
+@Entity('nutritions')
 export class Nutrition{
     @PrimaryGeneratedColumn()
     id: string
 
     @Column()
-    porcao: number
+    portion: number
 
     @Column('decimal')
-    quantidade_proteina: number
+    protein_quantity: number
 
     @Column('decimal')
-    quantidade_gordura: number
+    fatness_quantity: number
 
     @Column('decimal')
-    quantidade_carboidrato: number
+    carbohydrate_quantity: number
 
-    @ManyToOne(() => Measurement, {eager:true, nullable: false})
-    @JoinColumn({ name: 'idunidade_de_medida' })
-    unidademedida: Measurement
+    @ManyToOne(() => Measurement, {eager:true, nullable: false, cascade: true })
+    @JoinColumn({ name: 'id_measurements' })
+    measurement: Measurement
 }

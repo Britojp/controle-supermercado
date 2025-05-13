@@ -7,29 +7,29 @@ import { Batch } from "./batch.entity";
 
 
 
-@Entity('produto')
+@Entity('products')
 export class Product{
     @PrimaryGeneratedColumn()
     id: string
 
     @Column()
-    nome: string
+    name: string
 
-    @OneToOne(() => Nutrition)
-    @JoinColumn({ name: 'idnutricao' })
-    nutricao: Nutrition
-    
+    @OneToOne(() => Nutrition, { cascade: true })
+    @JoinColumn({ name: 'id_nutritions' })
+    nutrition: Nutrition
 
-    @ManyToOne( () => Category, category => category.produtos)
-    @JoinColumn({ name: 'idcategoria' })
-    categoria: Category
 
-    @ManyToOne( () => Brand, brand => brand.produtos)
-    @JoinColumn({ name: 'idmarca' })
-    marca: Brand
+    @ManyToOne( () => Category, category => category.products)
+    @JoinColumn({ name: 'id_categories' })
+    category: Category
 
-    @OneToOne(() => Transaction, transaction => transaction.produto)
-    transacao: Transaction
+    @ManyToOne( () => Brand, brand => brand.products)
+    @JoinColumn({ name: 'id_brands' })
+    brand: Brand
+
+    @OneToOne(() => Transaction, transaction => transaction.product)
+    transaction: Transaction
     
 
 }

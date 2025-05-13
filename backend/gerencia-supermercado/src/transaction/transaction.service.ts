@@ -4,9 +4,8 @@ import { Product } from 'src/database/entities/product.entity';
 import { Supplier } from 'src/database/entities/supplier.entity';
 import { Transaction } from 'src/database/entities/transaction.entity';
 import { User } from 'src/database/entities/user.entity';
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { readTransactionDTO } from './dto/read-transaction.dto';
-import { createSupplierDTO } from 'src/supplier/dto/create-supplier.dto';
 import { createTransactionDTO } from './dto/create-transaction.dto';
 
 @Injectable()
@@ -29,9 +28,9 @@ export class TransactionService {
     async findAll(): Promise<readTransactionDTO[]> {
         const transactions = await this.transactionRepository.find({
             relations : {
-                fornecedor: true,
-                usuario: true,
-                produto: true
+                supplier: true,
+                user: true,
+                product: true
             }
         });
 
@@ -42,9 +41,9 @@ export class TransactionService {
     async findOne(id: string){
         const transaction = await this.transactionRepository.findOne({
             relations : {
-                fornecedor: true,
-                usuario: true,
-                produto: true
+                supplier: true,
+                user: true,
+                product: true
             },
             where: {id}
         })
@@ -55,40 +54,40 @@ export class TransactionService {
     }
 
     async create(createTransactionDTO: createTransactionDTO) {
-        const { usuario, fornecedor, produto, preco, quantidade, tipo_transacao } = createTransactionDTO;
+        const { user, supplier, product, price, quantity, transaction_type } = createTransactionDTO;
         
-        const user = await this.userRepository.findOne({
-            where: { nome: usuario.nome, email: usuario.email }
+        const usuario = await this.userRepository.findOne({
+            where: { name: user.name, email: user.email }
         });
     
-        if (!user) {
+        if (!usuario) {
             throw new NotFoundException('Usuário não encontrado');
         }
     
-        const supplier = await this.supplierRepository.findOne({
-            where: { nome: fornecedor.nome }
+        const fornecedor = await this.supplierRepository.findOne({
+            where: { name: supplier.name }
         });
     
-        if (!supplier) {
+        if (!fornecedor) {
             throw new NotFoundException('Fornecedor não encontrado');
         }
     
-        const product = await this.productRepository.findOne({
-            where: { nome: produto.nome }
+        const produto = await this.productRepository.findOne({
+            where: { name: product.name }
         });
     
-        if (!product) {
+        if (!produto) {
             throw new NotFoundException('Produto não encontrado');
         }
     
         const transaction = this.transactionRepository.create({
-            data_transacao: new Date(),
-            preco,
-            quantidade,
-            tipo_transacao,
-            usuario: user,
-            produto: product,
-            fornecedor: supplier,
+            transaction_date: new Date(),
+            price,
+            quantity,
+            transaction_type,
+            user: user,
+            product: product,
+            supplier: supplier,
         });
     
         await this.transactionRepository.save(transaction);
@@ -101,9 +100,9 @@ export class TransactionService {
         const transaction = await this.transactionRepository.findOne({
             where: {id},
             relations : {
-                fornecedor: true,
-                usuario: true,
-                produto: true
+                supplier: true,
+                user: true,
+                product: true
             },
         })
         if(!transaction){

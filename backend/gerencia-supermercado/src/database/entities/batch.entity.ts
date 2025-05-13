@@ -3,27 +3,27 @@ import { Product } from "./product.entity";
 import { Transaction } from "./transaction.entity";
 import { Stock_location } from "./stock_location.entity";
 
-@Entity('lote')
+@Entity('batchies')
 export class Batch {
     @PrimaryGeneratedColumn()
     id: string
 
     @Column()
-    numero: string
+    number: string
 
     @Column()
-    data_validade: Date
+    validate_date: Date
 
     @Column()
-    quantidade: number
+    quantity: number
 
     @OneToOne(() => Transaction)
-    transacao: Transaction
+    transaction: Transaction
     
     @OneToOne(() => Product)
-    produto: Product
+    product: Product
 
-    @OneToMany(() => Stock_location, loc => loc.lote)
-    localizacoes: Stock_location[];
+    @OneToMany(() => Stock_location, loc => loc.batch)
+    locations: Stock_location[];
 
 }

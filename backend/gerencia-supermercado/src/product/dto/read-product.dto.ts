@@ -2,44 +2,42 @@ import { Product } from "src/database/entities/product.entity";
 
 export class readProductDTO {
     id: string
-    nome: string
-    nutricao: {
-            porcao: number
-            quantidade_proteina: number
-            quantidade_gordura : number
-            quantidade_carboidratos: number
-            unidade_medida: {
-                id: string,
-                nome: string
+    name: string
+    nutrition: {
+            portion: number
+            protein_quantity: number
+            fatness_quantity : number
+            carbohydrate_quantity: number
+            measurement: {
+                name: string
                 sigla: string
                 }
             }
-            categoria: {
-                nome: string
+            category: {
+                name: string
             }
-            marca: {
-                nome: string
+            brand: {
+                name: string
             }
     
     constructor(entity:Product) {
         this.id = entity.id
-        this.nome = entity.nome
-        this.nutricao = {
-            porcao: entity.nutricao?.porcao,
-            quantidade_proteina: entity.nutricao.quantidade_proteina,
-            quantidade_gordura: entity.nutricao.quantidade_gordura,
-            quantidade_carboidratos: entity.nutricao.quantidade_carboidrato,
-            unidade_medida: {
-                id: entity.nutricao.id,
-                nome: entity.nutricao.unidademedida.nome,
-                sigla: entity.nutricao.unidademedida.sigla,
+        this.name = entity.name
+        this.nutrition = {
+            portion: entity.nutrition?.portion,
+            protein_quantity: entity.nutrition.protein_quantity,
+            fatness_quantity: entity.nutrition.fatness_quantity,
+            carbohydrate_quantity: entity.nutrition.carbohydrate_quantity,
+            measurement: {
+                name: entity.nutrition.measurement.name,
+                sigla: entity.nutrition.measurement.initials,
             },
         };
-        this.categoria = {
-            nome: entity.categoria.nome,
+        this.category = {
+            name: entity.category.name,
         },
-        this.marca = {
-            nome: entity.marca.nome
+        this.brand = {
+            name: entity.brand.name
         }
     }
 }

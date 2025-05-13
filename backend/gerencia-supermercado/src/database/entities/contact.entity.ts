@@ -1,14 +1,14 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Supplier } from "./supplier.entity";
 
-@Entity('contato')
+@Entity('contacts')
 export class Contact{
     @PrimaryGeneratedColumn()
     id: string
 
     @Column()
-    numero: string
+    tel_number: string
     
     @OneToOne(() => Supplier)
-    fornecedor: Supplier
+    supplier: Supplier
 }

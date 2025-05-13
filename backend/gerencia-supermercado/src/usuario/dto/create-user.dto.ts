@@ -3,7 +3,7 @@ import { IsString } from "class-validator"
 export class createUserDTO {
 
     @IsString()
-    readonly nome: string
+    readonly name: string
 
     @IsString()
     readonly email : string

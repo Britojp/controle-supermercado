@@ -3,35 +3,36 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn
 import { Supplier } from "./supplier.entity";
 import { Product } from "./product.entity";
 import { User } from "src/database/entities/user.entity";
+import { Tipo_Transacao } from "src/interfaces/interfaces.types";
 
-@Entity('transacao')
+@Entity('transactions')
 export class Transaction {
     @PrimaryGeneratedColumn()
     id: string
 
-    @Column()
-    tipo_transacao: string
+    @Column({ type: 'enum', enum: Tipo_Transacao })
+    transaction_type: Tipo_Transacao;
 
     @Column()
-    data_transacao: Date
+    transaction_date: Date
 
     @Column('decimal')
-    preco: number
+    price: number
     
     @Column()
-    quantidade: number
+    quantity: number
 
     @ManyToOne(() => User, user => user.transactions)
-    @JoinColumn({ name: 'idusuario' })
-    usuario: User
+    @JoinColumn({ name: 'id_users' })
+    user: User
 
     @ManyToOne(() => Supplier, supplier => supplier.transactions)
-    @JoinColumn({ name: 'idfornecedor' })
-    fornecedor: Supplier
+    @JoinColumn({ name: 'id_suppliers' })
+    supplier: Supplier
 
-    @OneToOne(() => Product, product => product.transacao)
-    @JoinColumn({ name: 'idproduto' })
-    produto: Product;
+    @OneToOne(() => Product, product => product.transaction)
+    @JoinColumn({ name: 'id_products' })
+    product: Product;
     
 
 }

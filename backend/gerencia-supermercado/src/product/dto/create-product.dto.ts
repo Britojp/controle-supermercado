@@ -4,63 +4,63 @@ import { IsNotEmpty, IsNumber, IsString, ValidateNested } from "class-validator"
 class Brand{
     @IsString()
     @IsNotEmpty()
-    nome: string
+    name: string
 }
 
 class Category{
     @IsString()
     @IsNotEmpty()
-    nome: string
+    name: string
 }
 
 
 class Measurement{
     @IsString()
     @IsNotEmpty()
-    nome: string
+    name: string
 
     @IsString()
     @IsNotEmpty()
-    sigla: string
+    initials: string
 }
 
 class Nutrition{
     @IsNotEmpty()
     @IsNumber()
-    porcao : number
+    portion : number
 
     @IsNotEmpty()
     @Type(() => Measurement)
-    unidade_medida : Measurement
+    measurement : Measurement
 
     @IsNumber()
     @IsNotEmpty()
-    quantidade_proteina: number
+    protein_quantity: number
 
     @IsNumber()
     @IsNotEmpty()
-    quantidade_gordura: number
+    fatness_quantity: number
 
     @IsNumber()
     @IsNotEmpty()
-    quantidade_carboidrato: number
+    carbohydrate_quantity: number
 }
 
 
 export class createProductDTO{
     @IsNotEmpty()
     @IsString()
-    nome: string
+    name: string
 
     @ValidateNested()
     @Type(() => Nutrition)
-    nutricao : Nutrition 
+    nutrition : Nutrition 
     
     @ValidateNested()
     @Type(() => Category)
-    categoria: Category
+    category: Category
     
     @ValidateNested()
     @Type(() => Brand)
-    marca: Brand
+    brand: Brand
 }

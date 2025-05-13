@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { State } from "./state.entity";
 
-@Entity('endereco')
+@Entity('address')
 export class Address{
     @PrimaryGeneratedColumn()
     id: string
@@ -10,9 +10,10 @@ export class Address{
     cep: string
 
     @Column()
-    complemento: string
+    complement: string
 
     @ManyToOne(() => State, state => state.address)
-    estado: State
+    @JoinColumn({ name: 'id_states' }) 
+    state: State
     
 }

@@ -1,15 +1,15 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Product } from "./product.entity";
 
-@Entity('marca')
+@Entity('brands')
 export class Brand{
     @PrimaryGeneratedColumn()
     id: string
 
     @Column()
-    nome: string
+    name: string
 
-    @OneToMany(() => Product, product => product.marca)
-    produtos: Product[]
+    @OneToMany(() => Product, product => product.brand)
+    products: Product[]
     
 }

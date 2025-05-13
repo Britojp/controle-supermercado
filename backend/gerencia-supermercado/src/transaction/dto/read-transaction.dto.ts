@@ -2,35 +2,35 @@ import { Transaction } from "src/database/entities/transaction.entity"
 
 export class readTransactionDTO{
     id: string
-    quantidade: number
-    data: Date
-    preco: number
-    usuario:{
-        nome: string
+    quantity: number
+    date: Date
+    price: number
+    user:{
+        name: string
         email: string
     }
-    fornecedor: {
-        nome: string
+    supplier: {
+        name: string
     }
-    tipo_transacao: string
-    produto: {
-        nome: string
+    transaction_type: string
+    product: {
+        name: string
     }
 
     constructor( entity: Transaction){
         this.id = entity.id;
-        this.tipo_transacao = entity.tipo_transacao;
-        this.quantidade = entity.quantidade;
-        this.preco = entity.preco;
-        this.produto = {
-            nome: entity.produto.nome
+        this.transaction_type = entity.transaction_type;
+        this.quantity = entity.quantity;
+        this.price = entity.price;
+        this.product = {
+            name: entity.product.name
         };
-        this.fornecedor = {
-            nome: entity.fornecedor.nome
+        this.supplier = {
+            name: entity.supplier.name
         };
-        this.usuario = {
-            nome: entity.usuario.nome,
-            email: entity.usuario.email
+        this.user = {
+            name: entity.user.name,
+            email: entity.user.email
         };
     }
 

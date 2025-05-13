@@ -4,7 +4,7 @@ import { IsNotEmpty, IsString, ValidateNested } from "class-validator"
 class estadoDTO{
     @IsNotEmpty()
     @IsString()
-    nome: string
+    name: string
 
     @IsNotEmpty()
     @IsString()
@@ -17,22 +17,22 @@ class enderecoDTO{
     cep: string
 
     @IsString()
-    complemento: string
+    complement: string
 
     @Type(() => estadoDTO)
     @ValidateNested()
-    estado: estadoDTO
+    state: estadoDTO
 }
 
 class contatoDTO{
     @IsString()
-    numero: string
+    tel_number: string
 }
 
 export class createSupplierDTO {
     @IsString()
     @IsNotEmpty()
-    nome: string
+    name: string
     
     @IsString()
     @IsNotEmpty()
@@ -40,9 +40,9 @@ export class createSupplierDTO {
     
     @Type(() => enderecoDTO)
     @ValidateNested()
-    endereco: enderecoDTO
+    address: enderecoDTO
     
     @Type(() => contatoDTO)
     @ValidateNested()
-    contato: contatoDTO
+    contact: contatoDTO
 }

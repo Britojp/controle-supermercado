@@ -1,36 +1,39 @@
 import { createProductDTO } from "src/product/dto/create-product.dto";
 import { createSupplierDTO } from "src/supplier/dto/create-supplier.dto";
 import { createUserDTO } from "src/usuario/dto/create-user.dto";
-import { IsInt, IsNumber, IsDate, IsString, ValidateNested } from 'class-validator';
+import { IsInt, IsNumber, IsDate, IsString, ValidateNested, IsIn } from 'class-validator';
 import { Type } from 'class-transformer';
+import { PrimaryGeneratedColumn } from "typeorm";
+import { Tipo_Transacao } from "src/interfaces/interfaces.types";
 
 
 export class createTransactionDTO {
-    @IsInt()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @IsInt()
-    quantidade: number;
+    quantity: number;
 
     @IsDate()
     @Type(() => Date)
-    data: Date;
+    date: Date;
 
     @IsNumber()
-    preco: number;
+    price: number;
 
     @ValidateNested()
     @Type(() => createUserDTO)
-    usuario: createUserDTO;
+    user: createUserDTO;
 
     @ValidateNested()
     @Type(() => createSupplierDTO)
-    fornecedor: createSupplierDTO;
+    supplier: createSupplierDTO;
 
     @IsString()
-    tipo_transacao: string;
+    @IsIn(['ENTRADA', 'SAÍDA']) 
+    transaction_type: Tipo_Transacao;
 
     @ValidateNested()
     @Type(() => createProductDTO)
-    produto: createProductDTO;
+    product: createProductDTO;
 }

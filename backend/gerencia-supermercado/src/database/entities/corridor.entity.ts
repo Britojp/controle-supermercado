@@ -1,14 +1,14 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Stock_location } from "./stock_location.entity";
 
-@Entity('corredor')
+@Entity('corridors')
 export class Corridor {
     @PrimaryGeneratedColumn()
     id: string
 
     @Column()
-    numero: number
+    number: number
 
-    @OneToMany(() => Stock_location, loc => loc.lote)
-    localizacoes: Stock_location[];
+    @OneToMany(() => Stock_location, loc => loc.batch)
+    locations: Stock_location[];
 }
