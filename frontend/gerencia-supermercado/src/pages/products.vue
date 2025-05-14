@@ -11,7 +11,7 @@
 
         <v-divider></v-divider>
 
-        <TableEmployees :items="produtos" button-string="Cadastrar novo Produto"></TableEmployees>
+        <TableEmployees :header="header" :items="produtos" button-string="Cadastrar novo Produto"></TableEmployees>
 
   </v-card>
     </v-sheet>
@@ -28,6 +28,15 @@ import TableEmployees from '@/components/TableEmployees.vue';
 
     data () {
       return {
+            header: [
+      { title: 'Nome', key: 'name' },
+      { title: 'Preço', key: 'price' },
+      { title: 'Categoria', key: 'category' },
+      { title: 'Estoque', key: 'stock' },
+      { title: 'Código', key: 'code' },
+
+
+    ],
     produtos: [
       {
         name: 'Arroz Integral 1kg',

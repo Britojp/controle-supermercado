@@ -3,11 +3,11 @@
     <div class="d-flex justify-space-between mb-4">
     <v-btn
       prepend-icon="mdi-plus-circle-outline"
+      @click="$emit('toggleRegister', true)"
     >
 
       {{ buttonString }}
 </v-btn>
-
       <v-text-field
         v-model="search"
         density="compact"
@@ -29,16 +29,37 @@
       class="rounded-lg bg-white table-custom"
       height="100%"
       density="comfortable"
+      :headers="header"
     >
 
-    </v-data-table-virtual>
+    <template #item.actions="{ item } ">
+      <v-btn
+      size="large"
+      icon
+      variant="text"
+      color="red"
+      @click="$emit('deleteItem', item.id)"
+      >
+      <v-icon>mdi-delete-circle</v-icon>
+      </v-btn>
+    </template>
+
+  </v-data-table-virtual>
   </div>
 </template>
 
 <script lang="ts">
+import { userStore } from '@/stores/userStore';
+import type { User } from '@/utils/intefaces';
+import { toast } from 'vue3-toastify';
+
 export default {
   name: 'TableEmployees',
   props: {
+    header: {
+      type: Array,
+      required: true
+    },
     items: {
       type: Array,
       required: true,
@@ -51,8 +72,18 @@ export default {
   data() {
     return {
       search: '',
+      registerFlag: false,
+      funcionarios: [] as User[]
+
     };
   },
+  methods: {
+
+    addNewEmployee(employee: User) {
+      this.funcionarios.push(employee);
+      this.registerFlag= false;
+    }
+  }
 };
 </script>
 

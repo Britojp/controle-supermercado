@@ -37,7 +37,6 @@
         :class="!drawer ? 'justify-center' : ''"
       />
 
-    <v-divider></v-divider>
 
       <v-list-item
         prepend-icon="mdi-account-multiple"

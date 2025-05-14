@@ -8,7 +8,6 @@
 import AllEmployees from '@/pages/allEmployees.vue'
 import Dashboard from '@/pages/dashboard.vue'
 import Index from '@/pages/index.vue'
-import Register from '@/pages/register.vue'
 import Transaction from '@/pages/transaction.vue'
 import Product from '@/pages/products.vue'
 import { createRouter, createWebHistory } from 'vue-router/auto'
@@ -18,7 +17,6 @@ const routes = [
   {path: '/', component: Index},
   {path: '/dashboard', component: Dashboard},
   {path: '/transaction', component: Transaction},
-  {path: '/registerUser', component: Register},
   {path: '/registerSupplier', component: RegisterSupplier},
   {path: '/allEmployees', component: AllEmployees},
   {path: '/products', component: Product}

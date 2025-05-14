@@ -104,7 +104,7 @@ export default{
         this.allUsers = data.results;
           }).catch((error: Error) => {
 
-      console.error("Erro ao carregar filmes populares:", error);
+      console.error("Erro ao carregar usuários populares:", error);
     })
   }
   },

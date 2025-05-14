@@ -12,6 +12,8 @@ declare module 'vue' {
     CreateProduct: typeof import('./src/components/CreateProduct.vue')['default']
     CreateSupplier: typeof import('./src/components/CreateSupplier.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
+    Register: typeof import('./src/components/register.vue')['default']
+    RegisterEmployees: typeof import('./src/components/RegisterEmployees.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TableEmployees: typeof import('./src/components/TableEmployees.vue')['default']
