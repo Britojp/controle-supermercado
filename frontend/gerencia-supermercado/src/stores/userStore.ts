@@ -1,23 +1,19 @@
 import { defineStore } from 'pinia';
 import type { User } from '@/utils/intefaces';
 import * as api from '@/services/api';
-import { toast } from 'vue3-toastify';
 
 export const userStore = defineStore('userStore', {
   state: () => ({
     allUsers: [] as User[],
-    loading: false,
   }),
 
   actions: {
     async fetchUsers() {
-      this.loading = true;
       try {
         this.allUsers = await api.getAllUsers();
       } catch (error) {
         console.error(error);
       } finally {
-        this.loading = false;
       }
     },
 

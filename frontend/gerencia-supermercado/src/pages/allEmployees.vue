@@ -35,8 +35,7 @@
     <v-dialog
       v-model="toggleDelete"
       max-width="400"
-      persistent
-      colort="white"
+      color="white"
     >
       <v-card
         prepend-icon="mdi-delete-circle"
@@ -101,7 +100,7 @@ export default {
       editedUser: null as User | null,
     }
   },
-  
+
   methods: {
     async loadAllUsers() {
       try {

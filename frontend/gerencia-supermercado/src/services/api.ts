@@ -8,6 +8,18 @@ const api = axios.create({
   }
 });
 
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('auth_token');
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, error => {
+  return Promise.reject(error);
+});
+
+
+
 export const getAllUsers = async () => {
   try {
     const response = await api.get('/user');
@@ -56,5 +68,19 @@ const response = await api.patch(`/user/${user.id}`, {
     throw e;
   }
 }
+
+export const login = async (email: string, password: string) => {
+  try{
+    const response = await api.post(`/login`,{
+      email,
+      password,
+    });
+    return response.data;
+  }catch (e){
+    console.error("Erro no login", e);
+    throw e;
+  }
+}
+
 
 export default api;

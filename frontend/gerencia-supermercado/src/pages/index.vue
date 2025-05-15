@@ -60,15 +60,10 @@
             type="submit"
             variant="elevated"
             block
-            :onclick="verifyInputs"
+            :onclick="login"
           >
               Entrar
           </v-btn>
-          <v-btn
-          @click="fetchUserData"
-          >
-          teste
-        </v-btn>
 
         </div>
       </v-card>
@@ -78,6 +73,8 @@
 
 <script lang="ts">
 import { getAllUsers } from '@/services/api';
+import { authStore } from '@/stores/authStore';
+import { toast } from 'vue3-toastify';
 
 
 export default{
@@ -91,22 +88,17 @@ export default{
     };
   },
   methods: {
-    verifyInputs() {
-      this.loading = true;
-      if(this.email === '' || this.password === '' ){
-        return true
+    async login() {
+      try{
+        this.loading = true;
+        await authStore().login(this.email, this.password)
+        this.$router.push('/dashboard');
+      }catch (erro){
+        toast.error("Erro ao tentar logar");
+      }finally{
+        this.loading = false;
       }
-      this.loading = false;
-    },
-    fetchUserData() {
-      getAllUsers()
-      .then((data: { results: any[] }) => {
-        this.allUsers = data.results;
-          }).catch((error: Error) => {
-
-      console.error("Erro ao carregar usuários populares:", error);
-    })
-  }
+    }
   },
   computed: {
 },

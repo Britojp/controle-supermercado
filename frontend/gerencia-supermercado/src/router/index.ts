@@ -12,14 +12,15 @@ import Transaction from '@/pages/transaction.vue'
 import Product from '@/pages/products.vue'
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import RegisterSupplier from '@/pages/registerSupplier.vue'
+import { authStore } from '@/stores/authStore'
 
 const routes = [
   {path: '/', component: Index},
-  {path: '/dashboard', component: Dashboard},
-  {path: '/transaction', component: Transaction},
-  {path: '/registerSupplier', component: RegisterSupplier},
-  {path: '/allEmployees', component: AllEmployees},
-  {path: '/products', component: Product}
+  {path: '/dashboard', component: Dashboard, meta: { requiresAuth: true }},
+  {path: '/transaction', component: Transaction, meta: { requiresAuth: true }},
+  {path: '/registerSupplier', component: RegisterSupplier, meta: { requiresAuth: true }},
+  {path: '/allEmployees', component: AllEmployees, meta: { requiresAuth: true }},
+  {path: '/products', component: Product,   meta: { requiresAuth: true }}
 ]
 
 
@@ -47,5 +48,16 @@ router.onError((err, to) => {
 router.isReady().then(() => {
   localStorage.removeItem('vuetify:dynamic-reload')
 })
+
+router.beforeEach((to, from, next) => {
+  const store = authStore();
+
+  if (to.meta.requiresAuth && !store.isAuthenticated) {
+
+    return next('/');
+  }
+
+  next(); 
+});
 
 export default router

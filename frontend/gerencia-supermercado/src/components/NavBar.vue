@@ -66,6 +66,7 @@
             prepend-icon="mdi-logout"
             title="Logout"
             value="logout"
+            @click="logout"
             to="/"
             :class="!drawer ? 'justify-center' : ''"
           />
@@ -78,6 +79,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { VNavigationDrawer, VList, VListItem, VDivider } from 'vuetify/components';
+import { authStore } from '@/stores/authStore';
 
 export default defineComponent({
   name: 'NavBar',
@@ -91,6 +93,12 @@ export default defineComponent({
     return {
       drawer: true,
     };
+
+  },
+  methods: {
+    logout(){
+      authStore().logout();
+    }
   },
 });
 </script>
