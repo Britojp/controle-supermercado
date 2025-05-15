@@ -5,7 +5,7 @@
         height="90%"
         elevation="2"
         prepend-icon="mdi-account-plus"
-        title="Registro de novos usuários"
+        :title="title"
     >
 
         <v-divider></v-divider>
@@ -13,9 +13,9 @@
         <v-container class="w-75">
           <v-card
             class="ma-5"
-            title="Instruções para Cadastro"
-            subtitle="Siga os passos abaixo para se registrar"
-            text="Preencha todos os campos obrigatórios com informações válidas. Certifique-se de que o nome tenha pelo menos 3 caracteres, insira um email válido e escolha uma senha segura. Clique no botão 'Registrar' para concluir o cadastro."
+            :title="subtitle "
+            :subtitle="subtitle2 "
+            :text="text "
             variant="tonal"
             color="amber-accent-4"
             prepend-icon="mdi-information"
@@ -53,6 +53,7 @@
             :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append-inner="show = !show"
             class="mb-5 hint-custom"
+            :disabled="isEditing"
           />
 
         <div class="d-flex justify-center mt-6">
@@ -84,7 +85,30 @@ import type { User } from '@/utils/intefaces';
 import rulesForm from '@/utils/rules-form';
 
 export default {
-  name: 'register',
+  name: 'RegisterEmployees',
+  props: {
+    title:{
+      type: String,
+      required: true
+    },
+    subtitle: {
+      type: String,
+      required: true
+    },
+    subtitle2: {
+      type: String,
+      required: true
+    },
+    text: {
+      type: String,
+      required: true
+    },
+    user: {
+    type: Object as () => User | null,
+    default: null,
+  },
+
+  },
   data() {
     return {
       name: '',
@@ -95,34 +119,57 @@ export default {
       rulesForm,
     };
   },
+  watch: {
+  user: {
+    immediate: true,
+    handler(newUser: User | null) {
+      if (newUser) {
+        this.name = newUser.name;
+        this.email = newUser.email;
+        this.password = newUser.password;
+      }
+    }
+  }
+},
   computed: {
   formValid(): boolean {
     return this.rulesForm.requiredRule(this.name) === true &&
           this.rulesForm.emailRule(this.email) === true &&
           this.rulesForm.requiredRule(this.password) === true;
+  },
+  isEditing(): boolean {
+    return this.user !== null;
   }
 },
   methods: {
 
-    saveRegister() {
-      const form = this.$refs.form as any;
-      form.validate().then((valid: boolean) => {
-        if (!valid) return;
+saveRegister() {
+  const form = this.$refs.form as any;
 
-        const novoFuncionario : User = {
-          id: '',
-          name: this.name,
-          email: this.email,
-          password: this.password,
-        };
+  form.validate().then((isValid: boolean) => {
+    if (!isValid) return;
 
-        this.$emit('submit', novoFuncionario);
+    const funcionario: User = {
+      id: this.isEditing ? this.user!.id : '',
+      name: this.name.trim(),
+      email: this.email.trim(),
+      password: this.password,
+    };
 
-        this.name = '';
-        this.email = '';
-        this.password = '';
-      });
-    },
+    const eventName = this.isEditing ? 'edit' : 'submit';
+    this.$emit(eventName, funcionario);
+
+    if (!this.isEditing) {
+      this.resetFormFields();
+    }
+  });
+},
+  resetFormFields() {
+    this.name = '';
+    this.email = '';
+    this.password = '';
+  }
+
 
   },
 };

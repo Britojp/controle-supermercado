@@ -21,11 +21,13 @@
       />
     </div>
 
-        <v-data-table-virtual
+        <v-data-table
+
       v-model:search="search"
       :items="items"
       item-value="id"
       fixed-header
+      hide-default-footer
       class="rounded-lg bg-white table-custom"
       height="100%"
       density="comfortable"
@@ -38,20 +40,31 @@
       icon
       variant="text"
       color="red"
-      @click="$emit('deleteItem', item.id)"
+      @click="$emit('deleteItem', item)"
       >
       <v-icon>mdi-delete-circle</v-icon>
       </v-btn>
+
     </template>
 
-  </v-data-table-virtual>
+    <template #item.edit="{ item } ">
+      <v-btn
+      size="large"
+      icon
+      variant="text"
+      color="blue"
+      @click="$emit('editItem', item)"
+      >
+      <v-icon>mdi-pencil-circle</v-icon>
+      </v-btn>
+    </template>
+
+    </v-data-table>
   </div>
 </template>
 
 <script lang="ts">
-import { userStore } from '@/stores/userStore';
 import type { User } from '@/utils/intefaces';
-import { toast } from 'vue3-toastify';
 
 export default {
   name: 'TableEmployees',
@@ -81,7 +94,7 @@ export default {
 
     addNewEmployee(employee: User) {
       this.funcionarios.push(employee);
-      this.registerFlag= false;
+      this.registerFlag = false;
     }
   }
 };

@@ -1,49 +1,58 @@
 import { defineStore } from 'pinia';
-import api from '@/services/api';
 import type { User } from '@/utils/intefaces';
+import * as api from '@/services/api';
 import { toast } from 'vue3-toastify';
 
 export const userStore = defineStore('userStore', {
   state: () => ({
-    productsData: null as any,
     allUsers: [] as User[],
+    loading: false,
   }),
 
   actions: {
-    async fetchUserData() {
+    async fetchUsers() {
+      this.loading = true;
       try {
-        const response = await api.get("user");
-        this.allUsers = response.data;
-        return response.data;
+        this.allUsers = await api.getAllUsers();
       } catch (error) {
-        console.error("Erro ao carregar todos os usuários:", error);
-        return [];
+        console.error(error);
+      } finally {
+        this.loading = false;
       }
     },
 
-    async createNewUser(userData: User) {
+    async createUser(userData: User): Promise<User> {
       try {
-        const response = await api.post('/user', {
-          name: userData.name,
-          email: userData.email,
-          password: userData.password
-        });
-        console.log('Usuário criado com sucesso:', response.data);
-        return response.data;
+        const createdUser = await api.createNewUser(userData);
+        this.allUsers.push(createdUser);
+        return createdUser;
       } catch (error) {
-        console.error("Erro ao criar usuário:", error);
         throw error;
       }
     },
 
-    async deleteUser(userId: string){
+
+    async deleteUser(userId: string) {
       try {
-        await api.delete(`/user/${userId}`);
+        await api.deleteUser(userId);
         this.allUsers = this.allUsers.filter(user => user.id !== userId);
-      }catch(e){
-        toast.error("Erro ao deletar usuário")
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async editUser(user: User): Promise<User> {
+      try {
+        const updatedUser = await api.editUser(user);
+        const index = this.allUsers.findIndex(u => u.id === user.id);
+        if (index !== -1) {
+          this.allUsers[index] = updatedUser;
+        }
+        return updatedUser;
+      } catch (error) {
+        throw error;
       }
     }
-  }
 
+  }
 });

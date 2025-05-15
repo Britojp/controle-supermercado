@@ -16,10 +16,18 @@
         button-string="Cadastrar novo Funcionário"
         @toggleRegister="toggleModal"
         @deleteItem="openDeleteDialog"
+        @editItem="toggleEdit"
       ></TableEmployees>
 
       <v-dialog v-model="dialogOpen" max-width="800">
-        <RegisterEmployees @submit="addNewEmployee" @pressClose="toggleModal" />
+        <RegisterEmployees
+        title="Cadastrar novos usuários"
+        subtitle="Instruções para Cadastro"
+        subtitle2="Siga os passos abaixo para se registrar"
+        text="Preencha todos os campos obrigatórios com informações válidas. Certifique-se de que o nome tenha pelo menos 3 caracteres, insira um email válido e escolha uma senha segura. Clique no botão 'Registrar' para concluir o cadastro."
+        @submit="addNewEmployee"
+        @pressClose="dialogOpen = false"
+        />
       </v-dialog>
       <v-spacer></v-spacer>
     </v-card>
@@ -45,6 +53,20 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog v-model="editOpen" max-width="800">
+      <RegisterEmployees
+        :user="editedUser"
+        title="Editar usuário"
+        subtitle="Instruções para edição"
+        subtitle2="Siga os passos abaixo para atualizar as informações"
+        text="Atualize os campos necessários com informações válidas. Certifique-se de que o nome tenha pelo menos 3 caracteres e o email esteja em formato correto. As alterações serão aplicadas apenas após confirmar clicando no botão 'Salvar'."
+        @edit="editEmployee"
+        @pressClose="editOpen = false"
+      />
+    </v-dialog>
+
+
   </v-sheet>
 </template>
 
@@ -54,6 +76,7 @@ import RegisterEmployees from '@/components/RegisterEmployees.vue'
 import type { User } from '@/utils/intefaces';
 import { toast } from 'vue3-toastify';
 import { userStore } from '@/stores/userStore';
+
 
 export default {
   name: 'allEmployees',
@@ -66,53 +89,71 @@ export default {
         { title: 'Nome', key: 'name' },
         { title: 'Email', key: 'email' },
         { title: 'Excluir', key: 'actions', sortable: false },
+        { title: 'Editar', key: 'edit', sortable: false }
       ],
       dialogOpen: false,
       userStore: userStore,
       funcionarios: [] as User[],
       loading: true,
       toggleDelete: false,
-      userToDelete: null as string | null,
+      userToDelete: '',
+      editOpen: false,
+      editedUser: null as User | null,
     }
   },
+  
   methods: {
     async loadAllUsers() {
       try {
         const store = userStore();
-        await store.fetchUserData();
+        await store.fetchUsers();
         this.funcionarios = store.allUsers;
         this.loading = false;
       } catch(e) {
-        toast.error("Erro ao carregar os dados");
+        console.error(e)
       }
     },
 
     async addNewEmployee(employee: User) {
       try {
-        await userStore().createNewUser(employee);
-        toast.success('Cadastrado com sucesso');
-        this.funcionarios.push(employee);
-      } catch(e) {
-        toast.error('Erro ao cadastrar o usuário');
+        const createdUser = await userStore().createUser(employee);
+        toast.success("Usuário criado com sucesso!");
+      } catch (error) {
+        toast.error("Erro ao criar usuário.");
+        console.error(error);
       } finally {
         this.dialogOpen = false;
       }
     },
 
+async editEmployee(employee: User) {
+    try {
+      await userStore().editUser(employee);
+      toast.success("Usuário editado com sucesso!");
+      this.editOpen = false;
+      this.loadAllUsers();
+    } catch (error) {
+      toast.error("Erro ao editar usuário");
+      console.error(error);
+    }
+  },
+
     toggleModal(flag: boolean) {
       this.dialogOpen = flag;
     },
-
-    openDeleteDialog(userId: string) {
-      this.userToDelete = userId;
+    toggleEdit(user: User) {
+      this.editedUser = user;
+      this.editOpen = true;
+    },
+    openDeleteDialog(user: User) {
+      this.userToDelete = user.id;
       this.toggleDelete = true;
     },
 
     async confirmDelete() {
       if (this.userToDelete) {
         await this.deleteUser(this.userToDelete);
-        this.userToDelete = null;
-      }
+        }
       this.toggleDelete = false;
     },
 
@@ -120,6 +161,7 @@ export default {
       try {
         const store = userStore();
         await store.deleteUser(userId);
+        console.log(userId)
         this.funcionarios = this.funcionarios.filter(user => user.id !== userId);
         toast.success("Usuário excluído com sucesso");
       } catch(e) {
