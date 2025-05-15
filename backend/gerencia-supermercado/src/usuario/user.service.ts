@@ -19,12 +19,12 @@ export class UsuarioService {
         return this.userRepository.find()
     }
 
-    async findOne(id: string){
+    async findByEmail(email: string){
         const user = await this.userRepository.findOne({
-            where: {id},
+            where: {email},
         })
             if(!user){
-                throw new HttpException(`Usuário ${id} não encontrado`, 400)
+                throw new HttpException(`Email ${email} não encontrado`, 400)
             }
         return user;
     }
