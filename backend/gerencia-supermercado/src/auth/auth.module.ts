@@ -3,9 +3,13 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from './strategies/local.strategy';
 import { UsuarioModule } from 'src/usuario/user.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [UsuarioModule],
+  imports: [UsuarioModule, JwtModule.register({
+    secret: process.env.JWT_SECRET,
+    signOptions: {expiresIn: '30d'},
+  })],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy]
 })
