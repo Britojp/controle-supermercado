@@ -1,5 +1,7 @@
 import { Transaction } from "src/database/entities/transaction.entity"
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import * as bcrypt from 'bcrypt';
+import { Exclude } from "class-transformer";
 
 @Entity('users')
 export class User {
@@ -17,4 +19,9 @@ export class User {
 
     @OneToMany(() => Transaction, transaction => transaction.user)
     transactions: Transaction[];
+    
+    @BeforeInsert()
+    async hashPassword() {
+        this.password = await bcrypt.hash(this.password, 10);
     }
+}

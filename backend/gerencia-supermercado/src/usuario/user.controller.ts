@@ -32,7 +32,7 @@ export class UsuarioController {
 
     @HttpCode(204)
     @Delete(':id')
-    remove(@Param(':id') id: string){
+    remove(@Param('id') id: string){
         return this.usuarioService.remove(id);
     }
 
