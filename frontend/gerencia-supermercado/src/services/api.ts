@@ -1,6 +1,7 @@
 import type { User } from "@/utils/intefaces";
 import axios from "axios";
 import Cookies from "js-cookie";
+import type { SupplierDTO, CreateSupplierDTO, UpdateSupplierDTO } from '@/dto/supplier.dto';
 
 const api = axios.create({
   baseURL: 'http://localhost:3000',
@@ -21,6 +22,8 @@ api.interceptors.request.use(config => {
 //Pegando o token do Cookies salvo pelo pinia
 
 
+
+//Usuários
 
 export const getAllUsers = async () => {
   try {
@@ -71,6 +74,69 @@ const response = await api.patch(`/user/${user.id}`, {
   }
 }
 
+
+// Fornecedores
+
+
+export const getAllSuppliers = async (): Promise<SupplierDTO[]> => {
+  try {
+    const response = await api.get('/supplier');
+    return response.data as SupplierDTO[];
+  } catch (error) {
+    console.error('Erro ao buscar fornecedores', error);
+    throw new Error('Erro ao buscar fornecedores');
+  }
+};
+
+export const createNewSupplier = async (supplierData: CreateSupplierDTO): Promise<SupplierDTO> => {
+  try {
+    const response = await api.post('/supplier', supplierData);
+    return response.data as SupplierDTO;
+  } catch (error) {
+    console.error('Erro ao criar o fornecedor:', error);
+    throw error;
+  }
+};
+
+export const deleteSupplier = async (supplierId: string): Promise<void> => {
+  try {
+    await api.delete(`/supplier/${supplierId}`);
+  } catch (error) {
+    console.error('Erro ao deletar o fornecedor:', error);
+    throw error;
+  }
+};
+
+export const editSupplier = async (
+  supplierId: string,
+  supplierData: UpdateSupplierDTO
+): Promise<SupplierDTO> => {
+  try {
+    const response = await api.patch(`/supplier/${supplierId}`, supplierData);
+    return response.data as SupplierDTO;
+  } catch (error) {
+    console.error('Erro ao editar fornecedor', error);
+    throw error;
+  }
+};
+
+
+
+// Estados
+
+export const getStates = async () => {
+  try{
+    const response = await api.get('/states');
+    return response.data;
+  } catch (error){
+    console.error('Erro ao buscar estados', error);
+    throw new Error('Erro ao bsucar estados');
+  }
+}
+
+
+// Login
+
 export const login = async (email: string, password: string) => {
   try{
     const response = await api.post(`/login`,{
@@ -83,6 +149,8 @@ export const login = async (email: string, password: string) => {
     throw e;
   }
 }
+
+
 
 
 export default api;

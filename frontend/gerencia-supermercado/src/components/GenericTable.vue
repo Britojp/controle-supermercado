@@ -104,5 +104,4 @@ export default {
 .search-field {
   max-width: 300px;
 }
-
 </style>

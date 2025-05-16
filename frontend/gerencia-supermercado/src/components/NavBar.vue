@@ -45,6 +45,16 @@
         to="/allEmployees"
         :class="!drawer ? 'justify-center' : ''"
         />
+
+
+      <v-list-item
+        prepend-icon="mdi-handshake"
+        title="Consultar todos os fornecedores"
+        value="fornecedores"
+        to="/allSuppliers"
+        :class="!drawer ? 'justify-center' : ''"
+        />
+
     <v-divider></v-divider>
 
       <v-list-item

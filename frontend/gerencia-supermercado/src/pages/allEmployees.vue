@@ -10,14 +10,14 @@
       title="Consultar todos os funcionários"
     >
       <v-divider></v-divider>
-      <TableEmployees
+      <GenericTable
         :header="header"
         :items="funcionarios"
         button-string="Cadastrar novo Funcionário"
         @toggleRegister="toggleModal"
         @deleteItem="openDeleteDialog"
         @editItem="toggleEdit"
-      ></TableEmployees>
+      ></GenericTable>
 
       <v-dialog v-model="dialogOpen" max-width="800">
         <RegisterEmployees
@@ -70,7 +70,7 @@
 </template>
 
 <script lang="ts">
-import TableEmployees from '@/components/TableEmployees.vue';
+import GenericTable from '@/components/GenericTable.vue';
 import RegisterEmployees from '@/components/RegisterEmployees.vue'
 import type { User } from '@/utils/intefaces';
 import { toast } from 'vue3-toastify';
@@ -79,7 +79,7 @@ import { userStore } from '@/stores/userStore';
 
 export default {
   name: 'allEmployees',
-  components: {TableEmployees, RegisterEmployees},
+  components: {GenericTable, RegisterEmployees},
 
   data() {
     return {

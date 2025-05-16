@@ -11,6 +11,8 @@ declare module 'vue' {
     Card: typeof import('./src/components/Card.vue')['default']
     CreateProduct: typeof import('./src/components/CreateProduct.vue')['default']
     CreateSupplier: typeof import('./src/components/CreateSupplier.vue')['default']
+    GenericTable: typeof import('./src/components/GenericTable.vue')['default']
+    ModalRegisterSupplier: typeof import('./src/components/ModalRegisterSupplier.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     Register: typeof import('./src/components/register.vue')['default']
     RegisterEmployees: typeof import('./src/components/RegisterEmployees.vue')['default']

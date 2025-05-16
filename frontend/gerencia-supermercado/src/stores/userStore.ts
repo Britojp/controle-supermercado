@@ -5,15 +5,18 @@ import * as api from '@/services/api';
 export const userStore = defineStore('userStore', {
   state: () => ({
     allUsers: [] as User[],
+    loading: false
   }),
 
   actions: {
     async fetchUsers() {
       try {
         this.allUsers = await api.getAllUsers();
+        this.loading = true
       } catch (error) {
         console.error(error);
       } finally {
+        this.loading = false;
       }
     },
 

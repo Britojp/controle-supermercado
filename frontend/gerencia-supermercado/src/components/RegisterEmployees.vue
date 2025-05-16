@@ -115,7 +115,6 @@ export default {
       email: '',
       password: '',
       show: false,
-      isFormValid: false,
       rulesForm,
     };
   },

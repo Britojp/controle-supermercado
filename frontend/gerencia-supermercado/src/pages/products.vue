@@ -19,7 +19,7 @@
 
 
   <script lang="ts">
-import TableEmployees from '@/components/TableEmployees.vue';
+import TableEmployees from '@/components/GenericTable.vue';
 
 
   export default {
