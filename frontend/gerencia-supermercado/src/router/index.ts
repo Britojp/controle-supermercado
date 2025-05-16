@@ -57,7 +57,7 @@ router.beforeEach((to, from, next) => {
     return next('/');
   }
 
-  next(); 
+  next();
 });
 
 export default router

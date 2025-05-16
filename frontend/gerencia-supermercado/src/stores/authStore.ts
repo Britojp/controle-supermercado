@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia';
 import * as api from '@/services/api';
 import { toast } from 'vue3-toastify';
+import router from '@/router';
+import Cookies from 'js-cookie';
 
 export const authStore = defineStore('authStore', {
   state: () => ({
-    token: localStorage.getItem('auth_token') || ''
+    token: Cookies.get('auth_token') || ''
   }),
 
   getters: {
@@ -17,10 +19,17 @@ export const authStore = defineStore('authStore', {
     async login(email: string, password: string) {
       try {
         const { access_token } = await api.login(email, password);
+
         this.token = access_token;
-        localStorage.setItem('auth_token', access_token);
-        toast.success("Logado com sucesso!");
+
+        Cookies.set('auth_token', access_token);
+
+        router.push('/dashboard');
+        setTimeout(() => {
+          toast.success('Login realizado com sucesso!');
+        }, 200);
         return access_token;
+
       } catch (error) {
         console.error('Erro no login:', error);
         toast.error("Falha ao fazer login. Verifique suas credenciais.");
@@ -29,9 +38,12 @@ export const authStore = defineStore('authStore', {
     },
 
     logout() {
-      this.token = '';
-      localStorage.removeItem('auth_token');
-      toast.info("Você saiu da sua conta.");
+      this.token = ''
+      Cookies.remove('auth_token');
+      router.push('/');
+      setTimeout(() => {
+        toast.info('Logout realizado com sucesso!');
+      }, 200);
     }
   }
 });

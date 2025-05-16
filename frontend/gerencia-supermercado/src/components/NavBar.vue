@@ -67,7 +67,6 @@
             title="Logout"
             value="logout"
             @click="logout"
-            to="/"
             :class="!drawer ? 'justify-center' : ''"
           />
         </v-list>

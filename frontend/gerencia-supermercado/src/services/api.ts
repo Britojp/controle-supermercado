@@ -1,5 +1,6 @@
 import type { User } from "@/utils/intefaces";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const api = axios.create({
   baseURL: 'http://localhost:3000',
@@ -9,7 +10,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(config => {
-  const token = localStorage.getItem('auth_token');
+  const token = Cookies.get('auth_token')
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -17,6 +18,7 @@ api.interceptors.request.use(config => {
 }, error => {
   return Promise.reject(error);
 });
+//Pegando o token do Cookies salvo pelo pinia
 
 
 
