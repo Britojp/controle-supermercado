@@ -18,13 +18,13 @@ export class Address1747073409336 implements MigrationInterface {
                         {
                             name: 'cep',
                             type: 'varchar',
-                            length: '8',
+                            length: '9',
                             isNullable: false
                         },
                         {
                             name: 'complement',
                             type: 'varchar',
-                            length: '15',
+                            length: '30',
                             isNullable: true
                         },
                         {

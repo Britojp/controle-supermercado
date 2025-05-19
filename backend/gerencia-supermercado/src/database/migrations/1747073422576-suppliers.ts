@@ -24,7 +24,7 @@ export class Suppliers1747073422576 implements MigrationInterface {
                         {
                             name: 'cnpj',
                             type: 'varchar',
-                            length: '14',
+                            length: '18',
                             isNullable: false,
                             isUnique: true,
                         },
