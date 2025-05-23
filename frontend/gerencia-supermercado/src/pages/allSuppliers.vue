@@ -105,6 +105,7 @@ export default {
     },
 
     async addNewSupplier(supplier: CreateSupplierDTO) {
+      console.log(supplier)
       try {
         await supplierStore().createSupplier(supplier);
         toast.success('Fornecedor criado com sucesso!');
@@ -125,10 +126,7 @@ export default {
         address: {
           cep: supplier.address.cep,
           complement: supplier.address.complement,
-          state: {
-            name: supplier.address.state.name,
-            uf: supplier.address.state.uf,
-          },
+          id_state: supplier.address.state.id,
         },
         contact: {
           tel_number: supplier.contact.tel_number,

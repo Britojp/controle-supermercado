@@ -62,6 +62,7 @@
           <v-col cols="12" sm="6">
             <v-autocomplete
               color="green-darken-3"
+              item-value="id"
               v-model="state"
               label="Estado"
               variant="outlined"
@@ -121,7 +122,6 @@
 import rulesForm from '@/utils/rules-form';
 import type { States, Supplier } from '@/utils/intefaces';
 import { supplierStore } from '@/stores/supplierStore';
-import type { SupplierDTO } from "@/dto/supplier.dto";
 
 export default {
   name: 'ModalRegisterSupplier',
@@ -186,11 +186,11 @@ export default {
         (value: string) => value.length > 16 || 'Exemplo: 12.345.678/0001-00'
         ]
       },
- formValid(): boolean {
+formValid(): boolean {
     return this.rulesForm.requiredRule(this.name) === true &&
-           this.phoneRule(this.phone) === true &&
-           this.state !== '' &&
-           this.cepRule(this.cep) === true;
+          this.phoneRule(this.phone) === true &&
+          this.state !== '' &&
+          this.cepRule(this.cep) === true;
   },
   },
 

@@ -1,16 +1,6 @@
 import { Type } from "class-transformer"
 import { IsNotEmpty, IsString, ValidateNested } from "class-validator"
 
-class estadoDTO{
-    @IsNotEmpty()
-    @IsString()
-    name: string
-
-    @IsNotEmpty()
-    @IsString()
-    uf: string
-}
-
 class enderecoDTO{
     @IsNotEmpty()
     @IsString()
@@ -19,9 +9,9 @@ class enderecoDTO{
     @IsString()
     complement: string
 
-    @Type(() => estadoDTO)
-    @ValidateNested()
-    state: estadoDTO
+    @IsNotEmpty()
+    @IsString()
+    id_state: string;
 }
 
 class contatoDTO{

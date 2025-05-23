@@ -6,11 +6,11 @@ export interface SupplierDTO {
     id: string;
     cep: string;
     complement?: string;
-      state:{
+    state: {
       id: string;
       name: string;
       uf: string;
-  };
+    };
   };
   contact: {
     id: string;
@@ -24,27 +24,20 @@ export interface CreateSupplierDTO {
   address: {
     cep: string;
     complement?: string;
-      state:{
-      name: string;
-      uf: string;
-  };
+    id_state: string;
   };
   contact: {
     tel_number: string;
   };
 }
 
-
 export interface UpdateSupplierDTO {
   name?: string;
   cnpj?: string;
   address?: {
-    cep: string;
+    cep?: string;
     complement?: string;
-      state?:{
-      name: string;
-      uf: string;
-  };
+    id_state?: string;
   };
   contact?: {
     tel_number?: string;
