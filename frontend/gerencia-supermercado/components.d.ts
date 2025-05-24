@@ -12,6 +12,7 @@ declare module 'vue' {
     CreateProduct: typeof import('./src/components/CreateProduct.vue')['default']
     CreateSupplier: typeof import('./src/components/CreateSupplier.vue')['default']
     GenericTable: typeof import('./src/components/GenericTable.vue')['default']
+    ModalRegisterAndEdit: typeof import('./src/components/ModalRegisterAndEdit.vue')['default']
     ModalRegisterSupplier: typeof import('./src/components/ModalRegisterSupplier.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     Register: typeof import('./src/components/register.vue')['default']

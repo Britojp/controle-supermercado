@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import * as api from '@/services/api';
 import type { States, Supplier } from '@/utils/intefaces';
 import type { CreateSupplierDTO, SupplierDTO, UpdateSupplierDTO } from '@/dto/supplier.dto';
+import axios from 'axios';
 
 export const supplierStore = defineStore('supplierStore', {
   state: () => ({
@@ -22,14 +23,19 @@ export const supplierStore = defineStore('supplierStore', {
       }
     },
 
-    async createSupplier(supplierData: CreateSupplierDTO): Promise<CreateSupplierDTO> {
+    async createSupplier(supplierData: CreateSupplierDTO): Promise<SupplierDTO> {
       try {
         const createdSupplier = await api.createNewSupplier(supplierData);
-        this.allSuppliers.push(createdSupplier);
         return createdSupplier;
       } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          console.error('Erro na API:', error.response.data);
+        } else {
+          console.error(error);
+        }
         throw error;
-      }
+}
+
     },
 
     async deleteSupplier(supplierId: string) {

@@ -61,15 +61,15 @@
 
           <v-col cols="12" sm="6">
             <v-autocomplete
-              color="green-darken-3"
-              item-value="id"
               v-model="state"
+              :items="states"
+              item-title="name"
+              item-value="id"
               label="Estado"
               variant="outlined"
               class="mb-5 hint-custom"
-              :items="states.map(state => state.name)"
+              color="green-darken-3"
               :rules="[value => !!value || 'Selecione um estado válido']"
-              key="id"
             />
           </v-col>
 
@@ -122,7 +122,7 @@
 import rulesForm from '@/utils/rules-form';
 import type { States, Supplier } from '@/utils/intefaces';
 import { supplierStore } from '@/stores/supplierStore';
-
+import type { CreateSupplierDTO } from '@/dto/supplier.dto';
 export default {
   name: 'ModalRegisterSupplier',
   props: {
@@ -161,21 +161,19 @@ export default {
       validationEnabled: true,
     };
   },
-  watch: {
+watch: {
   supplier: {
     immediate: true,
-    handler(newSupplier: Supplier | null) {
+handler(newSupplier: Supplier | null) {
       if (newSupplier) {
-        this.name = newSupplier.name;
-        this.phone = newSupplier.phone;
-        this.cnpj = newSupplier.cnpj;
-        this.complement = newSupplier.complement;
-        this.state = newSupplier.state;
-        this.cep = newSupplier.cep;
+        this.fillForm(newSupplier);
+
       }
-    }
-  }
+    },
+  },
 },
+
+
   computed: {
   isEditing(): boolean {
     return this.supplier !== null;
@@ -200,6 +198,16 @@ this.loadStates();
 
 
 methods: {
+
+  fillForm(supplier: UpdateSupplierDTO) {
+    this.name = supplier.name || '';
+    this.cnpj = supplier.cnpj || '';
+    this.complement = supplier.address?.complement || '';
+    this.state = supplier.address?.id_state || '';
+    this.cep = supplier.address?.cep || '';
+    this.phone = supplier.contact?.tel_number || '';
+  },
+
     async loadStates() {
         try {
           const store = supplierStore();
@@ -216,15 +224,19 @@ saveRegister() {
   form.validate().then((isValid: boolean) => {
     if (!isValid) return;
 
-    const fornecedor: Supplier = {
-      id: this.isEditing ? this.supplier!.id : '',
-      name: this.name.trim(),
-      phone: this.phone.trim(),
-      cnpj: this.cnpj.trim(),
-      complement: this.complement.trim(),
-      state: this.state.trim(),
-      cep: this.cep.trim(),
-    };
+
+    const fornecedor: CreateSupplierDTO = {
+      name: this.name,
+      cnpj: this.cnpj,
+      address: {
+        cep: this.cep,
+        complement: this.complement,
+        id_state: this.state,
+      },
+      contact: {
+        tel_number: this.phone,
+      },
+    }
 
     const eventName = this.isEditing ? 'edit' : 'submit';
     this.$emit(eventName, fornecedor);
@@ -234,14 +246,6 @@ saveRegister() {
     }
   });
 },
-  resetFormFields() {
-        this.name = ''
-        this.phone = ''
-        this.cnpj = ''
-        this.complement = ''
-        this.state = ''
-        this.cep = ''
-  },
   formatCNPJ() {
       let digits = this.cnpj.replace(/\D/g, '').slice(0, 14)
       digits = digits.replace(/^(\d{2})(\d)/, '$1.$2')

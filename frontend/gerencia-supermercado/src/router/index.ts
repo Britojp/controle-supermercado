@@ -11,7 +11,6 @@ import Index from '@/pages/index.vue'
 import Transaction from '@/pages/transaction.vue'
 import Product from '@/pages/products.vue'
 import { createRouter, createWebHistory } from 'vue-router/auto'
-import RegisterSupplier from '@/pages/registerSupplier.vue'
 import { authStore } from '@/stores/authStore'
 import AllSuppliers from '@/pages/allSuppliers.vue'
 
@@ -19,7 +18,6 @@ const routes = [
   {path: '/', component: Index},
   {path: '/dashboard', component: Dashboard, meta: { requiresAuth: true }},
   {path: '/transaction', component: Transaction, meta: { requiresAuth: true }},
-  {path: '/registerSupplier', component: RegisterSupplier, meta: { requiresAuth: true }},
   {path: '/allEmployees', component: AllEmployees, meta: { requiresAuth: true }},
   {path: '/products', component: Product,   meta: { requiresAuth: true }},
   {path: '/allSuppliers', component: AllSuppliers,   meta: { requiresAuth: true }}

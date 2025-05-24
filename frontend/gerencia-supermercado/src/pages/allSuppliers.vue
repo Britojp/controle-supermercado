@@ -20,11 +20,8 @@
         @editItem="toggleEdit"
       />
       <v-dialog v-model="dialogOpen" max-width="50vw" width="50vw">
-        <ModalRegisterSupplier
+        <ModalRegisterAndEdit
           title="Cadastrar novos fornecedores"
-          subtitle="Instruções para Cadastro"
-          subtitle2="Siga os passos abaixo para registrar"
-          text="Certifique-se de que o nome tenha pelo menos 3 caracteres e o e-mail esteja em formato correto. As alterações serão aplicadas somente após confirmar clicando no botão Salvar."
           @submit="addNewSupplier"
           @pressClose="dialogOpen = false"
         />
@@ -46,7 +43,7 @@
     </v-dialog>
 
     <v-dialog v-model="editOpen" max-width="50vw" width="50vw">
-      <ModalRegisterSupplier
+      <ModalRegisterAndEdit
         :Supplier="editedSupplier"
         title="Editar usuário"
         subtitle="Instruções para edição"
@@ -61,7 +58,7 @@
 
 <script lang="ts">
 import GenericTable from '@/components/GenericTable.vue';
-import ModalRegisterSupplier from '@/components/ModalRegisterSupplier.vue';
+import ModalRegisterAndEdit from '@/components/ModalRegisterAndEdit.vue';
 import type { Supplier } from '@/utils/intefaces';
 import { toast } from 'vue3-toastify';
 import { supplierStore } from '@/stores/supplierStore';
@@ -69,7 +66,7 @@ import type { SupplierDTO, CreateSupplierDTO, UpdateSupplierDTO } from '@/dto/su
 
 export default {
   name: 'allSuppliers',
-  components: { GenericTable, ModalRegisterSupplier },
+  components: { GenericTable, ModalRegisterAndEdit },
 
   data() {
     return {
@@ -89,7 +86,7 @@ export default {
       toggleDelete: false,
       supplierToDelete: '',
       editOpen: false,
-      editedSupplier: null as Supplier | null,
+      editedSupplier: null as UpdateSupplierDTO | null,
     };
   },
 
@@ -105,15 +102,21 @@ export default {
     },
 
     async addNewSupplier(supplier: CreateSupplierDTO) {
-      console.log(supplier)
+    
+    
       try {
         await supplierStore().createSupplier(supplier);
         toast.success('Fornecedor criado com sucesso!');
         this.loadAllSuppliers();
-      } catch (error) {
+      }catch (error) {
         toast.error('Erro ao criar fornecedor.');
-        console.error(error);
-      } finally {
+
+        if (axios.isAxiosError(error)) {
+          console.error('Erro da API:', error.response?.data);
+        } else {
+          console.error(error);
+        }
+      }finally {
         this.dialogOpen = false;
       }
     },
@@ -132,7 +135,7 @@ export default {
           tel_number: supplier.contact.tel_number,
         }
       };
-
+      
       await supplierStore().editSupplier(supplier.id, updatePayload);
       toast.success('Fornecedor editado com sucesso!');
       this.editOpen = false;
@@ -147,7 +150,7 @@ export default {
       this.dialogOpen = flag;
     },
 
-    toggleEdit(supplier: Supplier) {
+    toggleEdit(supplier: UpdateSupplierDTO) {
       this.editedSupplier = supplier;
       this.editOpen = true;
     },
