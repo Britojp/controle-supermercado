@@ -1,7 +1,7 @@
-import type { User } from '@/utils/intefaces'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import type { SupplierDTO, CreateSupplierDTO, UpdateSupplierDTO } from '@/dto/supplier.dto'
+import type { createUserDTO, UserDTO } from '@/dto/users.dto'
 
 const api = axios.create({
   baseURL: 'http://localhost:3000',
@@ -36,7 +36,7 @@ export const getAllUsers = async () => {
   }
 }
 
-export const createNewUser = async (userData: User) => {
+export const createNewUser = async (userData: createUserDTO) => {
   try {
     const response = await api.post('/user', {
       name: userData.name,
@@ -61,7 +61,7 @@ export const deleteUser = async (userId: string) => {
   }
 }
 
-export const editUser = async (user: User) => {
+export const editUser = async (user: UserDTO) => {
   try {
     const response = await api.patch(`/user/${user.id}`, {
       name: user.name,
@@ -149,5 +149,20 @@ export const login = async (email: string, password: string) => {
     throw e
   }
 }
+
+
+// Marcas
+
+export const getAllBrands = async () => {
+  try {
+    const response = await api.get('/brand')
+
+    return response.data
+  } catch (error) {
+    console.error('Erro ao buscar marcas:', error)
+    throw new Error('Erro ao buscar marcas')
+  }
+}
+
 
 export default api

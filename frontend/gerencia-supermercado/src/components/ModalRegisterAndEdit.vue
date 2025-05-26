@@ -123,9 +123,9 @@
 
 <script lang="ts">
 import rulesForm from '@/utils/rules-form';
+import type { States, } from '@/utils/interfaces';
 import { supplierStore } from '@/stores/supplierStore';
-import type { States, Supplier } from '@/utils/intefaces';
-import type { CreateSupplierDTO, SupplierDTO, UpdateSupplierDTO } from '@/dto/supplier.dto';
+import type { SupplierDTO, CreateSupplierDTO, UpdateSupplierDTO } from '@/dto/supplier.dto';
 
 export default {
   name: 'ModalRegisterSupplier',
@@ -135,6 +135,7 @@ export default {
     subtitle2: String,
     text: String,
     supplier: {
+
       type: Object as () => UpdateSupplierDTO | null,
       default: null,
     },

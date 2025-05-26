@@ -23,16 +23,15 @@
 
         <v-data-table
 
-      v-model:search="search"
-      :items="items"
-      item-value="id"
-      fixed-header
-      hide-default-footer
-      class="rounded-lg bg-white table-custom"
-      height="100%"
-      density="comfortable"
-      :headers="header"
-    >
+    v-model:search="search"
+    :headers="header"
+    :items="items"
+    class="rounded-lg bg-white table-custom"
+    density="comfortable"
+    item-value="name"
+    hide-default-footer
+    hover
+  >
 
     <template #item.actions="{ item } ">
       <v-btn
@@ -64,7 +63,8 @@
 </template>
 
 <script lang="ts">
-import type { User } from '@/utils/intefaces';
+import type { UserDTO } from '@/dto/users.dto';
+
 
 export default {
   name: 'TableEmployees',
@@ -86,13 +86,13 @@ export default {
     return {
       search: '',
       registerFlag: false,
-      funcionarios: [] as User[]
+      funcionarios: [] as UserDTO[]
 
     };
   },
   methods: {
 
-    addNewEmployee(employee: User) {
+    addNewEmployee(employee: UserDTO) {
       this.funcionarios.push(employee);
       this.registerFlag = false;
     }

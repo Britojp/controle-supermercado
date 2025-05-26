@@ -18,6 +18,7 @@ import { createApp } from 'vue'
 import router from './router'
 import Vue3Toastify from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -32,4 +33,5 @@ registerPlugins(app)
 
 app.use(pinia)
 app.use(router)
+pinia.use(piniaPluginPersistedstate)
 app.mount('#app')

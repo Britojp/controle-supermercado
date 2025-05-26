@@ -72,9 +72,9 @@
 <script lang="ts">
 import GenericTable from '@/components/GenericTable.vue';
 import RegisterEmployees from '@/components/RegisterEmployees.vue'
-import type { User } from '@/utils/intefaces';
 import { toast } from 'vue3-toastify';
 import { userStore } from '@/stores/userStore';
+import type { UpdateUserDTO, UserDTO } from '@/dto/users.dto';
 
 
 export default {
@@ -92,12 +92,12 @@ export default {
       ],
       dialogOpen: false,
       userStore: userStore,
-      funcionarios: [] as User[],
+      funcionarios: [] as UserDTO[],
       loading: true,
       toggleDelete: false,
       userToDelete: '',
       editOpen: false,
-      editedUser: null as User | null,
+      editedUser: null as UpdateUserDTO | null,
     }
   },
 
@@ -113,7 +113,7 @@ export default {
       }
     },
 
-    async addNewEmployee(employee: User) {
+    async addNewEmployee(employee: UserDTO) {
       try {
         const createdUser = await userStore().createUser(employee);
         toast.success("Usuário criado com sucesso!");
@@ -125,7 +125,7 @@ export default {
       }
     },
 
-async editEmployee(employee: User) {
+async editEmployee(employee: UserDTO) {
     try {
       await userStore().editUser(employee);
       toast.success("Usuário editado com sucesso!");
@@ -140,11 +140,11 @@ async editEmployee(employee: User) {
     toggleModal(flag: boolean) {
       this.dialogOpen = flag;
     },
-    toggleEdit(user: User) {
+    toggleEdit(user: UpdateUserDTO) {
       this.editedUser = user;
       this.editOpen = true;
     },
-    openDeleteDialog(user: User) {
+    openDeleteDialog(user: UserDTO) {
       this.userToDelete = user.id;
       this.toggleDelete = true;
     },

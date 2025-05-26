@@ -1,128 +1,48 @@
 <template>
   <v-sheet class="bg-green-lighten-5 px-5 py-3 h-screen d-flex justify-center align-center">
-    <v-card class="pa-4 bg-white" width="90%" height="90%" elevation="0" flat prepend-icon="mdi-cart-plus" title="Movimentação de Mercadoria" variant="text">
+    <v-card
+      class="pa-6 bg-white"
+      width="90%"
+      height="90%"
+      elevation="2"
+      flat
+      title="Movimentação de Mercadoria"
+      prepend-icon="mdi-cart-plus"
+      variant="text"
+    >
+      <v-divider class="mb-6"></v-divider>
 
-      <v-divider class="mb-5"></v-divider>
-
-      <v-stepper
-        v-model="step"
-        alt-labels
-        class="bg-white"
-        elevation="0"
-        error-icon="mdi-alert-circle"
-      >
-        <v-stepper-header>
-            <v-stepper-item
-            title="Fornecedor"
-            subtitle="Preencha os dados do fornecedor"
-            :value="1"
-            :rules="[() => validateFirstData]"
-            :color="validateFirstData ? 'green-darken-4' : ''"
-          ></v-stepper-item>
-
-          <v-divider></v-divider>
-
-          <v-stepper-item
-            title="Produtos"
-            subtitle="Adicione os produtos"
-            :value="2"
-            :rules="[() => validateSecondData]"
-          ></v-stepper-item>
-
-          <v-divider></v-divider>
-
-          <v-stepper-item
-            title="Resumo"
-            subtitle="Revise os dados"
-            :value="3"
-          ></v-stepper-item>
-        </v-stepper-header>
-
-        <v-stepper-window>
-          <v-stepper-window-item
-          :value="1"
-          >
-            <CreateSupplier
-            @dados-validos="handleFirstValidData"
-            />
-          </v-stepper-window-item
-          >
-          <v-stepper-window-item
-          :value="2"
-          >
-            <CreateProduct
-            @validate-data="handleSecondValidData"
-            />
-          </v-stepper-window-item>
-          <v-stepper-window-item
-          :value="3">
-            <div>Conteúdo da Etapa 3</div>
-          </v-stepper-window-item>
-        </v-stepper-window>
-
-        <v-stepper-actions class="d-flex justify-center">
-          <template v-slot:prev>
-            <v-btn
-              icon
-              @click="goPrevious"
-              class="bg-green-darken-3 mr-10"
-              :disabled="step === 1"
-            >
-              <v-icon>mdi-chevron-left</v-icon>
-            </v-btn>
+        <v-card
+          class="mx-auto mb-8"
+          width="50%"
+          variant="tonal"
+          color="amber-accent-4"
+          prepend-icon="mdi-information"
+          title="Movimentação de Mercadoria"
+          subtitle="Registre uma entrada ou saída de produtos no estoque."
+        >
+          <template #text>
+            Escolha o tipo de movimentação desejada (entrada ou saída), selecione o produto, defina a quantidade e informe os dados complementares, como data e responsável.
+            No caso de entradas, certifique-se de vincular ao fornecedor correto.
+            A movimentação só será registrada após clicar no botão <strong>Confirmar</strong>.
           </template>
+        </v-card>
 
-            <template v-slot:next>
-            <v-btn
-              icon
-              @click="goNext"
-              class="bg-green-darken-3 ml-10"
-              :disabled="(step === 1 && !validateFirstData) || (step === 2 && !validateSecondData) || step === 3"
-            >
-              <v-icon>mdi-chevron-right</v-icon>
-            </v-btn>
-            </template>
-        </v-stepper-actions>
-      </v-stepper>
+
+      <CreateProduct />
     </v-card>
   </v-sheet>
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
 import CreateProduct from '@/components/CreateProduct.vue';
-import CreateSupplier from '@/components/CreateSupplier.vue';
 
-export default {
+
+export default defineComponent({
+  name: 'transaction',
   components: {
-    CreateSupplier,
-    CreateProduct
+    CreateProduct,
   },
-  data() {
-    return {
-      step: 1,
-      validateFirstData: false,
-      validateSecondData: false,
-    };
-  },
-  methods: {
-    goNext() {
-      if (this.step < 3 && this.validateFirstData) {
-        this.step++;
-      }
-    },
-
-    goPrevious() {
-      if (this.step > 1) {
-        this.step--;
-      }
-    },
-    handleFirstValidData(isValid: boolean) {
-      this.validateFirstData = isValid;
-    },
-    handleSecondValidData(isValidation: boolean){
-      this.validateSecondData = isValidation;
-    },
-  },
-
-};
+});
 </script>
