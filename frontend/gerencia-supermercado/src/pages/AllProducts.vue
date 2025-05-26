@@ -10,8 +10,7 @@
         >
 
         <v-divider></v-divider>
-
-        <GenericTable :header="header" :items="produtos" button-string="Cadastrar novo Produto"></GenericTable>
+        <ProductsTable/>
 
   </v-card>
     </v-sheet>

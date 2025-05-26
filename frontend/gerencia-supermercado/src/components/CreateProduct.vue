@@ -194,15 +194,6 @@
 
       <div v-else>
 
-        <v-form ref="form">
-
-
-
-            <v-row>
-            </v-row>
-        </v-form>
-
-
       </div>
 
       <v-btn
@@ -219,7 +210,7 @@ import { useDate } from 'vuetify';
 import rulesForm from '@/utils/rules-form';
 import { brandsStore } from '@/stores/brandsStore';
 import type { Brand } from '@/utils/interfaces';
-
+import Component from './Component.vue';
 export default {
     name: 'CreateProduct',
     data() {

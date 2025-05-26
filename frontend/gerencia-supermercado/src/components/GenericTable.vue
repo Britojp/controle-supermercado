@@ -23,16 +23,15 @@
 
         <v-data-table
 
-      v-model:search="search"
-      :items="items"
-      item-value="id"
-      fixed-header
-      hide-default-footer
-      class="rounded-lg bg-white table-custom"
-      height="100%"
-      density="comfortable"
-      :headers="header"
-    >
+    v-model:search="search"
+    :headers="header"
+    :items="items"
+    class="rounded-lg bg-white table-custom"
+    density="comfortable"
+    item-value="name"
+    hide-default-footer
+    hover
+  >
 
     <template #item.actions="{ item } ">
       <v-btn

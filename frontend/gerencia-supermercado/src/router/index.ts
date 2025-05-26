@@ -9,18 +9,18 @@ import AllEmployees from '@/pages/allEmployees.vue'
 import Dashboard from '@/pages/dashboard.vue'
 import Index from '@/pages/index.vue'
 import Transaction from '@/pages/transaction.vue'
-import Product from '@/pages/products.vue'
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import { authStore } from '@/stores/authStore'
 import AllSuppliers from '@/pages/allSuppliers.vue'
 import AllTransactions from '@/pages/allTransactions.vue'
+import AllProducts from '@/pages/AllProducts.vue'
 
 const routes = [
   {path: '/', component: Index, meta: {hideNavBar: true}},
   {path: '/dashboard', component: Dashboard, meta: { requiresAuth: true }},
   {path: '/transacao', component: Transaction, meta: { requiresAuth: true }},
   {path: '/todos-funcionarios', component: AllEmployees, meta: { requiresAuth: true }},
-  {path: '/produtos', component: Product,   meta: { requiresAuth: true }},
+  {path: '/produtos', component: AllProducts,   meta: { requiresAuth: true }},
   {path: '/todos-fornecedores', component: AllSuppliers,   meta: { requiresAuth: true }},
   {path: '/transacoes', component: AllTransactions, meta: {requiresAuth: true}}
 ]
