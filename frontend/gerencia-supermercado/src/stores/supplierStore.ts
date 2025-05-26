@@ -47,18 +47,18 @@ export const supplierStore = defineStore('supplierStore', {
       }
     },
 
-    async editSupplier(id: string, data: UpdateSupplierDTO): Promise<SupplierDTO> {
+  async editSupplier(id: string, data: UpdateSupplierDTO): Promise<SupplierDTO> {
   try {
     const updatedSupplier = await api.editSupplier(id, data);
     const index = this.allSuppliers.findIndex(u => u.id === id);
     if (index !== -1) {
-      this.allSuppliers[index] = updatedSupplier;
+      this.allSuppliers.splice(index, 1, updatedSupplier);
     }
     return updatedSupplier;
   } catch (error) {
     throw error;
   }
-    },
+},
 
 
     async fetchStates() {

@@ -12,9 +12,10 @@
     <v-container class="w-75">
       <v-card
         class="ma-5"
-        title="Editar fornecedor"
-        subtitle="Atualize os dados do fornecedor com informações válidas."
-        text="Certifique-se de que o nome tenha pelo menos 3 caracteres e o e-mail esteja em formato correto. As alterações serão aplicadas somente após confirmar clicando no botão Salvar."
+        :title=title
+        :subtitle=subtitle
+        :subtitle2=subtitle2
+        :text=text
         variant="tonal"
         color="amber-accent-4"
         prepend-icon="mdi-information"
@@ -60,17 +61,19 @@
           </v-col>
 
           <v-col cols="12" sm="6">
-            <v-autocomplete
-              v-model="state"
-              :items="states"
-              item-title="name"
-              item-value="id"
-              label="Estado"
-              variant="outlined"
-              class="mb-5 hint-custom"
-              color="green-darken-3"
-              :rules="[value => !!value || 'Selecione um estado válido']"
-            />
+          <v-autocomplete
+            v-model="state"
+            :items="states"
+            item-title="name"
+            item-value="id"
+            label="Estado"
+            variant="outlined"
+            class="mb-5 hint-custom"
+            color="green-darken-3"
+            :disabled="!statesLoaded"
+            :rules="[value => !!value || 'Selecione um estado válido']"
+          />
+
           </v-col>
 
           <v-col cols="12" sm="6">
@@ -115,38 +118,29 @@
       </v-form>
     </v-container>
   </v-card>
+  
 </template>
-
 
 <script lang="ts">
 import rulesForm from '@/utils/rules-form';
 import type { States, } from '@/utils/interfaces';
 import { supplierStore } from '@/stores/supplierStore';
 import type { SupplierDTO, CreateSupplierDTO, UpdateSupplierDTO } from '@/dto/supplier.dto';
+
 export default {
   name: 'ModalRegisterSupplier',
   props: {
-        title:{
-      type: String,
-      required: true
-    },
-    subtitle: {
-      type: String,
-      required: true
-    },
-    subtitle2: {
-      type: String,
-      required: true
-    },
-    text: {
-      type: String,
-      required: true
-    },
+    title: String,
+    subtitle: String,
+    subtitle2: String,
+    text: String,
     supplier: {
-      type: Object as () => SupplierDTO | null,
+
+      type: Object as () => UpdateSupplierDTO | null,
       default: null,
-    }
+    },
   },
+
   data() {
     return {
       name: '',
@@ -155,144 +149,162 @@ export default {
       complement: '',
       state: '',
       cep: '',
-      show: false,
       rulesForm,
-      states : [] as States[],
+      states: [] as States[],
       validationEnabled: true,
+      statesLoaded: false, 
     };
   },
-watch: {
-  supplier: {
-    immediate: true,
-handler(newSupplier: SupplierDTO | null) {
-      if (newSupplier) {
-        this.fillForm(newSupplier);
 
-      }
-    },
-  },
-},
-
-
-  computed: {
-  isEditing(): boolean {
-    return this.supplier !== null;
-  },
-      computedCNPJ () {
-        if(!this.validationEnabled) return [];
-        return[
-        (value: string) => value.length > 16 || 'Exemplo: 12.345.678/0001-00'
-        ]
-      },
-formValid(): boolean {
-    return this.rulesForm.requiredRule(this.name) === true &&
-          this.phoneRule(this.phone) === true &&
-          this.state !== '' &&
-          this.cepRule(this.cep) === true;
-  },
-  },
-
-  mounted(){
-this.loadStates();
-},
-
-
-methods: {
-
-  fillForm(supplier: UpdateSupplierDTO) {
-    this.name = supplier.name || '';
-    this.cnpj = supplier.cnpj || '';
-    this.complement = supplier.address?.complement || '';
-    this.state = supplier.address?.id_state || '';
-    this.cep = supplier.address?.cep || '';
-    this.phone = supplier.contact?.tel_number || '';
-  },
-
-    async loadStates() {
-        try {
-          const store = supplierStore();
-          await store.fetchStates()
-          this.states = store.states
-        } catch(e) {
-          console.error(e)
+  watch: {
+    supplier: {
+      immediate: true,
+      async handler(newSupplier: Supplier | null) {
+        if (newSupplier) {
+          if (!this.statesLoaded) {
+            await this.loadStates();
+          }
+          this.fillForm(newSupplier);
         }
       },
+    },
+  },
 
-saveRegister() {
-  const form = this.$refs.form as any;
+  computed: {
+    isEditing(): boolean {
+      return this.supplier !== null;
+    },
 
-  form.validate().then((isValid: boolean) => {
-    if (!isValid) return;
+    computedCNPJ() {
+      if (!this.validationEnabled) return [];
+      return [(value: string) => value.length > 16 || 'Exemplo: 12.345.678/0001-00'];
+    },
 
+    formValid(): boolean {
+      return (
+        this.rulesForm.requiredRule(this.name) === true &&
+        this.phoneRule(this.phone) === true &&
+        this.state !== '' &&
+        this.cepRule(this.cep) === true
+      );
+    },
+  },
 
-    const fornecedor: CreateSupplierDTO = {
-      name: this.name,
-      cnpj: this.cnpj,
-      address: {
-        cep: this.cep,
-        complement: this.complement,
-        id_state: this.state,
-      },
-      contact: {
-        tel_number: this.phone,
-      },
-    }
+  mounted() {
+    this.loadStates();
+  },
 
-    const eventName = this.isEditing ? 'edit' : 'submit';
-    this.$emit(eventName, fornecedor);
+  methods: {
+async loadStates() {
+  try {
+    const store = supplierStore();
+    await store.fetchStates();
+        this.states = store.states.map((item) => ({
+        id: String(item.id),   
+        name: item.name,
+        uf: item.uf,
+      }));
 
-    if (!this.isEditing) {
-      this.resetFormFields();
-    }
-  });
+    this.statesLoaded = true;
+  } catch (error) {
+    console.error('Erro ao carregar estados:', error);
+  }
 },
-  formatCNPJ() {
-      let digits = this.cnpj.replace(/\D/g, '').slice(0, 14)
-      digits = digits.replace(/^(\d{2})(\d)/, '$1.$2')
-      digits = digits.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
-      digits = digits.replace(/\.(\d{3})(\d)/, '.$1/$2')
-      digits = digits.replace(/(\d{4})(\d)/, '$1-$2')
-      this.cnpj = digits
+
+
+    fillForm(supplier: UpdateSupplierDTO) {
+      this.name = supplier.name || '';
+      this.cnpj = supplier.cnpj || '';
+      this.complement = supplier.address?.complement || '';
+      this.state = supplier.address?.id_state || '';
+      this.cep = supplier.address?.cep || '';
+      this.phone = supplier.contact?.tel_number || '';
+    },
+
+    restFormFields() {
+      this.name = '';
+      this.phone = '';
+      this.cnpj = '';
+      this.complement = '';
+      this.state = '';
+      this.cep = '';
+    },
+
+    saveRegister() {
+      const form = this.$refs.form as any;
+
+      form.validate().then((isValid: boolean) => {
+        if (!isValid) return;
+
+        const fornecedor: CreateSupplierDTO = {
+          name: this.name,
+          cnpj: this.cnpj,
+          address: {
+            cep: this.cep,
+            complement: this.complement,
+            id_state: this.state,
+          },
+          contact: {
+            tel_number: this.phone,
+          },
+        };
+
+        const eventName = this.isEditing ? 'edit' : 'submit';
+        this.$emit(eventName, fornecedor);
+
+        if (!this.isEditing) {
+          this.restFormFields();
+        }
+      });
+    },
+
+    formatCNPJ() {
+      let digits = this.cnpj.replace(/\D/g, '').slice(0, 14);
+      digits = digits.replace(/^(\d{2})(\d)/, '$1.$2');
+      digits = digits.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+      digits = digits.replace(/\.(\d{3})(\d)/, '.$1/$2');
+      digits = digits.replace(/(\d{4})(\d)/, '$1-$2');
+      this.cnpj = digits;
     },
 
     formatPhone() {
-      let digits = this.phone.replace(/\D/g, '').slice(0, 11)
+      let digits = this.phone.replace(/\D/g, '').slice(0, 11);
       if (digits.length >= 2) {
-        digits = digits.replace(/^(\d{2})(\d)/, '($1) $2')
+        digits = digits.replace(/^(\d{2})(\d)/, '($1) $2');
       }
       if (digits.length >= 7) {
-        digits = digits.replace(/(\d{5})(\d{4})$/, '$1-$2')
+        digits = digits.replace(/(\d{5})(\d{4})$/, '$1-$2');
       }
-      this.phone = digits
+      this.phone = digits;
     },
 
     formatCEP() {
-        let digits = this.cep.replace(/\D/g, '').slice(0, 8)
-        if (digits.length > 5) {
-          digits = digits.replace(/^(\d{5})(\d)/, '$1-$2')
-        }
-        this.cep = digits
+      let digits = this.cep.replace(/\D/g, '').slice(0, 8);
+      if (digits.length > 5) {
+        digits = digits.replace(/^(\d{5})(\d)/, '$1-$2');
+      }
+      this.cep = digits;
     },
 
     phoneRule: (v: string) => {
-    const cleaned = v.replace(/\D/g, '');
-    return cleaned.length === 11 || 'Telefone deve ter 11 dígitos';
-  },
+      const cleaned = v.replace(/\D/g, '');
+      return cleaned.length === 11 || 'Telefone deve ter 11 dígitos';
+    },
 
     cepRule: (v: string) => {
-    const cleaned = v.replace(/\D/g, '');
-    return cleaned.length === 8 || 'CEP deve ter 8 dígitos';
+      const cleaned = v.replace(/\D/g, '');
+      return cleaned.length === 8 || 'CEP deve ter 8 dígitos';
+    },
   },
-},
 };
 </script>
-
-
 <style scoped>
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.5s ease;
 }
-.fade-enter-from, .fade-leave-to {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
 }
 </style>
