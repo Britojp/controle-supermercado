@@ -1,18 +1,13 @@
 import { Type } from "class-transformer"
 import { IsNotEmpty, IsNumber, IsString, ValidateNested } from "class-validator"
+import { Brand } from "src/database/entities/brand.entity"
 
-class Brand{
-    @IsString()
-    @IsNotEmpty()
-    name: string
-}
 
 class Category{
     @IsString()
     @IsNotEmpty()
     name: string
 }
-
 
 class Measurement{
     @IsString()

@@ -1,229 +1,176 @@
 
 
--- Estados --
-
-Insert into Estado (id, Nome, Uf) values (12, 'Acre', 'AC');
-Insert into Estado (id, Nome, Uf) values (27, 'Alagoas', 'AL');
-Insert into Estado (id, Nome, Uf) values (16, 'Amapá', 'AP');
-Insert into Estado (id, Nome, Uf) values (13, 'Amazonas', 'AM');
-Insert into Estado (id, Nome, Uf) values (29, 'Bahia', 'BA');
-Insert into Estado (id, Nome, Uf) values (23, 'Ceará', 'CE');
-Insert into Estado (id, Nome, Uf) values (53, 'Distrito Federal', 'DF');
-Insert into Estado (id, Nome, Uf) values (32, 'Espírito Santo', 'ES');
-Insert into Estado (id, Nome, Uf) values (52, 'Goiás', 'GO');
-Insert into Estado (id, Nome, Uf) values (21, 'Maranhão', 'MA');
-Insert into Estado (id, Nome, Uf) values (51, 'Mato Grosso', 'MT');
-Insert into Estado (id, Nome, Uf) values (50, 'Mato Grosso do Sul', 'MS');
-Insert into Estado (id, Nome, Uf) values (31, 'Minas Gerais', 'MG');
-Insert into Estado (id, Nome, Uf) values (15, 'Pará', 'PA');
-Insert into Estado (id, Nome, Uf) values (25, 'Paraíba', 'PB');
-Insert into Estado (id, Nome, Uf) values (41, 'Paraná', 'PR');
-Insert into Estado (id, Nome, Uf) values (26, 'Pernambuco', 'PE');
-Insert into Estado (id, Nome, Uf) values (22, 'Piauí', 'PI');
-Insert into Estado (id, Nome, Uf) values (33, 'Rio de Janeiro', 'RJ');
-Insert into Estado (id, Nome, Uf) values (24, 'Rio Grande do Norte', 'RN');
-Insert into Estado (id, Nome, Uf) values (43, 'Rio Grande do Sul', 'RS');
-Insert into Estado (id, Nome, Uf) values (11, 'Rondônia', 'RO');
-Insert into Estado (id, Nome, Uf) values (14, 'Roraima', 'RR');
-Insert into Estado (id, Nome, Uf) values (42, 'Santa Catarina', 'SC');
-Insert into Estado (id, Nome, Uf) values (35, 'São Paulo', 'SP');
-Insert into Estado (id, Nome, Uf) values (28, 'Sergipe', 'SE');
-Insert into Estado (id, Nome, Uf) values (17, 'Tocantins', 'TO');
-
 -- Unidades de medida --
-INSERT INTO unidade_medida (nome, sigla) VALUES
+INSERT INTO measurements (name, initials) VALUES
 ('Grama', 'g');
-INSERT INTO unidade_medida (nome, sigla) VALUES
+INSERT INTO measurements (name, initials) VALUES
 ('Mililitro', 'ml');
-INSERT INTO unidade_medida (nome, sigla) VALUES
+INSERT INTO measurements (name, initials) VALUES
 ('Unidade', 'un');
-INSERT INTO unidade_medida (nome, sigla) VALUES
+INSERT INTO measurements (name, initials) VALUES
 ('Litro', 'L');
-INSERT INTO unidade_medida (nome, sigla) VALUES
+INSERT INTO measurements (name, initials) VALUES
 ('Quilograma', 'kg');
-INSERT INTO unidade_medida (nome, sigla) VALUES
+INSERT INTO measurements (name, initials) VALUES
 ('Pacote', 'pc');
-INSERT INTO unidade_medida (nome, sigla) VALUES
+INSERT INTO measurements (name, initials) VALUES
 ('Caixa', 'cx');
-INSERT INTO unidade_medida (nome, sigla) VALUES
+INSERT INTO measurements (name, initials) VALUES
 ('Dúzia', 'dz');
 
--- Usuarios --
-INSERT INTO usuario ( nome, email, senha) VALUES
-('Ana Paula', 'ana.paula@mercado.com', 'senha123');
-INSERT INTO usuario ( nome, email, senha) VALUES
-('Carlos Silva', 'carlos.silva@mercado.com', 'senha123');
-INSERT INTO usuario ( nome, email, senha) VALUES
-('Juliana Souza', 'juliana.souza@mercado.com', 'senha123');
-INSERT INTO usuario ( nome, email, senha) VALUES
-('Rafael Lima', 'rafael.lima@mercado.com', 'senha123');
-INSERT INTO usuario ( nome, email, senha) VALUES
-('Mariana Costa', 'mariana.costa@mercado.com', 'senha123');
-INSERT INTO usuario ( nome, email, senha) VALUES
-( 'Thiago Rocha', 'thiago.rocha@mercado.com', 'senha123');
-INSERT INTO usuario ( nome, email, senha) VALUES
-( 'Fernanda Alves', 'fernanda.alves@mercado.com', 'senha123');
-INSERT INTO usuario ( nome, email, senha) VALUES
-( 'Lucas Pereira', 'lucas.pereira@mercado.com', 'senha123');
-INSERT INTO usuario ( nome, email, senha) VALUES
-( 'Beatriz Gomes', 'beatriz.gomes@mercado.com', 'senha123');
-INSERT INTO usuario ( nome, email, senha) VALUES
-('João Vitor', 'joao.vitor@mercado.com', 'senha123');
-
--- Categorias --
-INSERT INTO categoria (nome) VALUES
+INSERT INTO categories (name) VALUES
 ('Alimentos');
-INSERT INTO categoria (nome) VALUES
+INSERT INTO categories (name) VALUES
 ('Bebidas');
-INSERT INTO categoria (nome) VALUES
+INSERT INTO categories (name) VALUES
 ( 'Laticínios');
-INSERT INTO categoria (nome) VALUES
+INSERT INTO categories (name) VALUES
 ( 'Cafés e chás');
-INSERT INTO categoria (nome) VALUES
+INSERT INTO categories (name) VALUES
 ( 'Massas');
-INSERT INTO categoria (nome) VALUES
+INSERT INTO categories (name) VALUES
 ( 'Padaria');
-INSERT INTO categoria (nome) VALUES
+INSERT INTO categories (name) VALUES
 ( 'Higiene pessoal');
-INSERT INTO categoria (nome) VALUES
+INSERT INTO categories (name) VALUES
 ( 'Limpeza');
-INSERT INTO categoria (nome) VALUES
+INSERT INTO categories (name) VALUES
 ( 'Congelados');
-INSERT INTO categoria (nome) VALUES
+INSERT INTO categories (name) VALUES
 ( 'Pet Shop');
 
 -- Marca --
-INSERT INTO marca (nome) VALUES
+INSERT INTO brands (name) VALUES
 ('Tio João');
-INSERT INTO marca (nome) VALUES
+INSERT INTO brands (name) VALUES
 ( 'Kicaldo');
-INSERT INTO marca ( nome) VALUES
+INSERT INTO brands (name) VALUES
 ( 'Soya');
-INSERT INTO marca (nome) VALUES
+INSERT INTO brands (name) VALUES
 ( 'União');
-INSERT INTO marca (nome) VALUES
+INSERT INTO brands (name) VALUES
 ( 'Parmalat');
-INSERT INTO marca (nome) VALUES
+INSERT INTO brands (name) VALUES
 ( 'Pilão');
-INSERT INTO marca (nome) VALUES
+INSERT INTO brands (name) VALUES
 ( 'Renata');
-INSERT INTO marca (nome) VALUES
+INSERT INTO brands (name) VALUES
 ( 'Dona Benta');
-INSERT INTO marca (nome) VALUES
+INSERT INTO brands (name) VALUES
 ( 'Palmolive');
-INSERT INTO marca (nome) VALUES
+INSERT INTO brands (name) VALUES
 ('Ypê');
 
 
 
 -- Nutricao Produtos --
-INSERT INTO nutricao (porcao, quantidade_proteina, quantidade_gordura, quantidade_carboidratos, idunidademedida) VALUES
+INSERT INTO nutritions (portion, protein_quantity, fatness_quantity, carbohydrate_quantity, id_measurements) VALUES
 ( 50.0, 4, 1, 35, 1);
-INSERT INTO nutricao ( porcao, quantidade_proteina, quantidade_gordura, quantidade_carboidratos, idunidademedida) VALUES
+INSERT INTO nutritions ( portion, protein_quantity, fatness_quantity, carbohydrate_quantity, id_measurements) VALUES
 ( 50.0, 7, 0, 30, 1);
-INSERT INTO nutricao ( porcao, quantidade_proteina, quantidade_gordura, quantidade_carboidratos, idunidademedida) VALUES
+INSERT INTO nutritions ( portion, protein_quantity, fatness_quantity, carbohydrate_quantity, id_measurements) VALUES
 ( 13.0, 0, 9, 0, 2);
-INSERT INTO nutricao ( porcao, quantidade_proteina, quantidade_gordura, quantidade_carboidratos, idunidademedida) VALUES
+INSERT INTO nutritions ( portion, protein_quantity, fatness_quantity, carbohydrate_quantity, id_measurements) VALUES
 ( 5.0, 0, 0, 5, 1);
-INSERT INTO nutricao ( porcao, quantidade_proteina, quantidade_gordura, quantidade_carboidratos, idunidademedida) VALUES
+INSERT INTO nutritions ( portion, protein_quantity, fatness_quantity, carbohydrate_quantity, id_measurements) VALUES
 ( 200.0, 6, 6, 10, 4);
-INSERT INTO nutricao ( porcao, quantidade_proteina, quantidade_gordura, quantidade_carboidratos, idunidademedida) VALUES
+INSERT INTO nutritions ( portion, protein_quantity, fatness_quantity, carbohydrate_quantity, id_measurements) VALUES
 ( 40.0, 1, 3, 5, 1);
-INSERT INTO nutricao ( porcao, quantidade_proteina, quantidade_gordura, quantidade_carboidratos, idunidademedida) VALUES
+INSERT INTO nutritions ( portion, protein_quantity, fatness_quantity, carbohydrate_quantity, id_measurements) VALUES
 ( 80.0, 2, 1, 65, 1);
-INSERT INTO nutricao ( porcao, quantidade_proteina, quantidade_gordura, quantidade_carboidratos, idunidademedida) VALUES
+INSERT INTO nutritions ( portion, protein_quantity, fatness_quantity, carbohydrate_quantity, id_measurements) VALUES
 ( 60.0, 2, 1, 45, 1);
-INSERT INTO nutricao ( porcao, quantidade_proteina, quantidade_gordura, quantidade_carboidratos, idunidademedida) VALUES
+INSERT INTO nutritions ( portion, protein_quantity, fatness_quantity, carbohydrate_quantity, id_measurements) VALUES
 ( 85.0, 0, 1, 0, 3);
-INSERT INTO nutricao ( porcao, quantidade_proteina, quantidade_gordura, quantidade_carboidratos, idunidademedida) VALUES
+INSERT INTO nutritions ( portion, protein_quantity, fatness_quantity, carbohydrate_quantity, id_measurements) VALUES
 (15.0, 0, 0, 0, 2);
 
 -- Endereco --
-INSERT INTO endereco (cep, complemento, idestado) VALUES
+INSERT INTO address (cep, complement, id_states) VALUES
 ( '01001000', 'Galpão 1', 12);
-INSERT INTO endereco ( cep, complemento, idestado) VALUES
+INSERT INTO address ( cep, complement, id_states) VALUES
 ( '30140071', 'Bloco B', 17);
-INSERT INTO endereco ( cep, complemento, idestado) VALUES
+INSERT INTO address ( cep, complement, id_states) VALUES
 ( '20040002', 'Anexo 3', 35);
-INSERT INTO endereco ( cep, complemento, idestado) VALUES
+INSERT INTO address ( cep, complement, id_states) VALUES
 ( '40015970', 'Centro', 52);
-INSERT INTO endereco ( cep, complemento, idestado) VALUES
+INSERT INTO address ( cep, complement, id_states) VALUES
 ( '80010000', 'Depósito', 21);
-INSERT INTO endereco ( cep, complemento, idestado) VALUES
+INSERT INTO address ( cep, complement, id_states) VALUES
 ( '88010020', 'Setor C', 42);
-INSERT INTO endereco ( cep, complemento, idestado) VALUES
+INSERT INTO address ( cep, complement, id_states) VALUES
 ( '90010000', 'Área 5', 29);
-INSERT INTO endereco ( cep, complemento, idestado) VALUES
+INSERT INTO address ( cep, complement, id_states) VALUES
 ( '50010000', 'Galpão Recife', 23);
-INSERT INTO endereco ( cep, complemento, idestado) VALUES
+INSERT INTO address ( cep, complement, id_states) VALUES
 ( '60010000', 'Zona 2', 53);
-INSERT INTO endereco ( cep, complemento, idestado) VALUES
+INSERT INTO address ( cep, complement, id_states) VALUES
 ( '74000000', 'Bloco Comercial', 15);
 
 -- Contato --
-INSERT INTO contato (telefone) VALUES
+INSERT INTO contacts (tel_number) VALUES
 ( '11999990000');
-INSERT INTO contato ( telefone) VALUES
+INSERT INTO contacts (tel_number) VALUES
 ( '31999990001');
-INSERT INTO contato ( telefone) VALUES
+INSERT INTO contacts (tel_number) VALUES
 ( '21999990002');
-INSERT INTO contato ( telefone) VALUES
+INSERT INTO contacts (tel_number) VALUES
 ( '71999990003');
-INSERT INTO contato ( telefone) VALUES
+INSERT INTO contacts (tel_number) VALUES
 ( '41999990004');
-INSERT INTO contato ( telefone) VALUES
+INSERT INTO contacts (tel_number) VALUES
 ('48999990005');
-INSERT INTO contato ( telefone) VALUES
+INSERT INTO contacts (tel_number) VALUES
 ( '51999990006');
-INSERT INTO contato ( telefone) VALUES
+INSERT INTO contacts (tel_number) VALUES
 ( '81999990007');
-INSERT INTO contato ( telefone) VALUES
+INSERT INTO contacts (tel_number) VALUES
 ( '85999990008');
-INSERT INTO contato ( telefone) VALUES
+INSERT INTO contacts (tel_number) VALUES
 ('62999990009');
 
 -- Fornecedor --
-INSERT INTO fornecedor (nome, cnpj, idendereco, idcontato) VALUES
+INSERT INTO suppliers (name, cnpj, id_address, id_contacts) VALUES
 ('Distribuidora Alimentos SP', '12345678000100', 2, 1);
-INSERT INTO fornecedor ( nome, cnpj, idendereco, idcontato) VALUES
+INSERT INTO suppliers ( name, cnpj, id_address, id_contacts) VALUES
 ( 'Atacado Nacional MG', '12345678000200', 2, 2);
-INSERT INTO fornecedor ( nome, cnpj, idendereco, idcontato) VALUES
+INSERT INTO suppliers ( name, cnpj, id_address, id_contacts) VALUES
 ( 'Comercial Soya Ltda', '12345678000300', 3, 3);
-INSERT INTO fornecedor ( nome, cnpj, idendereco, idcontato) VALUES
+INSERT INTO suppliers ( name, cnpj, id_address, id_contacts) VALUES
 ( 'Distribuidora União', '12345678000400', 4, 4);
-INSERT INTO fornecedor ( nome, cnpj, idendereco, idcontato) VALUES
+INSERT INTO suppliers ( name, cnpj, id_address, id_contacts) VALUES
 ( 'Laticínios Parmalat', '12345678000500', 5, 5);
-INSERT INTO fornecedor ( nome, cnpj, idendereco, idcontato) VALUES
+INSERT INTO suppliers ( name, cnpj, id_address, id_contacts) VALUES
 ( 'Café Pilão Indústrias', '12345678000600', 6, 6);
-INSERT INTO fornecedor ( nome, cnpj, idendereco, idcontato) VALUES
+INSERT INTO suppliers ( name, cnpj, id_address, id_contacts) VALUES
 ( 'Massas Renata SA', '12345678000700', 7, 7);
-INSERT INTO fornecedor ( nome, cnpj, idendereco, idcontato) VALUES
+INSERT INTO suppliers ( name, cnpj, id_address, id_contacts) VALUES
 ( 'Dona Benta Alimentos', '12345678000800', 8, 8);
-INSERT INTO fornecedor ( nome, cnpj, idendereco, idcontato) VALUES
+INSERT INTO suppliers ( name, cnpj, id_address, id_contacts) VALUES
 ( 'Colgate-Palmolive', '12345678000900', 9, 9);
-INSERT INTO fornecedor ( nome, cnpj, idendereco, idcontato) VALUES
+INSERT INTO suppliers ( name, cnpj, id_address, id_contacts) VALUES
 ( 'Química Ypê', '12345678001000', 10, 10);
 
 -- Produtos --
-INSERT INTO produto (nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
+INSERT INTO products (nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
 ( 'Arroz', 22.90, 1, 1, 1);
-INSERT INTO produto ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
+INSERT INTO products ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
 ( 'Feijão Carioca', 7.49, 2, 1, 2);
-INSERT INTO produto ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
+INSERT INTO products ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
 ( 'Óleo de Soja', 6.79, 3, 2, 3);
-INSERT INTO produto ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
+INSERT INTO products ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
 ( 'Açúcar', 4.29, 4, 1, 4);
-INSERT INTO produto ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
+INSERT INTO products ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
 ( 'Leite', 4.89, 5, 3, 5);
-INSERT INTO produto ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
+INSERT INTO products ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
 ( 'Café', 14.99, 6, 4, 6);
-INSERT INTO produto ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
+INSERT INTO products ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
 ( 'Macarrão Espaguete', 3.49, 7, 5, 7);
-INSERT INTO produto ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
+INSERT INTO products ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
 ( 'Farinha de Trigo', 5.59, 8, 6, 8);
-INSERT INTO produto ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
+INSERT INTO products ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
 ( 'Sabonete Neutro', 1.99, 9, 7, 9);
-INSERT INTO produto ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
+INSERT INTO products ( nome, preco_venda, idnutricao, idcategoria, idmarca) VALUES
 ( 'Detergente', 2.89, 10, 8, 10);
 
 -- Transações --
