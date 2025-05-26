@@ -22,6 +22,9 @@
       <v-dialog v-model="dialogOpen" max-width="50vw" width="50vw">
         <ModalRegisterAndEdit
           title="Cadastrar novos fornecedores"
+          subtitle="Instruções para cadastro"
+          subtitle2="Siga os passos abaixo para adicionar um novo fornecedor"
+          text="Preencha todos os campos obrigatórios com informações válidas. Clique em 'Salvar' para concluir o cadastro."
           @submit="addNewSupplier"
           @pressClose="dialogOpen = false"
         />
@@ -44,11 +47,11 @@
 
     <v-dialog v-model="editOpen" max-width="50vw" width="50vw">
       <ModalRegisterAndEdit
-        :Supplier="editedSupplier"
+        :supplier="editedSupplier"
         title="Editar usuário"
         subtitle="Instruções para edição"
         subtitle2="Siga os passos abaixo para atualizar as informações"
-        text="Atualize os campos necessários com informações válidas. Certifique-se de que o nome tenha pelo menos 3 caracteres e o email esteja em formato correto. As alterações serão aplicadas apenas após confirmar clicando no botão 'Salvar'."
+        text="Atualize os campos necessários com informações válidas. As alterações serão aplicadas apenas após confirmar clicando no botão 'Salvar'."
         @edit="editSupplier"
         @pressClose="editOpen = false"
       />
@@ -111,11 +114,6 @@ export default {
       }catch (error) {
         toast.error('Erro ao criar fornecedor.');
 
-        if (axios.isAxiosError(error)) {
-          console.error('Erro da API:', error.response?.data);
-        } else {
-          console.error(error);
-        }
       }finally {
         this.dialogOpen = false;
       }
@@ -123,20 +121,20 @@ export default {
 
   async editSupplier(supplier: SupplierDTO) {
     try {
-      const updatePayload: UpdateSupplierDTO = {
+      const updateSupplier: UpdateSupplierDTO = {
         name: supplier.name,
         cnpj: supplier.cnpj,
         address: {
+          id_state: supplier.address.state.id,
           cep: supplier.address.cep,
           complement: supplier.address.complement,
-          id_state: supplier.address.state.id,
         },
         contact: {
           tel_number: supplier.contact.tel_number,
-        }
+        },
       };
-      
-      await supplierStore().editSupplier(supplier.id, updatePayload);
+      const supplierId = supplier.id;
+      await supplierStore().editSupplier(supplierId, updateSupplier);
       toast.success('Fornecedor editado com sucesso!');
       this.editOpen = false;
       this.loadAllSuppliers();
