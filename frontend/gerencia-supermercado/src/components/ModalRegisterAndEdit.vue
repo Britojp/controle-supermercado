@@ -120,9 +120,9 @@
 
 <script lang="ts">
 import rulesForm from '@/utils/rules-form';
-import type { States, Supplier } from '@/utils/intefaces';
+import type { States, } from '@/utils/interfaces';
 import { supplierStore } from '@/stores/supplierStore';
-import type { CreateSupplierDTO } from '@/dto/supplier.dto';
+import type { SupplierDTO, CreateSupplierDTO, UpdateSupplierDTO } from '@/dto/supplier.dto';
 export default {
   name: 'ModalRegisterSupplier',
   props: {
@@ -143,7 +143,7 @@ export default {
       required: true
     },
     supplier: {
-      type: Object as () => Supplier | null,
+      type: Object as () => SupplierDTO | null,
       default: null,
     }
   },
@@ -164,7 +164,7 @@ export default {
 watch: {
   supplier: {
     immediate: true,
-handler(newSupplier: Supplier | null) {
+handler(newSupplier: SupplierDTO | null) {
       if (newSupplier) {
         this.fillForm(newSupplier);
 

@@ -150,4 +150,19 @@ export const login = async (email: string, password: string) => {
   }
 }
 
+
+// Marcas
+
+export const getAllBrands = async () => {
+  try {
+    const response = await api.get('/brand')
+
+    return response.data
+  } catch (error) {
+    console.error('Erro ao buscar marcas:', error)
+    throw new Error('Erro ao buscar marcas')
+  }
+}
+
+
 export default api

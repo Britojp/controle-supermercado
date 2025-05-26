@@ -11,7 +11,7 @@
 
         <v-divider></v-divider>
 
-        <TableEmployees :header="header" :items="produtos" button-string="Cadastrar novo Produto"></TableEmployees>
+        <GenericTable :header="header" :items="produtos" button-string="Cadastrar novo Produto"></GenericTable>
 
   </v-card>
     </v-sheet>
@@ -19,12 +19,12 @@
 
 
   <script lang="ts">
-import TableEmployees from '@/components/GenericTable.vue';
+import GenericTable from '@/components/GenericTable.vue';
 
 
   export default {
     name: 'products',
-    components: {TableEmployees},
+    components: {GenericTable},
 
     data () {
       return {

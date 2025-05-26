@@ -68,8 +68,8 @@
       <v-list-item
         prepend-icon="mdi-cart-plus"
         title="Movimentação de Produtos"
-        value="movimentacao"
-        to="/transacoes"
+        value="transacao"
+        to="/transacao"
         :class="!drawer ? 'justify-center' : ''"
       />
 

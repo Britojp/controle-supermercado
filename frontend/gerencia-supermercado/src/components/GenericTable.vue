@@ -64,7 +64,8 @@
 </template>
 
 <script lang="ts">
-import type { User } from '@/utils/intefaces';
+import type { UserDTO } from '@/dto/users.dto';
+
 
 export default {
   name: 'TableEmployees',
@@ -86,13 +87,13 @@ export default {
     return {
       search: '',
       registerFlag: false,
-      funcionarios: [] as User[]
+      funcionarios: [] as UserDTO[]
 
     };
   },
   methods: {
 
-    addNewEmployee(employee: User) {
+    addNewEmployee(employee: UserDTO) {
       this.funcionarios.push(employee);
       this.registerFlag = false;
     }
