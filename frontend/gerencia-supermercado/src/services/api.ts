@@ -1,7 +1,7 @@
-import type { User } from '@/utils/intefaces'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import type { SupplierDTO, CreateSupplierDTO, UpdateSupplierDTO } from '@/dto/supplier.dto'
+import type { createUserDTO, UserDTO } from '@/dto/users.dto'
 
 const api = axios.create({
   baseURL: 'http://localhost:3000',
@@ -36,7 +36,7 @@ export const getAllUsers = async () => {
   }
 }
 
-export const createNewUser = async (userData: User) => {
+export const createNewUser = async (userData: createUserDTO) => {
   try {
     const response = await api.post('/user', {
       name: userData.name,
@@ -61,7 +61,7 @@ export const deleteUser = async (userId: string) => {
   }
 }
 
-export const editUser = async (user: User) => {
+export const editUser = async (user: UserDTO) => {
   try {
     const response = await api.patch(`/user/${user.id}`, {
       name: user.name,

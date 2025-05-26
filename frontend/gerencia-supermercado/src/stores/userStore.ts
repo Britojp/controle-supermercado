@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
-import type { User } from '@/utils/intefaces';
 import * as api from '@/services/api';
+import type { createUserDTO, UpdateUserDTO, UserDTO } from '@/dto/users.dto';
 
 export const userStore = defineStore('userStore', {
   state: () => ({
-    allUsers: [] as User[],
+    allUsers: [] as UserDTO[],
     loading: false
   }),
 
@@ -20,7 +20,7 @@ export const userStore = defineStore('userStore', {
       }
     },
 
-    async createUser(userData: User): Promise<User> {
+    async createUser(userData: UserDTO): Promise<createUserDTO> {
       try {
         const createdUser = await api.createNewUser(userData);
         this.allUsers.push(createdUser);
@@ -40,7 +40,7 @@ export const userStore = defineStore('userStore', {
       }
     },
 
-    async editUser(user: User): Promise<User> {
+    async editUser(user: UserDTO): Promise<UpdateUserDTO> {
       try {
         const updatedUser = await api.editUser(user);
         const index = this.allUsers.findIndex(u => u.id === user.id);

@@ -13,14 +13,16 @@ import Product from '@/pages/products.vue'
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import { authStore } from '@/stores/authStore'
 import AllSuppliers from '@/pages/allSuppliers.vue'
+import AllTransactions from '@/pages/allTransactions.vue'
 
 const routes = [
-  {path: '/', component: Index},
+  {path: '/', component: Index, meta: {hideNavBar: true}},
   {path: '/dashboard', component: Dashboard, meta: { requiresAuth: true }},
-  {path: '/transaction', component: Transaction, meta: { requiresAuth: true }},
-  {path: '/allEmployees', component: AllEmployees, meta: { requiresAuth: true }},
-  {path: '/products', component: Product,   meta: { requiresAuth: true }},
-  {path: '/allSuppliers', component: AllSuppliers,   meta: { requiresAuth: true }}
+  {path: '/transacao', component: Transaction, meta: { requiresAuth: true }},
+  {path: '/todos-funcionarios', component: AllEmployees, meta: { requiresAuth: true }},
+  {path: '/produtos', component: Product,   meta: { requiresAuth: true }},
+  {path: '/todos-fornecedores', component: AllSuppliers,   meta: { requiresAuth: true }},
+  {path: '/transacoes', component: AllTransactions, meta: {requiresAuth: true}}
 ]
 
 

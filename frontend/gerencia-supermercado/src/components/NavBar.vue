@@ -29,11 +29,19 @@
       />
           <v-divider></v-divider>
 
-            <v-list-item
+      <v-list-item
         prepend-icon="mdi-cart-variant"
         title="Consultar todos os produtos"
         value="produtos"
-        to="/products"
+        to="/produtos"
+        :class="!drawer ? 'justify-center' : ''"
+      />
+
+      <v-list-item
+        prepend-icon="mdi-currency-usd"
+        title="Consultar transações"
+        value="transacoes"
+        to="/transacoes"
         :class="!drawer ? 'justify-center' : ''"
       />
 
@@ -42,7 +50,7 @@
         prepend-icon="mdi-account-multiple"
         title="Consultar todos os funcionários"
         value="funcionarios"
-        to="/allEmployees"
+        to="/todos-funcionarios"
         :class="!drawer ? 'justify-center' : ''"
         />
 
@@ -50,8 +58,8 @@
       <v-list-item
         prepend-icon="mdi-handshake"
         title="Consultar todos os fornecedores"
-        value="fornecedores"
-        to="/allSuppliers"
+        value="todos-fornecedores"
+        to="/todos-fornecedores"
         :class="!drawer ? 'justify-center' : ''"
         />
 
@@ -61,7 +69,7 @@
         prepend-icon="mdi-cart-plus"
         title="Movimentação de Produtos"
         value="movimentacao"
-        to="/transaction"
+        to="/transacoes"
         :class="!drawer ? 'justify-center' : ''"
       />
 
