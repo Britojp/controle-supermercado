@@ -217,7 +217,7 @@ fillForm(supplier: SupplierDTO) {
   this.name = supplier.name || '';
   this.cnpj = supplier.cnpj || '';
   this.complement = supplier.address?.complement || '';
-  this.state = supplier.address?.state?.id || '';
+  this.state = supplier.address?.state?.name || '';
   this.cep = supplier.address?.cep || '';
   this.phone = supplier.contact?.tel_number || '';
   this.supplierId = supplier.id;
