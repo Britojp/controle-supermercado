@@ -9,7 +9,9 @@
       title="Movimentação de Mercadoria"
       prepend-icon="mdi-cart-plus"
       variant="text"
+      style="overflow-y: auto;"
     >
+
       <v-divider class="mb-6"></v-divider>
 
         <v-card

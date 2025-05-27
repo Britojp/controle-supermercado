@@ -164,5 +164,16 @@ export const getAllBrands = async () => {
   }
 }
 
+// Categorias
+
+export const getAllCategories = async () => {
+  try {
+    const response = await api.get('/categories')
+    return response.data
+  } catch (error) {
+    console.error('Erro ao buscar categorias:', error)
+    throw new Error('Erro ao buscar categorias')
+  }
+}
 
 export default api

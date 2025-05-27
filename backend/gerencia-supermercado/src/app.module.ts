@@ -10,10 +10,12 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { StateModule } from './state/state.module';
 import { BrandModule } from './brand/brand.module';
+import { CategoriesService } from './categories/categories.service';
+import { CategoriesModule } from './categories/categories.module';
 
 
 @Module({
-  imports: [UsuarioModule, DatabaseModule, ProductModule, TransactionModule, SupplierModule, AuthModule, StateModule, BrandModule],
+  imports: [UsuarioModule, DatabaseModule, ProductModule, TransactionModule, SupplierModule, AuthModule, StateModule, BrandModule, CategoriesModule],
   controllers: [],
   providers: [
     {
