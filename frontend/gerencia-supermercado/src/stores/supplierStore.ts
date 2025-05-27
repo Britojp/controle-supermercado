@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia';
 import * as api from '@/services/api';
-import type { States, Supplier } from '@/utils/intefaces';
 import type { CreateSupplierDTO, SupplierDTO, UpdateSupplierDTO } from '@/dto/supplier.dto';
 import axios from 'axios';
+import type { StateDTO } from '@/dto/state.dto';
 
 export const supplierStore = defineStore('supplierStore', {
   state: () => ({
     allSuppliers: [] as SupplierDTO[],
     loading: false,
-    states: [] as States[]
+    states: [] as StateDTO[]
   }),
 
   actions: {
@@ -47,18 +47,28 @@ export const supplierStore = defineStore('supplierStore', {
       }
     },
 
-  async editSupplier(id: string, data: UpdateSupplierDTO): Promise<SupplierDTO> {
+async editSupplier(id: string, data: UpdateSupplierDTO): Promise<SupplierDTO> {
+  console.log('Editando fornecedor:', id);
+  console.log('Dados enviados para atualização:', JSON.stringify(data, null, 2));
+
   try {
     const updatedSupplier = await api.editSupplier(id, data);
-    const index = this.allSuppliers.findIndex(u => u.id === id);
+
+    const index = this.allSuppliers.findIndex(supplier => supplier.id === id);
     if (index !== -1) {
       this.allSuppliers.splice(index, 1, updatedSupplier);
+    } else {
+      console.warn(`Fornecedor com id ${id} não encontrado na lista`);
     }
+
     return updatedSupplier;
-  } catch (error) {
+  } catch (error: any) {
+    console.error('Erro ao editar fornecedor no store:', error.response?.data || error.message);
     throw error;
   }
 },
+
+
 
 
     async fetchStates() {

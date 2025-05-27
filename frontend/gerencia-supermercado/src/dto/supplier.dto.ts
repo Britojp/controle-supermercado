@@ -35,11 +35,12 @@ export interface UpdateSupplierDTO {
   name?: string;
   cnpj?: string;
   address?: {
+    id_state?: string;
     cep?: string;
     complement?: string;
-    id_state?: string;
   };
   contact?: {
     tel_number?: string;
   };
+
 }

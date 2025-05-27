@@ -62,7 +62,6 @@
 <script lang="ts">
 import GenericTable from '@/components/GenericTable.vue';
 import ModalRegisterAndEdit from '@/components/ModalRegisterAndEdit.vue';
-import type { Supplier } from '@/utils/intefaces';
 import { toast } from 'vue3-toastify';
 import { supplierStore } from '@/stores/supplierStore';
 import type { SupplierDTO, CreateSupplierDTO, UpdateSupplierDTO } from '@/dto/supplier.dto';
@@ -105,8 +104,8 @@ export default {
     },
 
     async addNewSupplier(supplier: CreateSupplierDTO) {
-    
-    
+
+
       try {
         await supplierStore().createSupplier(supplier);
         toast.success('Fornecedor criado com sucesso!');
@@ -119,30 +118,21 @@ export default {
       }
     },
 
-  async editSupplier(supplier: SupplierDTO) {
-    try {
-      const updateSupplier: UpdateSupplierDTO = {
-        name: supplier.name,
-        cnpj: supplier.cnpj,
-        address: {
-          id_state: supplier.address.state.id,
-          cep: supplier.address.cep,
-          complement: supplier.address.complement,
-        },
-        contact: {
-          tel_number: supplier.contact.tel_number,
-        },
-      };
-      const supplierId = supplier.id;
-      await supplierStore().editSupplier(supplierId, updateSupplier);
-      toast.success('Fornecedor editado com sucesso!');
-      this.editOpen = false;
-      this.loadAllSuppliers();
-    } catch (error) {
-      toast.error('Erro ao editar fornecedor');
-      console.error(error);
-    }
-  },
+async editSupplier(updateSupplier: UpdateSupplierDTO & {id: string}) {
+  const {id, ...data} = updateSupplier;
+  try {
+
+    await supplierStore().editSupplier(id, data);
+
+    toast.success('Fornecedor editado com sucesso!');
+    this.editOpen = false;
+    this.loadAllSuppliers();
+  } catch (error) {
+    toast.error('Erro ao editar fornecedor');
+    console.error(error);
+  }
+},
+
 
     toggleModal(flag: boolean) {
       this.dialogOpen = flag;
@@ -153,7 +143,7 @@ export default {
       this.editOpen = true;
     },
 
-    openDeleteDialog(supplier: Supplier) {
+    openDeleteDialog(supplier: SupplierDTO) {
       this.supplierToDelete = supplier.id;
       this.toggleDelete = true;
     },

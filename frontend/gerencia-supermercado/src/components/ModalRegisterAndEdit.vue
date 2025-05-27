@@ -118,7 +118,7 @@
       </v-form>
     </v-container>
   </v-card>
-  
+
 </template>
 
 <script lang="ts">
@@ -126,6 +126,7 @@ import rulesForm from '@/utils/rules-form';
 import type { States, } from '@/utils/interfaces';
 import { supplierStore } from '@/stores/supplierStore';
 import type { SupplierDTO, CreateSupplierDTO, UpdateSupplierDTO } from '@/dto/supplier.dto';
+import type { StateDTO } from '@/dto/state.dto';
 
 export default {
   name: 'ModalRegisterSupplier',
@@ -135,7 +136,6 @@ export default {
     subtitle2: String,
     text: String,
     supplier: {
-
       type: Object as () => UpdateSupplierDTO | null,
       default: null,
     },
@@ -148,18 +148,19 @@ export default {
       cnpj: '',
       complement: '',
       state: '',
+      supplierId: '',
       cep: '',
       rulesForm,
       states: [] as States[],
       validationEnabled: true,
-      statesLoaded: false, 
+      statesLoaded: false,
     };
   },
 
   watch: {
     supplier: {
       immediate: true,
-      async handler(newSupplier: Supplier | null) {
+      async handler(newSupplier: SupplierDTO | null) {
         if (newSupplier) {
           if (!this.statesLoaded) {
             await this.loadStates();
@@ -199,8 +200,8 @@ async loadStates() {
   try {
     const store = supplierStore();
     await store.fetchStates();
-        this.states = store.states.map((item) => ({
-        id: String(item.id),   
+        this.states = store.states.map((item : StateDTO) => ({
+        id: String(item.id),
         name: item.name,
         uf: item.uf,
       }));
@@ -212,14 +213,16 @@ async loadStates() {
 },
 
 
-    fillForm(supplier: UpdateSupplierDTO) {
-      this.name = supplier.name || '';
-      this.cnpj = supplier.cnpj || '';
-      this.complement = supplier.address?.complement || '';
-      this.state = supplier.address?.id_state || '';
-      this.cep = supplier.address?.cep || '';
-      this.phone = supplier.contact?.tel_number || '';
-    },
+fillForm(supplier: SupplierDTO) {
+  this.name = supplier.name || '';
+  this.cnpj = supplier.cnpj || '';
+  this.complement = supplier.address?.complement || '';
+  this.state = supplier.address?.state?.id || '';
+  this.cep = supplier.address?.cep || '';
+  this.phone = supplier.contact?.tel_number || '';
+  this.supplierId = supplier.id;
+},
+
 
     restFormFields() {
       this.name = '';
@@ -230,33 +233,50 @@ async loadStates() {
       this.cep = '';
     },
 
-    saveRegister() {
-      const form = this.$refs.form as any;
+saveRegister() {
+  const form = this.$refs.form as any;
 
-      form.validate().then((isValid: boolean) => {
-        if (!isValid) return;
+  form.validate().then((isValid: boolean) => {
+    if (!isValid) return;
 
-        const fornecedor: CreateSupplierDTO = {
-          name: this.name,
-          cnpj: this.cnpj,
-          address: {
-            cep: this.cep,
-            complement: this.complement,
-            id_state: this.state,
-          },
-          contact: {
-            tel_number: this.phone,
-          },
-        };
+    const fornecedor: CreateSupplierDTO = {
+      name: this.name,
+      cnpj: this.cnpj,
+      address: {
+        cep: this.cep,
+        complement: this.complement,
+        id_state: this.state,
+      },
+      contact: {
+        tel_number: this.phone,
+      },
+    };
+    const fornecedorUpdate: UpdateSupplierDTO = {
+      name: this.name,
+      cnpj: this.cnpj,
+      address: {
+        id_state: this.state,
+        cep: this.cep,
+        complement: this.complement,
+      },
+      contact: {
+        tel_number: this.phone,
+      },
+    };
+    const eventName = this.isEditing ? 'edit' : 'submit';
+    if (this.isEditing) {
 
-        const eventName = this.isEditing ? 'edit' : 'submit';
-        this.$emit(eventName, fornecedor);
-
-        if (!this.isEditing) {
-          this.restFormFields();
-        }
+      this.$emit(eventName, {
+        id: this.supplierId,
+        ...fornecedorUpdate,
       });
-    },
+    } else {
+      this.$emit(eventName, fornecedor);
+      this.restFormFields();
+    }
+  });
+},
+
 
     formatCNPJ() {
       let digits = this.cnpj.replace(/\D/g, '').slice(0, 14);

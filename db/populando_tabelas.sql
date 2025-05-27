@@ -1,10 +1,32 @@
-
+Insert into states (name, uf) values ('Acre', 'AC');
+Insert into states (name, uf) values ('Alagoas', 'AL');
+Insert into states (name, uf) values ('Amapá', 'AP');
+Insert into states (name, uf) values ('Amazonas', 'AM');
+Insert into states (name, uf) values ('Bahia', 'BA');
+Insert into states (name, uf) values ('Ceará', 'CE');
+Insert into states (name, uf) values ('Distrito Federal', 'DF');
+Insert into states (name, uf) values ('Espírito Santo', 'ES');
+Insert into states (name, uf) values ('Goiás', 'GO');
+Insert into states (name, uf) values ('Maranhão', 'MA');
+Insert into states (name, uf) values ('Mato Grosso', 'MT');
+Insert into states (name, uf) values ('Mato Grosso do Sul', 'MS');
+Insert into states (name, uf) values ('Minas Gerais', 'MG');
+Insert into states (name, uf) values ('Pará', 'PA');
+Insert into states (name, uf) values ('Paraíba', 'PB');
+Insert into states (name, uf) values ('Paraná', 'PR');
+Insert into states (name, uf) values ('Pernambuco', 'PE');
+Insert into states (name, uf) values ('Piauí', 'PI');
+Insert into states (name, uf) values ('Rio de Janeiro', 'RJ');
+Insert into states (name, uf) values ('Rio Grande do Norte', 'RN');
+Insert into states (name, uf) values ('Rio Grande do Sul', 'RS');
+Insert into states (name, uf) values ('Rondônia', 'RO');
+Insert into states (name, uf) values ('Roraima', 'RR');
+Insert into states (name, uf) values ('Santa Catarina', 'SC');
+Insert into states (name, uf) values ('São Paulo', 'SP');
+Insert into states (name, uf) values ('Sergipe', 'SE');
+Insert into states (name, uf) values ('Tocantins', 'TO');
 
 -- Unidades de medida --
-INSERT INTO measurements (name, initials) VALUES
-('Grama', 'g');
-INSERT INTO measurements (name, initials) VALUES
-('Mililitro', 'ml');
 INSERT INTO measurements (name, initials) VALUES
 ('Unidade', 'un');
 INSERT INTO measurements (name, initials) VALUES
