@@ -176,4 +176,36 @@ export const getAllCategories = async () => {
   }
 }
 
+// Unidades de Medida
+export const getAllUnits = async () => {
+  try {
+    const response = await api.get('/measurement')
+    return response.data
+  } catch (error) {
+    console.error('Erro ao buscar unidades de medida:', error)
+    throw new Error('Erro ao buscar unidades de medida')
+  }
+}
+
+// Prateleiras
+export const getAllShelves = async () => {
+  try {
+    const response = await api.get('/shelves')
+    return response.data
+  } catch (error) {
+    console.error('Erro ao buscar prateleiras:', error)
+    throw new Error('Erro ao buscar prateleiras')
+  }
+}
+
+// Corredores
+export const getAllCorridors = async () => {
+  try {
+    const response = await api.get('/corridors')
+    return response.data
+  } catch (error) {
+    console.error('Erro ao buscar corredores:', error)
+    throw new Error('Erro ao buscar corredores')
+  }
+}
 export default api

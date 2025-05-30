@@ -116,27 +116,27 @@
 
   <v-col cols="3">
     <v-select
-      :items="Corredores"
+      :items="corridors"
       label="Número do corredor"
-      item-title="nome"
+      item-title="name"
       item-value="id"
       color="green-darken-3"
       variant="outlined"
       class="hint-custom"
-      v-model="corredorNumber"
+      v-model="corridor"
     />
   </v-col>
 
   <v-col cols="3">
     <v-select
-      :items="Prateleiras"
+      :items="shelves"
       label="Número da prateleira"
-      item-title="nome"
+      item-title="name"
       item-value="id"
       color="green-darken-3"
       variant="outlined"
       class="hint-custom"
-      v-model="shelfNumber"
+      v-model="shelf"
     />
   </v-col>
 
@@ -225,9 +225,13 @@
 import { useDate } from 'vuetify';
 import rulesForm from '@/utils/rules-form';
 import { brandsStore } from '@/stores/brandsStore';
-import type { Brand } from '@/utils/interfaces';
+import type { Brand, Corridors, Meansurement, Shelves } from '@/utils/interfaces';
 import { categoriesStore } from '@/stores/categoriesStore';
 import type { CategoriesDTO } from '@/dto/categories.dto';
+import { uitsOfMeansureStore } from '@/stores/unitsOfMeansureStore';
+import { shelvesStore } from '@/stores/shelvesStore';
+import { corridorsStore } from '@/stores/corridorsStore';
+
 export default {
     name: 'CreateProduct',
     data() {
@@ -236,24 +240,23 @@ export default {
             typeTransaction: 'entrada',
             validationForms: false,
             brands : [] as Brand[],
-            Prateleiras: ['P01', 'P02', 'P03', 'P04', 'P05', 'P06', 'P07', 'P08', 'P09', 'P10'],
-            Corredores: ['C01', 'C02', 'C03', 'C04', 'C05', 'C06', 'C07', 'C08', 'C09', 'C10'],
+            shelves: [] as Shelves[],
+            corridors: [] as Corridors[],
             productName: '',
             brandName: '',
             lotNumber: '',
-            shelfNumber: '',
+            shelf: '',
             tempDate: '',
             inputQuantity: 0,
             costValue: 0,
             categoryName: '',
-            corredorNumber: '',
+            corridor: '',
             menuDate: false,
             date : useDate(),
             rulesForm: rulesForm,
             selectedUnit: '',
-            unitsOfMeasure: [],
+            unitsOfMeasure: [] as Meansurement[],
             allCategories: [] as CategoriesDTO[],
-
         };
     },
     methods: {
@@ -273,6 +276,38 @@ export default {
         const store = brandsStore();
         await store.fetchBrands();
         this.brands = store.allBrands;
+      } catch (e) {
+        console.error(e);
+      }
+    },
+
+    async loadAllUnitsOfMeasure() {
+      try {
+        const store = uitsOfMeansureStore();
+        await store.fetchMeansurements();
+        this.unitsOfMeasure = store.allUnits;
+      } catch (e) {
+        console.error(e);
+      }
+    },
+
+    async loadAllCorridors() {
+      try {
+        const store = corridorsStore();
+        await store.fetchCorridors();
+        this.corridors = store.allCorridors;
+        console.log(this.corridors);
+      } catch (e) {
+        console.error(e);
+      }
+    },
+
+    async loadAllShelves() {
+      try {
+        const store = shelvesStore();
+        await store.fetchShelves();
+        this.shelves = store.allShelves;
+        console.log(this.shelves);
       } catch (e) {
         console.error(e);
       }
@@ -311,6 +346,9 @@ export default {
     mounted(){
     this.loadAllBrands();
     this.loadAllCategories();
+    this.loadAllUnitsOfMeasure();
+    this.loadAllCorridors();
+    this.loadAllShelves();
     },
 };
 </script>
