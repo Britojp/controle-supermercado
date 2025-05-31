@@ -67,10 +67,6 @@ async editSupplier(id: string, data: UpdateSupplierDTO): Promise<SupplierDTO> {
     throw error;
   }
 },
-
-
-
-
     async fetchStates() {
       this.loading = true;
       try {

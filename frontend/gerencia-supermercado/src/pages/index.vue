@@ -72,7 +72,6 @@
 </template>
 
 <script lang="ts">
-import { getAllUsers } from '@/services/api';
 import { authStore } from '@/stores/authStore';
 import { toast } from 'vue3-toastify';
 
@@ -91,7 +90,7 @@ export default{
     async login() {
       try{
         this.loading = true;
-        await authStore().login(this.email, this.password)
+        await authStore().login(this.email, this.password);
         this.$router.push('/dashboard');
       }catch (erro){
         toast.error("Erro ao tentar logar");

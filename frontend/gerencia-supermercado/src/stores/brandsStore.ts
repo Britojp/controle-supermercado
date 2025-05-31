@@ -1,10 +1,10 @@
-import type { Brand } from '@/utils/interfaces';
 import { defineStore } from 'pinia';
 import * as api from '@/services/api';
+import type { BrandDTO, CreateBrandDTO } from '@/dto/brands.dto';
 
 export const brandsStore = defineStore('brandStore', {
   state: () => ({
-    allBrands: [] as Brand[],
+    allBrands: [] as BrandDTO[],
     loading: false
   }),
 
@@ -17,6 +17,17 @@ export const brandsStore = defineStore('brandStore', {
         console.error(error);
       } finally {
         this.loading = false;
+      }
+    },
+
+    async createBrand(brandData: CreateBrandDTO): Promise<BrandDTO> {
+      try {
+        const createdBrand = await api.createNewBrand(brandData);
+        this.allBrands.push(createdBrand);
+        return createdBrand;
+      } catch (error) {
+        console.error('Erro ao criar marca:', error);
+        throw error;
       }
     },
 

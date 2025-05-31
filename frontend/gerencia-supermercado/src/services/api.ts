@@ -2,6 +2,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import type { SupplierDTO, CreateSupplierDTO, UpdateSupplierDTO } from '@/dto/supplier.dto'
 import type { createUserDTO, UserDTO } from '@/dto/users.dto'
+import type { CreateTransactionDTO, TransactionDTO } from '@/dto/transaction.dto'
 
 const api = axios.create({
   baseURL: 'http://localhost:3000',
@@ -164,6 +165,16 @@ export const getAllBrands = async () => {
   }
 }
 
+export const createNewBrand = async (brandData: { name: string }) => {
+  try {
+    const response = await api.post('/brand', brandData)
+    return response.data
+  } catch (error) {
+    console.error('Erro ao criar marca:', error)
+    throw new Error('Erro ao criar marca')
+  }
+}
+
 // Categorias
 
 export const getAllCategories = async () => {
@@ -208,4 +219,36 @@ export const getAllCorridors = async () => {
     throw new Error('Erro ao buscar corredores')
   }
 }
+
+// Transações
+export const getAllTransactions = async () => {
+  try {
+    const response = await api.get('/transaction')
+    return response.data
+  } catch (error) {
+    console.error('Erro ao buscar transações:', error)
+    throw new Error('Erro ao buscar transações')
+  }
+}
+
+export const createNewTransaction = async (transactionData: CreateTransactionDTO) : Promise<TransactionDTO> => {
+  try {
+    const response = await api.post('/transaction', transactionData)
+    return response.data
+  } catch (error) {
+    console.error('Erro ao criar transação:', error)
+    throw new Error('Erro ao criar transação')
+  }
+}
+export const deleteTransaction = async (transactionId: string) => {
+  try {
+    await api.delete(`/transaction/${transactionId}`)
+    console.log(`Transação ${transactionId} deletada com sucesso`)
+  } catch (error) {
+    console.error('Erro ao deletar transação:', error)
+    throw new Error('Erro ao deletar transação')
+  }
+}
+
+
 export default api

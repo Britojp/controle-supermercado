@@ -1,49 +1,61 @@
-import { defineStore } from 'pinia';
-import * as api from '@/services/api';
-import { toast } from 'vue3-toastify';
-import router from '@/router';
-import Cookies from 'js-cookie';
+import { defineStore } from 'pinia'
+import * as api from '@/services/api'
+import { toast } from 'vue3-toastify'
+import router from '@/router'
+import Cookies from 'js-cookie'
 
 export const authStore = defineStore('authStore', {
   state: () => ({
-    token: Cookies.get('auth_token') || ''
+    token: Cookies.get('auth_token') || '',
+    user: JSON.parse(localStorage.getItem('user') || 'null'),
+    loading: false,
   }),
 
   getters: {
     isAuthenticated(): boolean {
-      return !!this.token;
-    }
+      return !!this.token
+    },
+    currentUser(): any {
+      return this.user
+    },
   },
 
   actions: {
-    async login(email: string, password: string) {
+    async login(email: string, password: string): Promise<string> {
+      this.loading = true
       try {
-        const { access_token } = await api.login(email, password);
+        const { access_token, user } = await api.login(email, password)
 
-        this.token = access_token;
+        this.token = access_token
+        this.user = user
 
-        Cookies.set('auth_token', access_token);
+        Cookies.set('auth_token', access_token)
+        localStorage.setItem('user', JSON.stringify(user))
 
-        router.push('/dashboard');
+        router.push('/dashboard')
         setTimeout(() => {
-          toast.success('Login realizado com sucesso!');
-        }, 200);
-        return access_token;
+          toast.success('Login realizado com sucesso!')
+        }, 200)
 
+        return access_token
       } catch (error) {
-        console.error('Erro no login:', error);
-        toast.error("Falha ao fazer login. Verifique suas credenciais.");
-        throw error;
+        console.error('Erro no login:', error)
+        toast.error('Falha ao fazer login. Verifique suas credenciais.')
+        throw error
+      } finally {
+        this.loading = false
       }
     },
 
     logout() {
       this.token = ''
-      Cookies.remove('auth_token');
-      router.push('/');
+      this.user = null
+      Cookies.remove('auth_token')
+      localStorage.removeItem('user')
+      router.push('/')
       setTimeout(() => {
-        toast.info('Logout realizado com sucesso!');
-      }, 200);
-    }
-  }
-});
+        toast.info('Logout realizado com sucesso!')
+      }, 200)
+    },
+  },
+})

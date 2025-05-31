@@ -3,12 +3,6 @@ export type States = {
     name:string,
     uf:string
 }
-
-export type Brand = {
-  id: string,
-  name: string
-}
-
 export type Meansurement = {
   id: string
   name: string
