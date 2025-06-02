@@ -7,7 +7,7 @@ export class Corridor {
     id: string
 
     @Column()
-    number: number
+    name: string
 
     @OneToMany(() => Stock_location, loc => loc.batch)
     locations: Stock_location[];

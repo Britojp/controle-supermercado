@@ -1,9 +1,15 @@
 import { Type } from "class-transformer"
 import { IsNotEmpty, IsNumber, IsString, ValidateNested } from "class-validator"
-import { createCategoriesDTO } from "src/categories/dto/create-categories.dto"
 import { Brand } from "src/database/entities/brand.entity"
+import { Category } from "src/database/entities/category.entity"
 
 class Measurement{
+    
+    @IsString()
+    @IsNotEmpty()
+    id: string
+
+    
     @IsString()
     @IsNotEmpty()
     name: string
@@ -46,8 +52,8 @@ export class createProductDTO{
     nutrition : Nutrition 
     
     @ValidateNested()
-    @Type(() => createCategoriesDTO)
-    category: createCategoriesDTO
+    @Type(() => Category)
+    category: Category
     
     @ValidateNested()
     @Type(() => Brand)
