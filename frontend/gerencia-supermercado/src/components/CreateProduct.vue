@@ -110,9 +110,9 @@
               v-model="selectedSupplier"
               />
           </v-col>
-          
-          
-          
+
+
+
           <v-col cols="3">
             <v-text-field
               color="green-darken-3"
@@ -126,8 +126,8 @@
               v-model="costValue"
             />
           </v-col>
-          
-          
+
+
           <v-col cols="1">
             <v-text-field
               color="green-darken-3"
@@ -141,21 +141,21 @@
               v-model="portion"
               />
             </v-col>
-            
-            
+
+
                 <v-col cols="2">
-               <v-select
-                 :items="unitsOfMeasure"
-                 label="Medida"
-                 item-title="name"
-                 item-value="id"
-                 color="green-darken-3"
-                 variant="outlined"
-                 class="hint-custom"
-                 :rules="[rulesForm.requiredRule]"
-                 v-model="selectedUnit"
-               />
-             </v-col>
+              <v-select
+                :items="unitsOfMeasure"
+                label="Medida"
+                item-title="name"
+                item-value="id"
+                color="green-darken-3"
+                variant="outlined"
+                class="hint-custom"
+                :rules="[rulesForm.requiredRule]"
+                v-model="selectedUnit"
+              />
+            </v-col>
         </v-row>
 
         <v-row>
@@ -215,7 +215,7 @@
 
         <v-row>
 
-            
+
             <v-col cols="3">
               <v-select
                 :items="shelves"
@@ -261,8 +261,13 @@
               :rules="[value => !!value || 'Selecione uma marca válida']"
             />
           </v-col>
+
         </v-row>
       </v-form>
+    </div>
+
+    <div v-else>
+      
     </div>
 
     <v-btn color="green">
@@ -378,7 +383,7 @@ export default {
         console.error(e);
       }
     },
-    
+
    async loaAllSuppliers() {
     try{
       const store = supplierStore();
@@ -401,7 +406,7 @@ async createNewTransaction() {
       nutritions: {
         portion: this.portion,
         protein_quantity: this.proteinQuantity,
-        fatness_quantity: this.fatnessQuantity, 
+        fatness_quantity: this.fatnessQuantity,
         carbohydrate_quantity: this.carbohydrateQuantity,
         id_meansurements: this.selectedUnit,
       },
@@ -427,7 +432,7 @@ async createNewTransaction() {
     }
 
 
-    
+
     this.$emit('transaction-created', true);
     toast.success('Transação criada com sucesso!');
   } catch (error) {
@@ -436,7 +441,7 @@ async createNewTransaction() {
   }
 },
 
-    
+
     selectDate(date: string) {
     const formattedDate = this.date.format(date, 'keyboardDate');
     this.tempDate = formattedDate;

@@ -14,6 +14,7 @@ import { authStore } from '@/stores/authStore'
 import AllSuppliers from '@/pages/allSuppliers.vue'
 import AllTransactions from '@/pages/allTransactions.vue'
 import AllProducts from '@/pages/AllProducts.vue'
+import Settings from '@/pages/settings.vue'
 
 const routes = [
   {path: '/', component: Index, meta: {hideNavBar: true}},
@@ -22,7 +23,8 @@ const routes = [
   {path: '/todos-funcionarios', component: AllEmployees, meta: { requiresAuth: true }},
   {path: '/produtos', component: AllProducts,   meta: { requiresAuth: true }},
   {path: '/todos-fornecedores', component: AllSuppliers,   meta: { requiresAuth: true }},
-  {path: '/transacoes', component: AllTransactions, meta: {requiresAuth: true}}
+  {path: '/transacoes', component: AllTransactions, meta: {requiresAuth: true}},
+  {path: '/configuracoes', component: Settings, meta: { requiresAuth: true }}
 ]
 
 

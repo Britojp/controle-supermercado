@@ -15,9 +15,6 @@ export const authStore = defineStore('authStore', {
     isAuthenticated(): boolean {
       return !!this.token
     },
-    currentUser(): any {
-      return this.user
-    },
   },
 
   actions: {
@@ -27,10 +24,8 @@ export const authStore = defineStore('authStore', {
         const { access_token, user } = await api.login(email, password)
 
         this.token = access_token
-        this.user = user
 
         Cookies.set('auth_token', access_token)
-        localStorage.setItem('user', JSON.stringify(user))
 
         router.push('/dashboard')
         setTimeout(() => {
@@ -51,7 +46,6 @@ export const authStore = defineStore('authStore', {
       this.token = ''
       this.user = null
       Cookies.remove('auth_token')
-      localStorage.removeItem('user')
       router.push('/')
       setTimeout(() => {
         toast.info('Logout realizado com sucesso!')

@@ -6,10 +6,14 @@
       width="90%"
       height="90%"
       elevation="2"
-      prepend-icon="mdi-currency-usd"
+      prepend-icon="mdi-chart-bar"
       title="Consultar todas as transações"
     >
       <v-divider></v-divider>
+
+      <TransactionTable/>
+
+
     </v-card>
 
 
@@ -17,10 +21,11 @@
 </template>
 
 <script lang="ts">
+import TransactionTable from '@/components/TransactionTable.vue'
 
 export default {
   name: 'allTransactions',
-  components: {},
+  components: {TransactionTable},
 
   data() {
     return {

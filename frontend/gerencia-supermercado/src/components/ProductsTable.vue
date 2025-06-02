@@ -15,120 +15,161 @@
       />
     </div>
 
-  <v-data-table
+    <v-data-table
+    class="bg-white"
     :headers="headers"
-    :items="employees"
-    class="rounded-lg bg-white table-custom"
-    density="comfortable"
-    item-value="name"
+    :items="movies"
+    item-value="title"
     hide-default-footer
-    hover
+    show-expand
+    style="overflow-y: auto;"
   >
-    <template v-slot:item="{ item }">
-      <tr class="text-no-wrap">
-        <td>{{ item.id }}</td>
-        <td>{{ item.name }}</td>
-        <td>{{ item.department }}</td>
-        <td>{{ item.role }}</td>
-        <td
-          :class="{
-            'text-end': true,
-            'bg-success': item.salary > 80000,
-            'bg-warning': item.salary > 70000 && item.salary <= 80000,
-            'bg-error': item.salary <= 70000
-          }"
-          v-text="`$${item.salary.toLocaleString()}`"
-        ></td>
-        <td>{{ item.hireDate }}</td>
-        <td class="text-end">{{ item.hoursPerWeek }}</td>
-        <td>{{ item.location }}</td>
-        <td>{{ item.status }}</td>
-        <td class="text-end">
-          <v-chip
-            :text="item.score.toFixed(2)"
-            append-icon="mdi-open-in-new"
-            size="x-small"
-            @click=""
-          ></v-chip>
+    <template
+    v-slot:item.data-table-expand="{ internalItem, isExpanded, toggleExpand }">
+      <v-btn
+        :append-icon="isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+        :text="isExpanded(internalItem) ? 'Fechar' : 'Mais informações'"
+        class="text-none bg-grey-lighten-2"
+        color="black"
+        size="small"
+        variant="text"
+        border
+        slim
+        @click="toggleExpand(internalItem)"
+      ></v-btn>
+    </template>
+
+    <template
+    v-slot:expanded-row="{ columns, item }">
+      <tr>
+        <td :colspan="columns.length" class="py-2">
+          <v-sheet rounded="lg" border>
+            <v-table density="compact" class="bg-white">
+              <tbody class="bg-surface-light bg-white">
+                <tr>
+                  <th>Rating</th>
+                  <th>Synopsis</th>
+                  <th>Cast</th>
+                </tr>
+              </tbody>
+
+              <tbody>
+                <tr>
+                  <td>
+                    <v-rating
+                      :model-value="item.details.rating"
+                      color="orange-darken-2"
+                      density="comfortable"
+                      size="x-small"
+                      half-increments
+                      readonly
+                    ></v-rating>
+                  </td>
+                  <td>{{ item.details.synopsis }}</td>
+                  <td>{{ item.details.cast.join(', ') }}</td>
+                </tr>
+              </tbody>
+            </v-table>
+          </v-sheet>
         </td>
       </tr>
     </template>
   </v-data-table>
+
 </div>
 </template>
-<script setup>
-  const headers = [
-    { title: 'ID', key: 'id', align: 'start' },
-    { title: 'Name', key: 'name' },
-    { title: 'Dept', key: 'department' },
-    { title: 'Role', key: 'role' },
-    { title: 'Salary($)', key: 'salary', align: 'end' },
-    { title: 'HireDate', key: 'hireDate' },
-    { title: 'Hours/Wk', key: 'hoursPerWeek', align: 'end' },
-    { title: 'Location', key: 'location' },
-    { title: 'Status', key: 'status' },
-    { title: 'Score', key: 'score', align: 'end' },
+<script lang="ts">
+import type { CategoriesDTO } from '@/dto/categories.dto';
+import { categoriesStore } from '@/stores/categoriesStore';
+
+  export default {
+    name: 'ProductsTable',
+    data() {
+      return {
+        allCategories: [] as CategoriesDTO[],
+    headers : [
+    { title: 'Title', key: 'title', align: 'start', sortable: true },
+    { title: 'Director', key: 'director' },
+    { title: 'Genre', key: 'genre' },
+    { title: 'Year', key: 'year', align: 'end' },
+    { title: 'Runtime(min)', key: 'runtime', align: 'end' },
+  ],
+
+  movies : [
+    {
+      title: 'The Shawshank Redemption',
+      director: 'Frank Darabont',
+      genre: 'Drama',
+      year: 1994,
+      runtime: 142,
+      details: {
+        synopsis: 'Two imprisoned men bond over years, finding solace and redemption through acts of decency.',
+        cast: ['Tim Robbins', 'Morgan Freeman'],
+        rating: 3.5,
+      },
+    },
+    {
+      title: 'Inception',
+      director: 'Christopher Nolan',
+      genre: 'Sci-Fi',
+      year: 2010,
+      runtime: 148,
+      details: {
+        synopsis: 'A thief with the ability to enter dreams is tasked with stealing a secret from the subconscious.',
+        cast: ['Leonardo DiCaprio', 'Joseph Gordon-Levitt'],
+        rating: 5,
+      },
+    },
+    {
+      title: 'The Godfather',
+      director: 'Francis Ford Coppola',
+      genre: 'Crime',
+      year: 1972,
+      runtime: 175,
+      details: {
+        synopsis: 'The aging patriarch of a crime dynasty transfers control to his reluctant son.',
+        cast: ['Marlon Brando', 'Al Pacino'],
+        rating: 4.5,
+      },
+    },
+    {
+      title: 'Pulp Fiction',
+      director: 'Quentin Tarantino',
+      genre: 'Crime',
+      year: 1994,
+      runtime: 154,
+      details: {
+        synopsis: 'Interwoven stories of criminals, violence, and redemption in Los Angeles.',
+        cast: ['John Travolta', 'Samuel L. Jackson'],
+        rating: 4.5,
+      },
+    },
+    {
+      title: 'The Dark Knight',
+      director: 'Christopher Nolan',
+      genre: 'Action',
+      year: 2008,
+      runtime: 152,
+      details: {
+        synopsis: 'When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.',
+        cast: ['Christian Bale', 'Heath Ledger'],
+        rating: 4,
+      },
+    },
   ]
-  const employees = [
-    {
-      id: 'E001',
-      name: 'Alice Johnson',
-      department: 'Engineering',
-      role: 'Software Dev',
-      salary: 95000,
-      hireDate: '2020-03-15',
-      hoursPerWeek: 40,
-      location: 'New York',
-      status: 'Full-Time',
-      score: 4.5,
+      }
     },
-    {
-      id: 'E002',
-      name: 'Bob Carter',
-      department: 'Sales',
-      role: 'Account Manager',
-      salary: 72000,
-      hireDate: '2019-11-01',
-      hoursPerWeek: 35,
-      location: 'Chicago',
-      status: 'Full-Time',
-      score: 4.2,
+  methods:{
+    async loadAllCategories(){
+      try{
+        const store = categoriesStore();
+        await store.fetchCategories();
+        this.allCategories = store.allCategories;
+      } catch (e) {
+        console.error(e);
+      }
     },
-    {
-      id: 'E003',
-      name: 'Clara Diaz',
-      department: 'HR',
-      role: 'Recruiter',
-      salary: 65000,
-      hireDate: '2021-06-10',
-      hoursPerWeek: 32,
-      location: 'Remote',
-      status: 'Part-Time',
-      score: 4.0,
-    },
-    {
-      id: 'E004',
-      name: 'David Lee',
-      department: 'Engineering',
-      role: 'DevOps Engineer',
-      salary: 105000,
-      hireDate: '2018-09-22',
-      hoursPerWeek: 40,
-      location: 'San Francisco',
-      status: 'Full-Time',
-      score: 4.7,
-    },
-    {
-      id: 'E005',
-      name: 'Ella Smith',
-      department: 'Marketing',
-      role: 'Social Media Mgr',
-      salary: 80000,
-      hireDate: '2020-01-05',
-      hoursPerWeek: 38,
-      location: 'Los Angeles',
-      status: 'Full-Time',
-      score: 4.3,
-    },
-  ]
+  }
+}
+
 </script>
