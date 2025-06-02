@@ -1,39 +1,99 @@
-import { createProductDTO } from "src/product/dto/create-product.dto";
-import { createSupplierDTO } from "src/supplier/dto/create-supplier.dto";
-import { createUserDTO } from "src/usuario/dto/create-user.dto";
-import { IsInt, IsNumber, IsDate, IsString, ValidateNested, IsIn } from 'class-validator';
+import {
+  IsInt,
+  IsNumber,
+  IsDateString,
+  IsString,
+  IsIn,
+  ValidateNested,
+  IsOptional,
+  IsEnum,
+} from 'class-validator';
 import { Type } from 'class-transformer';
-import { PrimaryGeneratedColumn } from "typeorm";
-import { Tipo_Transacao } from "src/interfaces/interfaces.types";
+import { Tipo_Transacao } from 'src/interfaces/interfaces.types';
 
+export class UserDTO {
+  @IsString()
+  id: string;
+}
 
-export class createTransactionDTO {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+export class SupplierDTO {
+  @IsString()
+  id: string;
+}
 
-    @IsInt()
-    quantity: number;
+export class MeasurementDTO {
+  @IsString()
+  id: string;
+}
 
-    @IsDate()
-    @Type(() => Date)
-    date: Date;
+export class NutritionDTO {
+  @IsInt()
+  portion: number;
 
-    @IsNumber()
-    price: number;
+  @IsNumber()
+  protein_quantity: number;
 
-    @ValidateNested()
-    @Type(() => createUserDTO)
-    user: createUserDTO;
+  @IsNumber()
+  fatness_quantity: number;
 
-    @ValidateNested()
-    @Type(() => createSupplierDTO)
-    supplier: createSupplierDTO;
+  @IsNumber()
+  carbohydrate_quantity: number;
 
-    @IsString()
-    @IsIn(['ENTRADA', 'SAÍDA']) 
-    transaction_type: Tipo_Transacao;
+  @ValidateNested()
+  @Type(() => MeasurementDTO)
+  measurement: MeasurementDTO;
+}
 
-    @ValidateNested()
-    @Type(() => createProductDTO)
-    product: createProductDTO;
+export class CategoryDTO {
+  @IsString()
+  id: string;
+}
+
+export class BrandDTO {
+  @IsString()
+  id: string;
+}
+
+export class ProductDTO {
+  @IsString()
+  name: string;
+
+  @ValidateNested()
+  @Type(() => NutritionDTO)
+  nutrition: NutritionDTO;
+
+  @ValidateNested()
+  @Type(() => CategoryDTO)
+  category: CategoryDTO;
+
+  @ValidateNested()
+  @Type(() => BrandDTO)
+  brand: BrandDTO;
+}
+
+export class CreateTransactionDTO {
+  @IsEnum(['ENTRADA', 'SAIDA'])
+  transaction_type: string;
+
+  @IsInt()
+  quantity: number;
+
+  @IsNumber()
+  price: number;
+
+  @IsOptional()
+  @IsDateString()
+  transaction_date?: string;
+
+  @ValidateNested()
+  @Type(() => UserDTO)
+  user: UserDTO;
+
+  @ValidateNested()
+  @Type(() => SupplierDTO)
+  supplier: SupplierDTO;
+
+  @ValidateNested()
+  @Type(() => ProductDTO)
+  product: ProductDTO;
 }

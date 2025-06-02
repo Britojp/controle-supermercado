@@ -14,19 +14,21 @@ import { CategoriesService } from './categories/categories.service';
 import { CategoriesModule } from './categories/categories.module';
 import { MeasurementController } from './measurement/measurement.controller';
 import { MeasurementService } from './measurement/measurement.service';
-import { CmeasurementModule } from './cmeasurement/cmeasurement.module';
 import { MeasurementModule } from './measurement/measurement.module';
+import { CorridorsController } from './corridors/corridors.controller';
+import { CorridorsModule } from './corridors/corridors.module';
+import { ShelvesService } from './shelves/shelves.service';
+import { ShelvesModule } from './shelves/shelves.module';
 
 
 @Module({
-  imports: [UsuarioModule, DatabaseModule, ProductModule, TransactionModule, SupplierModule, AuthModule, StateModule, BrandModule, CategoriesModule, CmeasurementModule, MeasurementModule],
-  controllers: [MeasurementController],
+  imports: [UsuarioModule, DatabaseModule, ProductModule, TransactionModule, SupplierModule, AuthModule, StateModule, BrandModule, CategoriesModule, MeasurementModule, CorridorsModule, ShelvesModule],
+  controllers: [],
   providers: [
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
-    MeasurementService,
   ],
 })
 export class AppModule {} 

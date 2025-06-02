@@ -31,7 +31,9 @@
         </v-card>
 
 
-      <CreateProduct />
+      <CreateProduct
+        @transaction-created="handleTransaction"
+       />
     </v-card>
   </v-sheet>
 </template>
@@ -39,6 +41,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CreateProduct from '@/components/CreateProduct.vue';
+import type { CreateTransactionDTO } from '@/dto/transaction.dto';
+import { transactionStore } from '@/stores/transactionStore';
+import { toast } from 'vue3-toastify';
 
 
 export default defineComponent({
@@ -46,5 +51,24 @@ export default defineComponent({
   components: {
     CreateProduct,
   },
+
+  data() {
+    return {
+    };
+  },
+  
+  methods: {
+    async handleTransaction(transaction: CreateTransactionDTO) {
+    try{
+    
+      const store = transactionStore();
+      await store.createTransaction(transaction);
+      toast.success('Transação realizada com sucesso!');
+    } catch (error) {
+      toast.error('Erro ao realizar transação');
+    }
+    },
+  },
+
 });
 </script>

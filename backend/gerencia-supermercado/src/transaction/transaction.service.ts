@@ -6,23 +6,36 @@ import { Transaction } from 'src/database/entities/transaction.entity';
 import { User } from 'src/database/entities/user.entity';
 import { Repository } from 'typeorm';
 import { readTransactionDTO } from './dto/read-transaction.dto';
-import { createTransactionDTO } from './dto/create-transaction.dto';
+import { CreateTransactionDTO } from './dto/create-transaction.dto';
+import { Brand } from 'src/database/entities/brand.entity';
+import { Category } from 'src/database/entities/category.entity';
+import { Measurement } from 'src/database/entities/measurement.entity';
+import { Tipo_Transacao } from 'src/interfaces/interfaces.types';
 
 @Injectable()
 export class TransactionService {
 
     constructor(
         @InjectRepository(Transaction)
-        private readonly transactionRepository: Repository <Transaction>,
+        private readonly transactionRepository: Repository<Transaction>,
 
         @InjectRepository(Supplier)
-        private readonly supplierRepository: Repository <Supplier>,
+        private readonly supplierRepository: Repository<Supplier>,
 
         @InjectRepository(User)
-        private readonly userRepository: Repository <User>,
+        private readonly userRepository: Repository<User>,
 
         @InjectRepository(Product)
-        private readonly productRepository: Repository <Product>
+        private readonly productRepository: Repository<Product>,
+
+        @InjectRepository(Brand)
+        private readonly brandRepository: Repository<Brand>,
+
+        @InjectRepository(Category)
+        private readonly categoryRepository: Repository<Category>,
+
+        @InjectRepository(Measurement)
+        private readonly measurementRepository: Repository<Measurement>,
     ){}
 
     async findAll(): Promise<readTransactionDTO[]> {
@@ -53,47 +66,59 @@ export class TransactionService {
         return new readTransactionDTO(transaction);
     }
 
-    async create(createTransactionDTO: createTransactionDTO) {
-        const { user, supplier, product, price, quantity, transaction_type } = createTransactionDTO;
-        
-        const usuario = await this.userRepository.findOne({
-            where: { name: user.name, email: user.email }
-        });
-    
-        if (!usuario) {
-            throw new NotFoundException('Usuário não encontrado');
+async create(CreateTransactionDTO: CreateTransactionDTO) {
+    const {
+        transaction_type,
+        quantity,
+        price,
+        transaction_date,
+        product,
+        user,
+        supplier
+    } = CreateTransactionDTO;
+
+    const { 
+        name: productName,
+        nutrition,
+        category,
+        brand
+    } = product;
+
+    const {
+        portion,
+        protein_quantity,
+        fatness_quantity,
+        carbohydrate_quantity,
+        measurement
+    } = nutrition;
+
+    const transaction = this.transactionRepository.create({
+        transaction_type: transaction_type as Tipo_Transacao,
+        quantity,
+        price,
+        transaction_date,
+
+        user: { id: user.id },
+        supplier: { id: supplier.id },
+
+        product: {
+            name: productName,
+            nutrition: {
+                portion,
+                protein_quantity,
+                fatness_quantity,
+                carbohydrate_quantity,
+                measurement: { id: measurement.id }
+            },
+            category: { id: category.id },
+            brand: { id: brand.id }
         }
-    
-        const fornecedor = await this.supplierRepository.findOne({
-            where: { name: supplier.name }
-        });
-    
-        if (!fornecedor) {
-            throw new NotFoundException('Fornecedor não encontrado');
-        }
-    
-        const produto = await this.productRepository.findOne({
-            where: { name: product.name }
-        });
-    
-        if (!produto) {
-            throw new NotFoundException('Produto não encontrado');
-        }
-    
-        const transaction = this.transactionRepository.create({
-            transaction_date: new Date(),
-            price,
-            quantity,
-            transaction_type,
-            user: user,
-            product: product,
-            supplier: supplier,
-        });
-    
-        await this.transactionRepository.save(transaction);
-    
-        return new readTransactionDTO(transaction);
-    }
+    });
+
+    return await this.transactionRepository.save(transaction);
+}
+
+
     
 
     async remove(id: string){

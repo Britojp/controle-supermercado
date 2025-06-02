@@ -265,7 +265,11 @@
       </v-form>
     </div>
 
-    <v-btn color="green">
+    <v-btn 
+    color="green"
+    class="mt-4"
+    @click="createNewTransaction"
+    >
       Confirmar
     </v-btn>
   </v-card>
@@ -283,11 +287,9 @@ import { uitsOfMeansureStore } from '@/stores/unitsOfMeansureStore';
 import { shelvesStore } from '@/stores/shelvesStore';
 import { corridorsStore } from '@/stores/corridorsStore';
 import type { BrandDTO } from '@/dto/brands.dto';
-import { createNewTransaction } from '@/services/api';
 import type { CreateTransactionDTO, TransactionType } from '@/dto/transaction.dto';
 import type { SupplierDTO } from '@/dto/supplier.dto';
 import { supplierStore } from '@/stores/supplierStore';
-import { th } from 'vuetify/locale';
 import { toast } from 'vue3-toastify';
 
 
@@ -362,7 +364,6 @@ export default {
         const store = corridorsStore();
         await store.fetchCorridors();
         this.corridors = store.allCorridors;
-        console.log(this.corridors);
       } catch (e) {
         console.error(e);
       }
@@ -373,7 +374,6 @@ export default {
         const store = shelvesStore();
         await store.fetchShelves();
         this.shelves = store.allShelves;
-        console.log(this.shelves);
       } catch (e) {
         console.error(e);
       }
@@ -394,15 +394,15 @@ async createNewTransaction() {
 
   const transaction: CreateTransactionDTO = {
     type: this.typeTransaction,
-    quantity: this.inputQuantity,
-    price: this.costValue,
+    quantity: Number(this.inputQuantity),
+    price: Number(this.costValue),
     products: {
       name: this.productName,
       nutritions: {
-        portion: this.portion,
-        protein_quantity: this.proteinQuantity,
-        fatness_quantity: this.fatnessQuantity, 
-        carbohydrate_quantity: this.carbohydrateQuantity,
+        portion: Number(this.portion),
+        protein_quantity: Number(this.proteinQuantity),
+        fatness_quantity: Number(this.fatnessQuantity),
+        carbohydrate_quantity: Number(this.carbohydrateQuantity),
         id_meansurements: this.selectedUnit,
       },
       id_categories: this.categoryName,
@@ -422,17 +422,13 @@ async createNewTransaction() {
       if (selectedBrand) {
         transaction.products.id_brands = selectedBrand.id;
       } else {
-        throw new Error('Marca não encontrada.');
+        throw new Error('Marca selecionada não encontrada');
       }
     }
 
-
-    
-    this.$emit('transaction-created', true);
-    toast.success('Transação criada com sucesso!');
+    this.$emit('transaction-created', transaction);
   } catch (error) {
     console.error('Erro ao criar transação:', error);
-    toast.error('Erro ao criar transação.');
   }
 },
 
