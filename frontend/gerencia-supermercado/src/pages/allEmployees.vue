@@ -6,7 +6,7 @@
       width="90%"
       height="90%"
       elevation="2"
-      prepend-icon="mdi-account-multiple"
+      prepend-icon="mdi-account-group"
       title="Consultar todos os funcionários"
     >
       <v-divider></v-divider>

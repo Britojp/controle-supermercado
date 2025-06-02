@@ -21,8 +21,7 @@
       />
     </div>
 
-        <v-data-table
-
+  <v-data-table
     v-model:search="search"
     :headers="header"
     :items="items"
@@ -31,6 +30,7 @@
     item-value="name"
     hide-default-footer
     hover
+    style="overflow-y: auto;"
   >
 
     <template #item.actions="{ item } ">

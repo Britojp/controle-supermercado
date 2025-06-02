@@ -7,7 +7,7 @@
       width="90%"
       height="90%"
       elevation="2"
-      prepend-icon="mdi-handshake"
+      prepend-icon="mdi-truck"
       title="Consultar todos os fornecedores"
     >
       <v-divider></v-divider>

@@ -5,7 +5,7 @@
         width="90%"
         height="90%"
         elevation="2"
-        prepend-icon="mdi-account-multiple"
+        prepend-icon="mdi-package-variant-closed"
         title="Consultar todos os produtos"
         >
 

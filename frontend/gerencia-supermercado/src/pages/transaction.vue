@@ -30,10 +30,7 @@
           </template>
         </v-card>
 
-
-      <CreateProduct
-        @transaction-created="handleTransaction"
-       />
+      <CreateProduct />
     </v-card>
   </v-sheet>
 </template>
