@@ -6,37 +6,42 @@ import { Product } from "src/database/entities/product.entity"
 
 class Corridor{
     @IsString()
-    nome: string
+    name: string
 }
 class Shelf{
     @IsString()
-    nome: string
+    name: string
 }
 
 class Location_Batch{
     
     @Type(() => Shelf)    
-    prateleira: Shelf
+    shelves: Shelf
     
     @Type(() => Corridor)
-    corredor: Corridor
+    corridors: Corridor
     
 }
 export class createBatchDTO{
     @IsString()
     @IsNotEmpty()
-    numero: string
+    name: string
 
     @IsDate()
     @Type(() => Date)
-    data_validade: Date
+    validate_date: Date
     
     @IsNumber()
     @IsNotEmpty()
-    quantidade: number
+    quantity: number
+
+    @IsString()
+    @IsNotEmpty()
+    @Type(() => Product)
+    productId: string
 
     @IsOptional()
     @ValidateNested()
     @Type(() => Location_Batch)
-    localizacao_estoque: Location_Batch
+    location_batch: Location_Batch
 }

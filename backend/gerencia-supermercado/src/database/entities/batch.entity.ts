@@ -3,7 +3,7 @@ import { Product } from "./product.entity";
 import { Transaction } from "./transaction.entity";
 import { Stock_location } from "./stock_location.entity";
 
-@Entity('batchies')
+@Entity('batches')
 export class Batch {
     @PrimaryGeneratedColumn()
     id: string

@@ -17,9 +17,7 @@ export interface SupplierDTO {
     tel_number: string;
   };
 }
-export interface supplierDTO {
-  id: string;
-}
+
 
 export interface CreateSupplierDTO {
   name: string;

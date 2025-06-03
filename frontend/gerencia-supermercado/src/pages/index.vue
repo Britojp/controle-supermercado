@@ -10,7 +10,8 @@
   </div>
 
     <v-container class="pa-0 ma-0" style="max-width: 25%;">
-      <v-card class="bg-green-lighten-5 px-6 py-10 h-screen d-flex flex-column align-center justify-center  elevation-5">
+      <v-card class="bg-grey-lighten-2
+   px-6 py-10 h-screen d-flex flex-column align-center justify-center  elevation-5">
         <div class="w-100">
 
 

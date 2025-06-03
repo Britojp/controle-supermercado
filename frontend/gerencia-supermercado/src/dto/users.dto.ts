@@ -5,9 +5,6 @@ export interface UserDTO {
   password: string
 }
 
-export interface userDTO{
-  id: string,
-}
 
 export interface createUserDTO{
   name: string,

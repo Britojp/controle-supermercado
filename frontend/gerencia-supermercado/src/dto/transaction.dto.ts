@@ -1,6 +1,4 @@
 import type {  ProductDTO } from "./products.dto";
-import type { supplierDTO } from "./supplier.dto";
-import type { userDTO } from "./users.dto";
 
 export enum TransactionType {
     Entrada = 'entrada',
@@ -11,8 +9,8 @@ export interface CreateTransactionDTO {
   transaction_type: TransactionType;
   quantity: number;
   price: number;
-  user: userDTO;
-  supplier: string | supplierDTO;
+  user: {id: string};
+  supplier: {id: string};
   product: ProductDTO;
   transaction_date?: string;
 }

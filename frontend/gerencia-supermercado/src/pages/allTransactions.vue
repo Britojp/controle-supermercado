@@ -1,6 +1,7 @@
 <template>
   <v-sheet
-  class="bg-green-lighten-5 px-5 py-3 h-screen d-flex justify-center align-center">
+  class="bg-grey-lighten-2
+   px-5 py-3 h-screen d-flex justify-center align-center">
   <v-card
       class="pa-4 d-flex flex-column bg-white"
       width="90%"
