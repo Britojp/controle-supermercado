@@ -66,57 +66,47 @@ export class TransactionService {
         return new readTransactionDTO(transaction);
     }
 
-async create(CreateTransactionDTO: CreateTransactionDTO) {
-    const {
-        transaction_type,
-        quantity,
-        price,
-        transaction_date,
-        product,
-        user,
-        supplier
-    } = CreateTransactionDTO;
-
-    const { 
-        name: productName,
-        nutrition,
-        category,
-        brand
-    } = product;
-
-    const {
-        portion,
-        protein_quantity,
-        fatness_quantity,
-        carbohydrate_quantity,
-        measurement
-    } = nutrition;
-
-    const transaction = this.transactionRepository.create({
-        transaction_type: transaction_type as Tipo_Transacao,
-        quantity,
-        price,
-        transaction_date,
-
-        user: { id: user.id },
-        supplier: { id: supplier.id },
-
-        product: {
-            name: productName,
-            nutrition: {
-                portion,
-                protein_quantity,
-                fatness_quantity,
-                carbohydrate_quantity,
-                measurement: { id: measurement.id }
-            },
-            category: { id: category.id },
-            brand: { id: brand.id }
+    async create(createTransactionDTO: CreateTransactionDTO){
+        const { user, supplier, product } = createTransactionDTO;
+        
+        const userEntity = await this.userRepository.findOne({ where: { id: user.id } });
+        if (!userEntity) {
+            throw new NotFoundException(`Usuário com ID ${user.id} não encontrado`);
         }
-    });
 
-    return await this.transactionRepository.save(transaction);
-}
+        const supplierEntity = await this.supplierRepository.findOne({ where: { id: supplier.id } });
+        if (!supplierEntity) {
+            throw new NotFoundException(`Fornecedor com ID ${supplier.id} não encontrado`);
+        }
+
+        const productEntity = this.productRepository.create({
+            name: product.name,
+            nutrition: {
+                portion: product.nutrition.portion,
+                carbohydrate_quantity: product.nutrition.carbohydrate_quantity,
+                protein_quantity: product.nutrition.protein_quantity,
+                fatness_quantity: product.nutrition.fatness_quantity,
+                measurement: {
+                    id: product.nutrition.measurement.id,
+                } as Measurement,
+            },
+            brand: product.brand,
+            category: product.category,
+        })
+        await this.productRepository.save(productEntity);
+
+        const transaction = this.transactionRepository.create({
+            transaction_type: createTransactionDTO.transaction_type as Tipo_Transacao,
+            quantity: createTransactionDTO.quantity,
+            price: createTransactionDTO.price,
+            user: userEntity,
+            supplier: supplierEntity,
+            product: productEntity,
+        });
+    
+        await this.transactionRepository.save(transaction);
+        return new readTransactionDTO(transaction);
+    }
 
 
     

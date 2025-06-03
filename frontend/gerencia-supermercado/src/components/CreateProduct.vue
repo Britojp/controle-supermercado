@@ -7,49 +7,50 @@
 
     <div v-if="typeTransaction === 'entrada'">
       <v-form ref="form">
+
+        <v-divider class="my-4" />
+        <v-card-title class="text-subtitle-1">Informações do Produto</v-card-title>
         <v-row>
-          <v-col cols="3">
+          <v-col cols="4">
             <v-text-field
-              color="green-darken-3"
               label="Nome do produto"
-              variant="outlined"
-              class="hint-custom"
-              maxlength="30"
-              persistent-hint
-              :rules="[rulesForm.maxLenghtRule(30), rulesForm.requiredRule]"
               v-model="productName"
+              :rules="[rulesForm.maxLenghtRule(30), rulesForm.requiredRule]"
+              variant="outlined"
+              color="green-darken-3"
+              class="hint-custom"
             />
           </v-col>
 
-          <v-col cols="3">
+          <v-col cols="4">
             <v-select
               :items="allCategories"
-              label="Categoria do Produto"
+              label="Categoria"
               item-title="name"
               item-value="id"
-              color="green-darken-3"
-              variant="outlined"
-              class="hint-custom"
-              :rules="[rulesForm.requiredRule]"
               v-model="categoryName"
+              :rules="[rulesForm.requiredRule]"
+              variant="outlined"
+              color="green-darken-3"
+              class="hint-custom"
             />
           </v-col>
 
-          <v-col cols="3">
+          <v-col cols="4">
             <v-text-field
-              color="green-darken-3"
               label="Número do lote"
               type="number"
-              variant="outlined"
-              class="hint-custom"
-              maxlength="5"
-              persistent-hint
-              :rules="[rulesForm.integerRule, rulesForm.requiredRule]"
               v-model="lotNumber"
+              :rules="[rulesForm.integerRule, rulesForm.requiredRule, rulesForm.minRule(0)]"
+              variant="outlined"
+              color="green-darken-3"
+              class="hint-custom"
             />
           </v-col>
+        </v-row>
 
-          <v-col cols="3">
+        <v-row>
+          <v-col cols="4">
             <v-menu
               v-model="menuDate"
               :close-on-content-click="false"
@@ -64,12 +65,10 @@
                   label="Data de Validade"
                   readonly
                   v-bind="props"
-                  color="green-darken-3"
-                  variant="outlined"
-                  class="hint-custom"
-                  persistent-hint
                   :rules="[rulesForm.requiredRule]"
-                  @input="selectDate"
+                  variant="outlined"
+                  color="green-darken-3"
+                  class="hint-custom"
                 />
               </template>
               <v-date-picker
@@ -81,155 +80,163 @@
               />
             </v-menu>
           </v-col>
-        </v-row>
 
-        <v-row>
-          <v-col cols="3">
+          <v-col cols="4">
             <v-text-field
-              color="green-darken-3"
-              type="number"
               label="Quantidade"
-              variant="outlined"
-              class="hint-custom"
-              maxlength="5"
-              persistent-hint
-              :rules="[rulesForm.integerRule, rulesForm.requiredRule, rulesForm.minRule(0)]"
+              type="number"
               v-model="inputQuantity"
+              :rules="[rulesForm.integerRule, rulesForm.requiredRule, rulesForm.minRule(0)]"
+              variant="outlined"
+              color="green-darken-3"
+              class="hint-custom"
             />
           </v-col>
 
-          <v-col cols="3">
+          <v-col cols="4">
             <v-select
               :items="supplier"
               label="Fornecedor"
               item-title="name"
               item-value="id"
-              color="green-darken-3"
-              variant="outlined"
-              class="hint-custom"
               v-model="selectedSupplier"
-              />
-          </v-col>
-
-
-
-          <v-col cols="3">
-            <v-text-field
-              color="green-darken-3"
-              type="number"
-              label="Valor de custo por unidade"
               variant="outlined"
+              color="green-darken-3"
               class="hint-custom"
-              append-inner-icon="mdi-currency-usd"
-              persistent-hint
-              :rules="[rulesForm.requiredRule, rulesForm.integerRule]"
-              v-model="costValue"
             />
           </v-col>
-
-
-          <v-col cols="1">
-            <v-text-field
-              color="green-darken-3"
-              type="number"
-              label="Porção"
-              variant="outlined"
-              class="hint-custom"
-              maxlength="5"
-              persistent-hint
-              :rules="[rulesForm.integerRule, rulesForm.requiredRule, rulesForm.minRule(0)]"
-              v-model="portion"
-              />
-            </v-col>
-
-
-                <v-col cols="2">
-              <v-select
-                :items="unitsOfMeasure"
-                label="Medida"
-                item-title="name"
-                item-value="id"
-                color="green-darken-3"
-                variant="outlined"
-                class="hint-custom"
-                :rules="[rulesForm.requiredRule]"
-                v-model="selectedUnit"
-              />
-            </v-col>
         </v-row>
 
+        <v-divider class="my-4" />
+        <v-card-title class="text-subtitle-1">Valores</v-card-title>
         <v-row>
-          <v-col cols="3">
+          <v-col cols="4">
             <v-text-field
-              color="green-darken-3"
+              label="Valor de custo por unidade"
               type="number"
-              label="Quantidade de proteína"
+              v-model="costValue"
+              :rules="[rulesForm.requiredRule, rulesForm.integerRule]"
+              append-inner-icon="mdi-currency-usd"
               variant="outlined"
+              color="green-darken-3"
               class="hint-custom"
-              maxlength="5"
-              persistent-hint
-              :rules="[rulesForm.integerRule, rulesForm.requiredRule, rulesForm.minRule(0)]"
-              v-model="proteinQuantity"
             />
           </v-col>
 
-          <v-col cols="3">
+          <v-col cols="4">
             <v-text-field
-              color="green-darken-3"
+              label="Preço de venda por unidade"
               type="number"
-              label="Quantidade de gordura"
-              variant="outlined"
-              class="hint-custom"
-              maxlength="5"
+              v-model="sellPrice"
+              :hint="costValue ? (sellPrice ? `Margem de lucro: ${((Number(sellPrice) - Number(costValue)) /Number(sellPrice) * 100).toFixed(2)}%` : `Preço sugerido: ${Number(costValue) * 1.5}`) : ''"
+              :rules="[rulesForm.requiredRule, rulesForm.integerRule]"
+              append-inner-icon="mdi-currency-usd"
               persistent-hint
+              variant="outlined"
+              color="green-darken-3"
+              class="hint-custom"
+            />
+          </v-col>
+
+          <v-col cols="2">
+            <v-text-field
+              label="Porção"
+              type="number"
+              v-model="portion"
               :rules="[rulesForm.integerRule, rulesForm.requiredRule, rulesForm.minRule(0)]"
+              variant="outlined"
+              color="green-darken-3"
+              class="hint-custom"
+            />
+          </v-col>
+
+          <v-col cols="2">
+            <v-select
+              :items="unitsOfMeasure"
+              label="Medida"
+              item-title="name"
+              item-value="id"
+              v-model="selectedUnit"
+              :rules="[rulesForm.requiredRule]"
+              variant="outlined"
+              color="green-darken-3"
+              class="hint-custom"
+            />
+          </v-col>
+        </v-row>
+
+        <v-divider class="my-4" />
+        <v-card-title class="text-subtitle-1">Informação Nutricional</v-card-title>
+        <v-row>
+          <v-col cols="4">
+            <v-text-field
+              label="Proteína (g)"
+              type="number"
+              v-model="proteinQuantity"
+              :rules="[rulesForm.integerRule, rulesForm.minRule(0)]"
+              variant="outlined"
+              color="green-darken-3"
+              class="hint-custom"
+            />
+          </v-col>
+
+          <v-col cols="4">
+            <v-text-field
+              label="Gordura (g)"
+              type="number"
               v-model="fatnessQuantity"
-            />
-          </v-col>
-          <v-col cols="3">
-            <v-text-field
-              color="green-darken-3"
-              type="number"
-              label="Quantidade de carboidrato"
+              :rules="[rulesForm.integerRule, rulesForm.minRule(0)]"
               variant="outlined"
+              color="green-darken-3"
               class="hint-custom"
-              maxlength="5"
-              persistent-hint
-              :rules="[rulesForm.integerRule, rulesForm.requiredRule, rulesForm.minRule(0)]"
-              v-model="carbohydrateQuantity"
             />
           </v-col>
-          <v-col cols="3">
+
+          <v-col cols="4">
+            <v-text-field
+              label="Carboidrato (g)"
+              type="number"
+              v-model="carbohydrateQuantity"
+              :rules="[rulesForm.integerRule, rulesForm.minRule(0)]"
+              variant="outlined"
+              color="green-darken-3"
+              class="hint-custom"
+            />
+          </v-col>
+        </v-row>
+
+        <v-divider class="my-4" />
+        <v-card-title class="text-subtitle-1">Localização no Estoque</v-card-title>
+        <v-row>
+          <v-col cols="6">
             <v-select
               :items="corridors"
               label="Número do corredor"
               item-title="name"
               item-value="id"
-              color="green-darken-3"
-              variant="outlined"
-              class="hint-custom"
               v-model="corridor"
-              />
-            </v-col>
+              variant="outlined"
+              color="green-darken-3"
+              class="hint-custom"
+            />
+          </v-col>
+
+          <v-col cols="6">
+            <v-select
+              :items="shelves"
+              label="Número da prateleira"
+              item-title="name"
+              item-value="id"
+              v-model="shelf"
+              variant="outlined"
+              color="green-darken-3"
+              class="hint-custom"
+            />
+          </v-col>
         </v-row>
 
-        <v-row>
-
-
-            <v-col cols="3">
-              <v-select
-                :items="shelves"
-                label="Número da prateleira"
-                item-title="name"
-                item-value="id"
-                color="green-darken-3"
-                variant="outlined"
-                class="hint-custom"
-                v-model="shelf"
-              />
-            </v-col>
-        </v-row>
-
+        <!-- Seção Marca -->
+        <v-divider class="my-4" />
         <v-card-title class="text-subtitle-1">Marca</v-card-title>
         <v-radio-group v-model="registrationMarca" inline>
           <v-radio label="Cadastrar" value="cadastrar" class="mr-2" />
@@ -237,44 +244,42 @@
         </v-radio-group>
 
         <v-row>
-          <v-col cols="3" v-if="registrationMarca === 'cadastrar'">
+          <v-col cols="6">
             <v-text-field
-              color="green-darken-3"
+              v-if="registrationMarca === 'cadastrar'"
               label="Nome da Marca"
-              variant="outlined"
-              class="mb-5 hint-custom"
-              maxlength="30"
-              :rules="[rulesForm.maxLenghtRule(30), rulesForm.requiredRule]"
               v-model="brandName"
+              :rules="[rulesForm.maxLenghtRule(30), rulesForm.requiredRule]"
+              variant="outlined"
+              color="green-darken-3"
+              class="hint-custom"
             />
-          </v-col>
-          <v-col cols="3" v-else>
             <v-autocomplete
+              v-else
               v-model="brandName"
               :items="brands"
               label="Selecione a marca"
               item-title="name"
               item-value="id"
-              color="green-darken-3"
-              variant="outlined"
-              class="mb-5 hint-custom"
               :rules="[value => !!value || 'Selecione uma marca válida']"
+              variant="outlined"
+              color="green-darken-3"
+              class="hint-custom"
             />
           </v-col>
-
         </v-row>
       </v-form>
     </div>
 
-    <v-btn 
+    <v-btn
     color="green"
     class="mt-4"
-    @click="createNewTransaction"
-    >
+    @click="createNewTransaction">
       Confirmar
     </v-btn>
   </v-card>
 </template>
+
 
 
 <script lang="ts">
@@ -291,7 +296,6 @@ import type { BrandDTO } from '@/dto/brands.dto';
 import type { CreateTransactionDTO, TransactionType } from '@/dto/transaction.dto';
 import type { SupplierDTO } from '@/dto/supplier.dto';
 import { supplierStore } from '@/stores/supplierStore';
-import { toast } from 'vue3-toastify';
 
 
 
@@ -299,6 +303,7 @@ export default {
     name: 'CreateProduct',
     data() {
         return {
+            sellPrice: '',
             registrationMarca: 'cadastrar',
             typeTransaction: 'entrada' as TransactionType,
             validationForms: false,
@@ -310,8 +315,8 @@ export default {
             lotNumber: '',
             shelf: '',
             tempDate: '',
-            inputQuantity: 0,
-            costValue: 0,
+            inputQuantity: '',
+            costValue: '',
             categoryName: '',
             corridor: '',
             menuDate: false,
@@ -322,10 +327,10 @@ export default {
             allCategories: [] as CategoriesDTO[],
             supplier: [] as SupplierDTO[],
             selectedSupplier: '',
-            carbohydrateQuantity: 0,
-            proteinQuantity: 0,
-            fatnessQuantity: 0,
-            portion: 0,
+            carbohydrateQuantity: '',
+            proteinQuantity: '',
+            fatnessQuantity: '',
+            portion: '',
         };
     },
     methods: {
@@ -380,7 +385,7 @@ export default {
       }
     },
 
-   async loaAllSuppliers() {
+  async loaAllSuppliers() {
     try{
       const store = supplierStore();
       await store.fetchSuppliers();
@@ -390,39 +395,50 @@ export default {
     }
 
     },
-async createNewTransaction() {
+  async createNewTransaction() {
   const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const userId = user?.id || '';
+  if (!userId) {
+    console.error('Usuário não encontrado. Certifique-se de que o usuário está autenticado.');
+    return;
+  }
+
 
   const transaction: CreateTransactionDTO = {
-    type: this.typeTransaction,
+    transaction_type: this.typeTransaction.toUpperCase() as TransactionType,
     quantity: Number(this.inputQuantity),
     price: Number(this.costValue),
-    products: {
+    user: {id: userId},
+    supplier: {id: this.selectedSupplier},
+    product: {
       name: this.productName,
-      nutritions: {
-
+      nutrition: {
         portion: Number(this.portion),
         protein_quantity: Number(this.proteinQuantity),
         fatness_quantity: Number(this.fatnessQuantity),
         carbohydrate_quantity: Number(this.carbohydrateQuantity),
-        id_meansurements: this.selectedUnit,
+        measurement: { id: this.selectedUnit },
       },
-      id_categories: this.categoryName,
-      id_brands: '',
-    },
-    id_users: user?.id || '',
-    id_suppliers: this.selectedSupplier,
-  };
+      category: { id: this.categoryName },
+      brand: { id: '' },
+    }
+  }
+
 
   try {
     if (this.registrationMarca === 'cadastrar') {
-      transaction.products.id_brands = this.brandName;
+      const store = brandsStore();
+      await store.createBrand({
+        name: this.brandName,
+      });
+      transaction.product.brand.id = store.allBrands.find(brand => brand.name === this.brandName)?.id || '';
+
     } else {
       const selectedBrand = this.brands.find(
         (brand) => brand.id === this.brandName || brand.name === this.brandName
       );
       if (selectedBrand) {
-        transaction.products.id_brands = selectedBrand.id;
+        transaction.product.brand.id = selectedBrand.id;
       } else {
         throw new Error('Marca selecionada não encontrada');
       }
@@ -434,35 +450,10 @@ async createNewTransaction() {
   }
 },
 
-
     selectDate(date: string) {
     const formattedDate = this.date.format(date, 'keyboardDate');
     this.tempDate = formattedDate;
     this.menuDate = false;
-    },
-    checkFields() {
-      const isValidation = [
-        this.productName.trim(),
-        this.brandName.trim(),
-        this.lotNumber,
-        this.tempDate,
-        this.inputQuantity > 0,
-        this.costValue > 0,
-        this.categoryName.trim()
-      ].every(field => field && field !== '');
-
-      this.$emit('validate-data', isValidation);
-    },
-  },
-  watch: {
-    productName() { this.checkFields() },
-    brandName() { this.checkFields() },
-    lotNumber() { this.checkFields() },
-    tempDate() { this.checkFields() },
-    inputQuantity() { this.checkFields() },
-    costValue() { this.checkFields() },
-    categoryName() { this.checkFields()
-
     }
   },
     mounted(){
@@ -477,8 +468,5 @@ async createNewTransaction() {
 </script>
 
 <style>
-.hint-custom .v-messages__message {
-    color: red;
-    font-style: italic;
-}
+
 </style>

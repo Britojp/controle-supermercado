@@ -2,12 +2,12 @@
   <div class="d-flex flex-column bg-white rounded-xl elevation-1 pa-4" style="height: 100%;">
     <div class="d-flex justify-space-between mb-4">
     <v-btn
-      prepend-icon="mdi-plus-circle-outline"
-      @click="$emit('toggleRegister', true)"
-    >
+        prepend-icon="mdi-plus-circle-outline"
+        @click="$emit('toggleRegister', true)"
+      >
 
-      {{ buttonString }}
-</v-btn>
+        {{ buttonString }}
+  </v-btn>
       <v-text-field
         v-model="search"
         density="compact"

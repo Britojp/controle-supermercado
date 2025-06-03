@@ -73,7 +73,7 @@ export class ProductDTO {
 
 export class CreateTransactionDTO {
   @IsEnum(['ENTRADA', 'SAIDA'])
-  transaction_type: string;
+  transaction_type: Tipo_Transacao;
 
   @IsInt()
   quantity: number;

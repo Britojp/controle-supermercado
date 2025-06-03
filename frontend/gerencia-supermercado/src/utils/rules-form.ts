@@ -81,8 +81,6 @@ export const forcarErro = (errorMessage = 'error internal input') => {
   return  errorMessage;
 };
 
-
-
 export default {
   requiredRule,
   requiredFileRule,

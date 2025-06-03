@@ -18,6 +18,7 @@ export const transactionStore = defineStore('transactionStore', {
         }
         this.loading = false;
     },
+
     async createTransaction(transactionData: CreateTransactionDTO): Promise<TransactionDTO> {
         try {
             const createdTransaction = await api.createNewTransaction(transactionData);
@@ -31,4 +32,4 @@ export const transactionStore = defineStore('transactionStore', {
     }
 },
   persist: true
-}); 
+});

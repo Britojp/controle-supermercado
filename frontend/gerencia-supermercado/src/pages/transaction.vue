@@ -30,7 +30,7 @@
           </template>
         </v-card>
 
-      <CreateProduct />
+      <CreateProduct @transaction-created="handleTransaction"/>
     </v-card>
   </v-sheet>
 </template>
@@ -51,21 +51,24 @@ export default defineComponent({
 
   data() {
     return {
+      loading: false,
     };
   },
-  
+
   methods: {
     async handleTransaction(transaction: CreateTransactionDTO) {
+      console.log('Transação criada com sucesso:', transaction);
     try{
-    
+      this.loading = true;
       const store = transactionStore();
       await store.createTransaction(transaction);
       toast.success('Transação realizada com sucesso!');
     } catch (error) {
       toast.error('Erro ao realizar transação');
+    }finally {
+      this.loading = false;
     }
-    },
   },
-
+  }
 });
 </script>

@@ -1,20 +1,40 @@
-export interface ProductDTO{
-    name: string;
-    id_nutritions: string;
-    id_categories: string;
-    id_brands: string;
+export enum TransactionType {
+  ENTRADA = 'ENTRADA',
+  SAIDA = 'SAIDA',
 }
 
-export interface CreateProductDTO {
-    name: string;
-    nutritions: {
-        portion: number;
-        protein_quantity: number;
-        fatness_quantity: number;
-        carbohydrate_quantity: number;
-        id_meansurements: string;
-    }
-    id_categories: string;
-    id_brands: string;
+export interface UserDTO {
+  id: string;
+}
+
+export interface SupplierDTO {
+  id: string;
+}
+
+export interface MeasurementDTO {
+  id: string;
+}
+
+export interface NutritionDTO {
+  portion: number;
+  protein_quantity: number;
+  fatness_quantity: number;
+  carbohydrate_quantity: number;
+  measurement: MeasurementDTO;
+}
+
+export interface CategoryDTO {
+  id: string;
+}
+
+export interface BrandDTO {
+  id: string;
+}
+
+export interface ProductDTO {
+  name: string;
+  nutrition: NutritionDTO;
+  category: CategoryDTO;
+  brand: BrandDTO;
 }
 

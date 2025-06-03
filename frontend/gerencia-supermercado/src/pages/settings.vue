@@ -19,104 +19,45 @@
         </div>
 
           <v-col cols="auto" class="mx-2">
-            <v-card
-              class="pa-4 d-flex align-center hover:shadow-lg transition-slow cursor-pointer"
-              elevation="2"
-              @click="handleClick('categorias')"
-              color="grey-lighten-4"
-            >
-              <v-icon size="40" color="black" class="mr-4">mdi-shape-outline</v-icon>
-              <div>
-                <div class="font-weight-bold text-subtitle-1">Cadastrar Categoria</div>
-                <div class="text-body-2 text-grey-darken-1">
-                  Organize o estoque criando categorias para produtos, facilitando a navegação.
-                </div>
-              </div>
-            </v-card>
-          </v-col>
-                    <v-col cols="auto" class="mx-2">
-            <v-card
-              class="pa-4 d-flex align-center hover:shadow-lg transition-slow cursor-pointer"
-              elevation="2"
-              @click="handleClick('categorias')"
-              color="grey-lighten-4"
-            >
-              <v-icon size="40" color="black" class="mr-4">mdi-shape-outline</v-icon>
-              <div>
-                <div class="font-weight-bold text-subtitle-1">Apagar Categoria</div>
-                <div class="text-body-2 text-grey-darken-1">
-                  Organize o estoque criando categorias para produtos, facilitando a navegação.
-                </div>
-              </div>
-            </v-card>
+            <Button
+              title="Cadastrar Categoria"
+              description="Organize o estoque criando categorias para produtos, facilitando a navegação."
+              @click="handleClick('categorias')"></Button>
+            </v-col>
+
+          <v-col cols="auto" class="mx-2">
+            <Button
+              title="Apagar Categoria"
+              description="Organize o estoque criando categorias para produtos, facilitando a navegação."
+              @click="handleClick('categorias')"></Button>
           </v-col>
 
           <v-col cols="auto" class="mx-2">
-            <v-card
-              class="pa-4 d-flex align-center hover:shadow-lg transition-slow cursor-pointer"
-              elevation="2"
-              @click="handleClick('corredores')"
-              color="grey-lighten-4"
-            >
-              <v-icon size="40" color="black" class="mr-4">mdi-view-parallel</v-icon>
-              <div>
-                <div class="font-weight-bold text-subtitle-1">Cadastrar Corredor</div>
-                <div class="text-body-2 text-grey-darken-1">
-                  Organize o estoque criando corredores para navegação eficiente.
-                </div>
-              </div>
-            </v-card>
-          </v-col>
-
-           <v-col cols="auto" class="mx-2">
-            <v-card
-              class="pa-4 d-flex align-center hover:shadow-lg transition-slow cursor-pointer"
-              elevation="2"
-              @click="handleClick('corredores')"
-              color="grey-lighten-4"
-            >
-              <v-icon size="40" color="black" class="mr-4">mdi-view-parallel</v-icon>
-              <div>
-                <div class="font-weight-bold text-subtitle-1">Apagar Corredor</div>
-                <div class="text-body-2 text-grey-darken-1">
-                  Organize o estoque criando corredores para navegação eficiente.
-                </div>
-              </div>
-            </v-card>
+            <Button
+              title="Cadastrar Corredor"
+              description="Organize o estoque criando corredores para navegação eficiente."
+              @click="handleClick('corredores')"></Button>
           </v-col>
 
           <v-col cols="auto" class="mx-2">
-            <v-card
-              class="pa-4 d-flex align-center hover:shadow-lg transition-slow cursor-pointer"
-              elevation="2"
-              @click="handleClick('prateleiras')"
-              color="grey-lighten-4"
-            >
-              <v-icon size="40" color="black" class="mr-4">mdi-wall-sconce-flat-outline</v-icon>
-              <div>
-                <div class="font-weight-bold text-subtitle-1">Cadastrar Prateleira</div>
-                <div class="text-body-2 text-grey-darken-1">
-                  Organize o estoque criando prateleiras para produtos, facilitando a localização.
-                </div>
-              </div>
-            </v-card>
+            <Button
+              title="Apagar Corredor"
+              description="Organize o estoque criando corredores para navegação eficiente."
+              @click="handleClick('corredores')"></Button>
           </v-col>
 
           <v-col cols="auto" class="mx-2">
-            <v-card
-              class="pa-4 d-flex align-center hover:shadow-lg transition-slow cursor-pointer"
-              elevation="2"
-              @click="handleClick('prateleiras')"
-              color="grey-lighten-4"
-            >
-              <v-icon size="40" color="black" class="mr-4">mdi-wall-sconce-flat-outline</v-icon>
-              <div>
-                <div class="font-weight-bold text-subtitle-1">Apagar Prateleira</div>
-                <div class="text-body-2 text-grey-darken-1">
-                  Organize o estoque criando prateleiras para produtos, facilitando a localização.
-                </div>
-              </div>
-            </v-card>
+            <Button
+              title="Cadastrar Prateleira"
+              description="Organize o estoque criando prateleiras para produtos, facilitando a localização."
+              @click="handleClick('prateleiras')"></Button>
+          </v-col>
+
+          <v-col cols="auto" class="mx-2">
+            <Button
+              title="Apagar Prateleira"
+              description="Organize o estoque criando prateleiras para produtos, facilitando a localização."
+              @click="handleClick('prateleiras')"></Button>
           </v-col>
       </div>
 
@@ -126,13 +67,19 @@
 </template>
 
 <script lang="ts">
+import Button from '@/components/Button.vue';
 export default {
+  components: {
+    Button,
+  },
+  data(vm) {
+    return {
+
+    }
+  },
   name: 'Settings',
   methods: {
     handleClick(section: string) {
-      console.log('Ir para:', section);
-      // Aqui você pode usar o Vue Router para navegar, ex:
-      // this.$router.push(`/configuracoes/${section}`);
     },
   },
 };

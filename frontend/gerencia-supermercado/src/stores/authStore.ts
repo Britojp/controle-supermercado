@@ -15,6 +15,9 @@ export const authStore = defineStore('authStore', {
     isAuthenticated(): boolean {
       return !!this.token
     },
+    getUser(): any {
+      return this.user
+    },
   },
 
   actions: {
@@ -24,6 +27,9 @@ export const authStore = defineStore('authStore', {
         const { access_token, user } = await api.login(email, password)
 
         this.token = access_token
+        this.user = user
+
+        localStorage.setItem('user', JSON.stringify(user))
 
         Cookies.set('auth_token', access_token)
 
