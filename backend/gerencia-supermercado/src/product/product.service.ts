@@ -9,6 +9,7 @@ import { Category } from 'src/database/entities/category.entity';
 import { createProductDTO } from './dto/create-product.dto';
 import { Measurement } from 'src/database/entities/measurement.entity';
 import { updateProductDTO } from './dto/update-product.dto';
+import { ProductNotFoundError } from './errors/products-not-found.error';
 
 @Injectable()
 export class ProductService {
@@ -41,6 +42,11 @@ export class ProductService {
                 brand: true,   
             }
         });
+
+        if(!products || products.length === 0) {
+            throw new ProductNotFoundError(`Produtos não encontrados`);
+        }
+
         return products.map(product => new readProductDTO(product))
     }
 
@@ -56,7 +62,7 @@ export class ProductService {
             where: {id},
         })
         if(!product){
-            throw new HttpException(`Produto ${id} não encontrado`,400)
+            throw new ProductNotFoundError(`Produto ${id} não encontrado`)
         }
         return new readProductDTO(product)                
     }
@@ -115,7 +121,7 @@ export class ProductService {
         });
       
         if (!existingProduct) {
-          throw new Error('Produto não encontrado.');
+          throw new ProductNotFoundError(`Produto ${id} não encontrado`);
         }
       
         if (dto.nutrition?.measurement) {
@@ -181,8 +187,8 @@ export class ProductService {
         const supplier = await this.productRespository.findOne({
             where: {id},
             relations : {
-                nutrition : {
-                    measurement : true,
+                nutrition : {  
+                  measurement : true,
                 },
                 category : true,
                 brand: true,   

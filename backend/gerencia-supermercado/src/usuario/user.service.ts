@@ -5,6 +5,7 @@ import { updateUserDTO } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { EmailNotFoundError, UserNotFoundError } from './errors';
 
 @Injectable()
 export class UsuarioService {
@@ -14,7 +15,6 @@ export class UsuarioService {
         private readonly userRepository: Repository<User>
     ){}
 
-
     async findAll(){
         return this.userRepository.find()
     }
@@ -23,9 +23,9 @@ export class UsuarioService {
         const user = await this.userRepository.findOne({
             where: {email},
         })
-            if(!user){
-                throw new HttpException(`Email ${email} não encontrado`, 400)
-            }
+        if(!user){
+            throw new EmailNotFoundError(email, 'Busca por email');
+        }
         return user;
     }
 
@@ -41,26 +41,25 @@ export class UsuarioService {
             ...createdUser,
             password: undefined,
         };
-
     }
 
-async update(id: string, updateUserDTO: updateUserDTO){
-    const user = await this.userRepository.preload({
-        id,
-        ...updateUserDTO
-    });
-    if(!user){
-        throw new NotFoundException("Não encontrado");
+    async update(id: string, updateUserDTO: updateUserDTO){
+        const user = await this.userRepository.preload({
+            id,
+            ...updateUserDTO
+        });
+        if(!user){
+            throw new UserNotFoundError(id, 'Atualização de usuário');
+        }
+        return this.userRepository.save(user);
     }
-    return this.userRepository.save(user);
-}
     
     async remove(id: string){
         const user = await this.userRepository.findOne({
             where: {id},
         })
         if(!user){
-            throw new NotFoundException("Não encontrado");
+            throw new UserNotFoundError(id, 'Exclusão de usuário');
         }
         return this.userRepository.remove(user);
     }

@@ -5,12 +5,13 @@ import * as bcrypt from 'bcrypt';
 import { User } from 'src/database/entities/user.entity';
 import { UserPayload } from './models/UserPayload';
 import { JwtService } from '@nestjs/jwt'
+import { UnauthorizedError } from 'src/common/errors';
 
 @Injectable()
 export class AuthService {
     constructor(private readonly usuarioService: UsuarioService, private readonly jwtService: JwtService ){}
-    
-        login(user: User) : UserToken {
+
+    async login(user: User) : Promise<UserToken> {
         const payload : UserPayload = {
             sub: user.id,
             email: user.email,
@@ -43,7 +44,7 @@ export class AuthService {
                 }
             }
 
-            throw new Error('Erro na autenticação');
+            throw new UnauthorizedError('Usuário não autorizado', 'AuthService');
         }
     }
 }

@@ -4,6 +4,7 @@ Injectable,
 UnauthorizedException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { UnauthorizedError } from 'src/common/errors';
 
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {
@@ -14,7 +15,7 @@ canActivate(context: ExecutionContext) { // Permitir a rota para guards específ
 
 handleRequest(err, user) { // Tratamento de erro 
     if (err || !user) {
-    throw new UnauthorizedException(err?.message);
+        throw new UnauthorizedError(err?.message, 'LocalAuthGuard');
     }
 
     return user;

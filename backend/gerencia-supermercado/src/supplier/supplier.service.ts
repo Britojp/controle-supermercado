@@ -6,6 +6,8 @@ import { State } from 'src/database/entities/state.entity';
 import { Address } from 'src/database/entities/address.entity';
 import { Contact } from 'src/database/entities/contact.entity';
 import { createSupplierDTO, readSupplierDTO, updateSupplierDTO } from './dto/index';
+import { SupplierNotFoundError } from './errors/supplier-not-found.error';
+import { StateNotFoundError } from 'src/state/errors/state-not-found.error';
 
 @Injectable()
 export class SupplierService {
@@ -31,6 +33,10 @@ export class SupplierService {
       }
     });
 
+    if(!suppliers || suppliers.length === 0) {
+        throw new SupplierNotFoundError(`Fornecedores não encontrados`);
+    }
+
     return suppliers.map(supplier => new readSupplierDTO(supplier));
   }
 
@@ -45,7 +51,7 @@ export class SupplierService {
       where: { id },
     });
     if (!supplier) {
-      throw new HttpException(`Fornecedor ${id} não encontrado`, 400);
+      throw new SupplierNotFoundError(`Fornecedor ${id} não encontrado`);
     }
     return new readSupplierDTO(supplier);
   }
@@ -58,7 +64,7 @@ export class SupplierService {
     });
 
     if (!state) {
-      throw new NotFoundException(`Estado com ID ${address.id_state} não encontrado`);
+      throw new StateNotFoundError(`Estado com ID ${address.id_state} não encontrado`);
     }
 
     const newAddress = this.addressRepository.create({
@@ -90,7 +96,7 @@ export class SupplierService {
     });
 
     if (!supplier) {
-      throw new NotFoundException('Fornecedor não encontrado');
+      throw new SupplierNotFoundError('Fornecedor não encontrado');
     }
 
     if (address) {
@@ -99,7 +105,7 @@ export class SupplierService {
       });
 
       if (!state) {
-        throw new NotFoundException(`Estado com ID ${address.id_state} não encontrado`);
+        throw new StateNotFoundError(`Estado com ID ${address.id_state} não encontrado`);
       }
 
       const newAddress = this.addressRepository.create({
@@ -132,7 +138,7 @@ export class SupplierService {
     });
 
     if (!supplier) {
-      throw new NotFoundException("Fornecedor não encontrado");
+      throw new SupplierNotFoundError("Fornecedor não encontrado");
     }
     return this.supplierRepository.remove(supplier);
   }

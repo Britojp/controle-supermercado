@@ -11,6 +11,9 @@ import { Brand } from 'src/database/entities/brand.entity';
 import { Category } from 'src/database/entities/category.entity';
 import { Measurement } from 'src/database/entities/measurement.entity';
 import { Tipo_Transacao } from 'src/interfaces/interfaces.types';
+import { TransactionNotFoundError } from './errors/transaction-not-found.error';
+import { UserNotFoundError } from 'src/usuario/errors/user-not-found.error';
+import { SupplierNotFoundError } from 'src/supplier/errors/supplier-not-found.error';
 
 @Injectable()
 export class TransactionService {
@@ -47,6 +50,10 @@ export class TransactionService {
             }
         });
 
+        if(!transactions || transactions.length === 0) {
+            throw new TransactionNotFoundError(`Transações não encontradas`);
+        }
+
         return transactions.map(transaction => new readTransactionDTO(transaction))
         
     }
@@ -61,7 +68,7 @@ export class TransactionService {
             where: {id}
         })
         if(!transaction){
-            throw new HttpException(`Transação ${id} não encontrada`, 400)
+            throw new TransactionNotFoundError(`Transação ${id} não encontrada`);
         }
         return new readTransactionDTO(transaction);
     }
@@ -71,12 +78,12 @@ export class TransactionService {
         
         const userEntity = await this.userRepository.findOne({ where: { id: user.id } });
         if (!userEntity) {
-            throw new NotFoundException(`Usuário com ID ${user.id} não encontrado`);
+            throw new UserNotFoundError(`Usuário com ID ${user.id} não encontrado`);
         }
 
         const supplierEntity = await this.supplierRepository.findOne({ where: { id: supplier.id } });
         if (!supplierEntity) {
-            throw new NotFoundException(`Fornecedor com ID ${supplier.id} não encontrado`);
+            throw new SupplierNotFoundError(`Fornecedor com ID ${supplier.id} não encontrado`);
         }
 
         const productEntity = this.productRepository.create({
@@ -107,10 +114,7 @@ export class TransactionService {
         await this.transactionRepository.save(transaction);
         return new readTransactionDTO(transaction);
     }
-
-
     
-
     async remove(id: string){
         const transaction = await this.transactionRepository.findOne({
             where: {id},
@@ -121,7 +125,7 @@ export class TransactionService {
             },
         })
         if(!transaction){
-            throw new NotFoundException("Não encontrado");
+            throw new TransactionNotFoundError("Não encontrado");
         }
         return this.transactionRepository.remove(transaction);
     }

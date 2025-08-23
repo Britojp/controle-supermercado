@@ -1,0 +1,14 @@
+export { StatesSeed } from './states.seed';
+export { MeasurementsSeed } from './measurements.seed';
+export { CategoriesSeed } from './categories.seed';
+export { BrandsSeed } from './brands.seed';
+export { NutritionsSeed } from './nutritions.seed';
+export { AddressSeed } from './address.seed';
+export { ContactsSeed } from './contacts.seed';
+export { SuppliersSeed } from './suppliers.seed';
+export { ProductsSeed } from './products.seed';
+export { TransactionsSeed } from './transactions.seed';
+export { ShelvesSeed } from './shelves.seed';
+export { CorridorsSeed } from './corridors.seed';
+export { BatchesSeed } from './batches.seed';
+export { StockLocationsSeed } from './stock-locations.seed'; 

@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Batch } from 'src/database/entities/batch.entity';
 import { Product } from 'src/database/entities/product.entity';
 import { Repository } from 'typeorm';
+import { BatchNotFoundError } from './errors/batch-not-found.error';
 
 @Injectable()
 export class BatchService {
@@ -21,6 +22,11 @@ export class BatchService {
                 product: true,
             },
         });
+
+        if(!batches || batches.length === 0) {
+            throw new BatchNotFoundError(`Lotes não encontrados`);
+        }
+
         return batches;
     }
 

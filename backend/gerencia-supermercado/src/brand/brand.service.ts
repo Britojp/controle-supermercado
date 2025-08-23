@@ -4,6 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { readBrandsDTO } from './dto/read-brands.dto';
 import { Repository } from 'typeorm';
 import { Brand } from 'src/database/entities/brand.entity';
+import { BrandNotFoundError } from './errors/brand-not-found.error';
+import { BrandNotCreatedError } from './errors/brand-created-error.error';
 
 
 @Injectable()
@@ -16,6 +18,9 @@ export class BrandService {
 
     async findAll(): Promise <readBrandsDTO[]> {
         const brands = await this.brandRepository.find({})
+        if(!brands || brands.length === 0) {
+            throw new BrandNotFoundError(`Marcas não encontradas`);
+        }
         return brands.map(brands => new readBrandsDTO(brands))
     }
     
@@ -23,6 +28,11 @@ export class BrandService {
         const brand = this.brandRepository.create({
             ...createBrandDTO
         })
+
+        if(!brand){
+            throw new BrandNotCreatedError("Houve um erro ao criar a marca");
+        }
+
         return this.brandRepository.save(brand)
     }
 
