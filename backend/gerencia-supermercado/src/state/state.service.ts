@@ -12,6 +12,7 @@ export class StateService {
         private readonly stateRepository: Repository <State>,
     ){}
 
+    
     async findAll(): Promise<readStatesDTO[]> {
         const states = await this.stateRepository.find()
 
